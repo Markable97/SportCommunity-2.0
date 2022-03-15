@@ -1,7 +1,8 @@
-package com.glushko.sportcommunity
+package com.glushko.sportcommunity.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.glushko.sportcommunity.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
