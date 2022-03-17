@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
         val toggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,

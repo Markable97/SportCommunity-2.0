@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.di
 
-import com.glushko.sportcommunity.data.api.ApiService
+import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.util.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import dagger.Module
