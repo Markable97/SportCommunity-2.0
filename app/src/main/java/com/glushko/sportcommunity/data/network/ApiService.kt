@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.data.network
 
-import com.glushko.sportcommunity.data.division.network.ResponseFootballDivisions
-import com.glushko.sportcommunity.data.leagues.network.ResponseFootballLeagues
+import com.glushko.sportcommunity.data.main_screen.division.network.ResponseFootballDivisions
+import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.data.teams.network.ResponseFootballTeams
 import io.reactivex.Single
 import retrofit2.http.FieldMap
@@ -15,8 +15,8 @@ interface ApiService {
         const val GET_FOOTBALL_DIVISIONS = "GetFootballDivisions"
         const val GET_FOOTBALL_TEAMS = "GetFootballTeams"
 
-        const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
-        const val PARAM_FOOTBALL_DIVISION_ID = "division_id"
+        const val PARAM_FOOTBALL_LEAGUE_ID = "leagueId"
+        const val PARAM_FOOTBALL_DIVISION_ID = "divisionId"
     }
 
     @POST(GET_FOOTBALL_LEAGUES)

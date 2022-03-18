@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SportCommunity">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.main_screen.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

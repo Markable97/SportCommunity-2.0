@@ -1,13 +1,13 @@
-package com.glushko.sportcommunity.data.division.network
+package com.glushko.sportcommunity.data.main_screen.division.network
 
-import com.glushko.sportcommunity.data.division.model.FootballDivision
+import com.glushko.sportcommunity.data.main_screen.division.model.FootballDivision
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.network.BaseResponse
 
 
-data class ResponseFootballDivisions(
-    override val success: Int,
-    override val message: String,
+class ResponseFootballDivisions(
+    success: Int,
+    message: String,
     val football_divisions: MutableList<FootballDivision> = mutableListOf()
 ) :
     BaseResponse(success, message) {
