@@ -2,6 +2,12 @@
     <string name="app_name">SportCommunity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Tittle item bottom navigate -->
+    <string name="bottom_tittle__calendar">Календарь</string>
+    <string name="bottom_tittle__results">Результаты</string>
+    <string name="bottom_tittle__tournament_table">Таблица</string>
+
+
 </resources>

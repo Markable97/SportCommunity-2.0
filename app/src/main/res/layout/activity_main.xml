@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    tools:openDrawer="end">
 
     <!-- this layout contains main content -->
     <LinearLayout
@@ -19,15 +19,14 @@
             android:layout_height="wrap_content"
             android:background="@color/teal_200"
             app:navigationIcon="@drawable/ic_round_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
-        <fragment
-            android:id="@+id/nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph_drawer"
+        <include
+            android:id="@+id/container"
+            layout="@layout/fragment_container"
             />
     </LinearLayout>
 
@@ -38,7 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:headerLayout="@layout/header_navigation_drawer"
-        app:menu="@menu/drawer_main_menu"
         android:layout_gravity="start"
         android:background="@color/teal_200"
         app:itemTextColor="@color/white"

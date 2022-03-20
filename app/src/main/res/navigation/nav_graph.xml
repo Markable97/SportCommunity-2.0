@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/calendarFragment">
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.glushko.sportcommunity.presentation.calendar.ui.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.glushko.sportcommunity.presentation.results.ui.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results" />
+    <fragment
+        android:id="@+id/tournamentTableFragment"
+        android:name="com.glushko.sportcommunity.presentation.tournament_table.ui.TournamentTableFragment"
+        android:label="fragment_tournament_table"
+        tools:layout="@layout/fragment_tournament_table" />
+</navigation>
