@@ -2,14 +2,11 @@ package com.glushko.sportcommunity.presentation.main_screen.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
 import com.glushko.sportcommunity.presentation.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,6 +15,9 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     private val _liveDataLeagues: MutableLiveData<List<LeaguesDisplayData>> = MutableLiveData()
     val liveDataLeagues: LiveData<List<LeaguesDisplayData>> = _liveDataLeagues
+
+    private val _liveDataSelectedDivision: MutableLiveData<Int> = MutableLiveData()
+    val liveDataSelectedDivision: LiveData<Int> = _liveDataSelectedDivision
 
     init {
         getLeagues()
@@ -31,6 +31,10 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             Timber.e("Ошибка getLeagues ${it.message}")
         })
         )
+    }
+
+    fun chooseDivision(divisionId: Int){
+        _liveDataSelectedDivision.value = divisionId
     }
 
 }

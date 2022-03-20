@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigationView.setNavigationItemSelectedListener {
             Timber.d("Клик по боковой менюшки id=${it.itemId}  title=${it.title} ")
+            viewModel.chooseDivision(it.itemId)
             binding.toolbar.title = it.title
             binding.drawerLayout.close()
             true
