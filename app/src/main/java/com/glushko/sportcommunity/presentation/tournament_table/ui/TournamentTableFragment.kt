@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,13 +17,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
-import coil.compose.rememberImagePainter
-import coil.size.OriginalSize
+import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.tournament_table.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
@@ -130,15 +130,13 @@ class TournamentTableFragment : BaseFragment() {
 
     @Composable
     fun TableCellIMage(modifier: Modifier, value: String){
-        Image(
-            painter = rememberImagePainter(data = "$BASE_URL_IMAGE$value.png",
-                builder = {
-                    size(OriginalSize)
-                    error(R.drawable.ic_healing_black_36dp)
-                    placeholder(R.drawable.ic_healing_black_36dp)
-                }),
+        AsyncImage(
+            model = "$BASE_URL_IMAGE$value.png",
+            placeholder = painterResource(R.drawable.ic_healing_black_36dp),
+            error = painterResource(R.drawable.ic_healing_black_36dp),
             contentDescription = null,
-            modifier = modifier
+            contentScale = ContentScale.Crop,
+            modifier = modifier,
         )
     }
 

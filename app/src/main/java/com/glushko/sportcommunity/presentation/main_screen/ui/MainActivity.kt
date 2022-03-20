@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        binding.container.bottomNav.setupWithNavController(navController)
+        binding.bottomNav.setupWithNavController(navController)
 
 
         setupObservers()
