@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
+import com.glushko.sportcommunity.data.results.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
 import com.glushko.sportcommunity.presentation.results.vm.ResultsViewModel
 import com.glushko.sportcommunity.util.Constants
@@ -55,20 +59,20 @@ class ResultsFragment : BaseFragment() {
         }
     }
 
-    @Preview
     @Composable
     fun ScreenResult() {
+        val response by viewModel.liveDataResults.observeAsState(emptyList())
         LazyColumn(modifier = Modifier
             .fillMaxSize()
             .background(Color.White)){
-            items(10){
-                CardResult()
+            items(response){match ->
+                CardResult(match)
             }
         }
     }
 
     @Composable
-    fun CardResult(){
+    fun CardResult(match: MatchFootballDisplayData){
         Card(
             modifier = Modifier
                 .height(100.dp)
@@ -80,26 +84,26 @@ class ResultsFragment : BaseFragment() {
             Column(
             )
                 {
-                ResultHeader()
+                ResultHeader(match.divisionName)
                 Row() {
                     val modifierTour= Modifier
                         .weight(0.1f)
-                    TextTour(modifier = modifierTour)
+                    TextTour(tour = match.tour,modifier = modifierTour)
                     val modifierTeams= Modifier
                         .weight(0.8f)
-                    Teams(modifierTeams)
+                    Teams(teamHome = match.teamHomeName, teamGuest = match.teamGuestName, modifierTeams)
                     val modifierScore= Modifier
                         .weight(0.1f)
-                    Score(modifierScore)
+                    Score(match.teamHomeGoal, match.teamGuestGoal,modifierScore)
                 }
             }
         }
     }
 
     @Composable
-    fun ResultHeader() {
+    fun ResultHeader(divisionName: String) {
         Column {
-            Text(text = "Первый дивизион",
+            Text(text = divisionName,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
             )
@@ -108,19 +112,19 @@ class ResultsFragment : BaseFragment() {
     }
 
     @Composable
-    fun TextTour(modifier: Modifier){
+    fun TextTour(tour: Int, modifier: Modifier){
         Box(contentAlignment = Alignment.Center, modifier =  modifier.fillMaxHeight()) {
-            Text(text = "10 тур", textAlign = TextAlign.Center)
+            Text(text = "$tour тур", textAlign = TextAlign.Center)
         }
 
     }
 
     @Composable
-    fun Teams(modifier: Modifier){
+    fun Teams(teamHome: String, teamGuest: String, modifier: Modifier){
         Column(modifier = modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
-            Team(teamName = "Косино")
+            Team(teamName = teamHome)
             Spacer(modifier = Modifier.height(1.dp))
-            Team(teamName = "Морс")
+            Team(teamName = teamGuest)
         }
     }
 
@@ -132,7 +136,7 @@ class ResultsFragment : BaseFragment() {
         ) {
             AsyncImage(
                 model = "${Constants.BASE_URL_IMAGE}$teamName.png",
-                placeholder = painterResource(R.drawable.ic_healing_black_36dp),
+//                placeholder = painterResource(R.drawable.ic_healing_black_36dp),
                 error = painterResource(R.drawable.ic_healing_black_36dp),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
@@ -142,7 +146,7 @@ class ResultsFragment : BaseFragment() {
     }
 
     @Composable
-    fun Score(modifier: Modifier){
+    fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier){
         Row(modifier = modifier) {
             Divider(
                 color = Color.Gray,
@@ -151,12 +155,12 @@ class ResultsFragment : BaseFragment() {
                     .width(1.dp)
             )
             Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
-                Text(text = "5", modifier = Modifier
+                Text(text = "$goalHome", modifier = Modifier
                     .fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
                 Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
-                Text(text = "2", modifier = Modifier
+                Text(text = "$goalGuest", modifier = Modifier
                     .fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )

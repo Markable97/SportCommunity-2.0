@@ -13,7 +13,7 @@ data class MatchFootball(
     @SerializedName("league_name") val leagueName: String,
     @SerializedName("division_info") val divisionInfo : FootballDivision,
     @SerializedName("match_id") val matchId: Long,
-    @SerializedName("tour_iod") val tourId: Int,
+    @SerializedName("tour_id") val tourId: Int,
     @SerializedName("team_home") val teamHome: FootballTeam,
     @SerializedName("goal_home") val goalHome:Int,
     @SerializedName("goal_guest") val goalGuest: Int,
