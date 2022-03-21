@@ -19,13 +19,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.presentation.BaseFragment
+import com.glushko.sportcommunity.presentation.results.vm.ResultsViewModel
 import com.glushko.sportcommunity.util.Constants
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class ResultsFragment : BaseFragment() {
+
+    private val viewModel: ResultsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +51,7 @@ class ResultsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner) {
             Timber.d("Пришел новый дивизион = $it")
+            viewModel.getResults(it)
         }
     }
 
