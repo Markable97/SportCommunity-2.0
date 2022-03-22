@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_result"
+    app:startDestination="@id/resultsFragment">
+
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.glushko.sportcommunity.presentation.results.ui.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results" >
+        <action
+            android:id="@+id/action_resultsFragment_to_detailMatchFragment"
+            app:destination="@id/detailMatchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailMatchFragment"
+        android:name="com.glushko.sportcommunity.presentation.match_detail.ui.DetailMatchFragment"
+        android:label="DetailMatchFragment">
+
+        <argument
+            android:name="match"
+            app:argType="com.glushko.sportcommunity.data.results.model.MatchFootballDisplayData" />
+    </fragment>
+</navigation>

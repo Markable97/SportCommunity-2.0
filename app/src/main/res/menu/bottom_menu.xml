@@ -6,7 +6,7 @@
         android:title="@string/bottom_tittle__calendar" />
 
     <item
-        android:id="@+id/resultsFragment"
+        android:id="@+id/nav_graph_result"
         android:icon="@drawable/ic_results"
         android:title="@string/bottom_tittle__results" />
 
