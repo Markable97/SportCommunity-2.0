@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.results.model.MatchFootballDisplayData
@@ -71,6 +72,7 @@ class ResultsFragment : BaseFragment() {
         }
     }
 
+    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun CardResult(match: MatchFootballDisplayData){
         Card(
@@ -78,8 +80,10 @@ class ResultsFragment : BaseFragment() {
                 .height(100.dp)
                 .padding(5.dp),
             shape = RoundedCornerShape(8.dp),
-            backgroundColor = Color.LightGray
-
+            backgroundColor = Color.LightGray,
+            onClick = {
+                findNavController().navigate(ResultsFragmentDirections.actionResultsFragmentToDetailMatchFragment(match))
+            }
         ){
             Column(
             )

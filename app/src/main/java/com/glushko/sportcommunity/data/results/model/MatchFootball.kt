@@ -1,13 +1,9 @@
 package com.glushko.sportcommunity.data.results.model
 
-import android.graphics.Bitmap
-import android.os.Parcelable
 import com.glushko.sportcommunity.data.main_screen.division.model.FootballDivision
 import com.glushko.sportcommunity.data.teams.model.FootballTeam
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class MatchFootball(
     @SerializedName("season_id") val seasonId: Int,
     @SerializedName("league_name") val leagueName: String,
@@ -22,9 +18,11 @@ data class MatchFootball(
     @SerializedName("name_stadium") val nameStadium: String?,
     @SerializedName("match_desc") val matchDesc: String?,
     val played: Int
-) : Parcelable
+)
 
 fun MatchFootball.toModel() = MatchFootballDisplayData(
+    matchId = matchId,
+    leagueName = leagueName,
     divisionName = divisionInfo.divisionName,
     tour = tourId,
     teamHomeName = teamHome.team_name,
