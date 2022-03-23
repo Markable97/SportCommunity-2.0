@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation.results.vm
+package com.glushko.sportcommunity.presentation.matches.results.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

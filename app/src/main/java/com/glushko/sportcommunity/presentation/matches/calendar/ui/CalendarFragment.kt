@@ -1,26 +1,27 @@
-package com.glushko.sportcommunity.presentation.calendar.ui
+package com.glushko.sportcommunity.presentation.matches.calendar.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
-import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
-import com.glushko.sportcommunity.presentation.results.ui.CardMatch
+import com.glushko.sportcommunity.presentation.matches.CardMatch
 import timber.log.Timber
 
 class CalendarFragment : BaseFragment() {
@@ -69,6 +70,27 @@ class CalendarFragment : BaseFragment() {
             }
         }
     }
+}
 
-
+@Composable
+fun DateAndStadium(matchDate: String, stadium: String, modifier: Modifier) {
+    Row(modifier = modifier) {
+        Divider(
+            color = Color.Gray,
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp)
+        )
+        Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
+            Text(text = matchDate, modifier = Modifier
+                .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
+            Text(text = stadium, modifier = Modifier
+                .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+        }
+    }
 }
