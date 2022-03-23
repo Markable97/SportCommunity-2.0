@@ -13,19 +13,27 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
 import com.glushko.sportcommunity.presentation.matches.CardMatch
+import com.glushko.sportcommunity.presentation.matches.calendar.vm.CalendarViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class CalendarFragment : BaseFragment() {
 
+    private val viewModel: CalendarViewModel by viewModels()
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,24 +52,13 @@ class CalendarFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner){
             Timber.d("Пришел новый дивизион = $it")
+            viewModel.getCalendar(it)
         }
     }
 
     @Composable
     fun ScreenCalendar(){
-        val response = listOf(MatchFootballDisplayData(
-            played = 0,
-            stadium = "Спартак 1",
-            matchDate = "06.02.2021",
-            tour = 25,
-            teamGuestGoal = 0,
-            teamGuestName = "Команда гстей",
-            teamHomeGoal = 0,
-            teamHomeName = "Команда домашняя",
-            divisionName = "Какой то там дивизион",
-            leagueName = "Бомжицкая",
-            matchId = 235
-        ))
+        val response by viewModel.liveDataCalendar.observeAsState(emptyList())
         LazyColumn(modifier = Modifier
             .fillMaxSize()
             .background(Color.White)){

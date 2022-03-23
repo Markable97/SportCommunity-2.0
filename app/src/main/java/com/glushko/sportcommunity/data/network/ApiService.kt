@@ -19,6 +19,7 @@ interface ApiService {
         const val GET_FOOTBALL_TEAMS = "GetFootballTeams"
         const val GET_TOURNAMENT_TABLE_FOOTBALL = "GetTournamentTableFootball"
         const val GET_FOOTBALL_MATCHES_DIVISION= "GetFootballMatchesDivision"
+        const val GET_FOOTBALL_MATCHES_CALENDAR_DIVISION= "GetFootballMatchesCalendarDivision"
         const val GET_PLAYERS_IN_MATCH = "GetPlayersInMatch"
 
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -47,6 +48,10 @@ interface ApiService {
     @FormUrlEncoded
     @POST(GET_FOOTBALL_MATCHES_DIVISION)
     fun getFootballMatchesDivision(@FieldMap params: Map<String, String>): Single<ResponseFootballMatches>
+
+    @FormUrlEncoded
+    @POST(GET_FOOTBALL_MATCHES_CALENDAR_DIVISION)
+    fun getFootballMatchesCalendarDivision(@FieldMap params: Map<String, String>): Single<ResponseFootballMatches>
 
     @FormUrlEncoded
     @POST(GET_PLAYERS_IN_MATCH)

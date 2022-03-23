@@ -4,6 +4,7 @@ import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.data.matches.network.ResponseFootballMatches
 import com.glushko.sportcommunity.data.matches.network.toModel
+import com.glushko.sportcommunity.data.matches.network.toModelCalendar
 import com.glushko.sportcommunity.domain.repository.matches.MatchesRepository
 import dagger.hilt.components.SingletonComponent
 import io.reactivex.Single
@@ -22,6 +23,9 @@ class MatchesRepositoryImpl @Inject constructor(private val api: ApiService): Ma
     }
 
     override fun getCalendar(divisionId: Int): Single<List<MatchFootballDisplayData>> {
-        TODO("Not yet implemented")
+        return api.getFootballMatchesCalendarDivision(ResponseFootballMatches.createMap(divisionId))
+            .subscribeOn(Schedulers.io())
+            .map { it.toModelCalendar() }
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }
