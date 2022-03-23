@@ -20,13 +20,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.results.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
 import com.glushko.sportcommunity.presentation.results.vm.ResultsViewModel
 import com.glushko.sportcommunity.util.Constants
@@ -67,108 +67,147 @@ class ResultsFragment : BaseFragment() {
             .fillMaxSize()
             .background(Color.White)){
             items(response){match ->
-                CardResult(match)
+                CardMatch(match, findNavController())
             }
         }
     }
+}
 
-    @OptIn(ExperimentalMaterialApi::class)
-    @Composable
-    fun CardResult(match: MatchFootballDisplayData){
-        Card(
-            modifier = Modifier
-                .height(100.dp)
-                .padding(5.dp),
-            shape = RoundedCornerShape(8.dp),
-            backgroundColor = Color.LightGray,
-            onClick = {
-                findNavController().navigate(ResultsFragmentDirections.actionResultsFragmentToDetailMatchFragment(match))
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
+    Card(
+        modifier = Modifier
+            .height(100.dp)
+            .padding(5.dp),
+        shape = RoundedCornerShape(8.dp),
+        backgroundColor = Color.LightGray,
+        onClick = {
+            if (match.played == 1){
+                navController.navigate(ResultsFragmentDirections.actionResultsFragmentToDetailMatchFragment(match))
             }
-        ){
-            Column(
-            )
-                {
-                ResultHeader(match.divisionName)
-                Row() {
-                    val modifierTour= Modifier
-                        .weight(0.1f)
-                    TextTour(tour = match.tour,modifier = modifierTour)
-                    val modifierTeams= Modifier
+        }
+    ){
+        Column(
+        )
+        {
+            ResultHeader(match.divisionName)
+            Row() {
+                val modifierTour= Modifier
+                    .weight(0.1f)
+                TextTour(tour = match.tour,modifier = modifierTour)
+                val modifierTeams= if(match.played == 1){
+                    Modifier
                         .weight(0.8f)
-                    Teams(teamHome = match.teamHomeName, teamGuest = match.teamGuestName, modifierTeams)
-                    val modifierScore= Modifier
+                }else{
+                    Modifier
+                        .weight(0.65f)
+                }
+                Teams(teamHome = match.teamHomeName, teamGuest = match.teamGuestName, modifierTeams)
+                val modifierScore= if(match.played == 1){
+                    Modifier
                         .weight(0.1f)
+                }else{
+                    Modifier
+                        .weight(0.25f)
+                }
+                if(match.played==1){
                     Score(match.teamHomeGoal, match.teamGuestGoal,modifierScore)
+                }else{
+                    DateAndStadium(match.matchDate?:"", match.stadium?:"",modifierScore)
                 }
             }
         }
     }
+}
 
-    @Composable
-    fun ResultHeader(divisionName: String) {
-        Column {
-            Text(text = divisionName,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-            )
-            Divider(color = Color.Gray)
-        }
+
+@Composable
+fun ResultHeader(divisionName: String) {
+    Column {
+        Text(text = divisionName,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
+        Divider(color = Color.Gray)
+    }
+}
+
+@Composable
+fun TextTour(tour: Int, modifier: Modifier){
+    Box(contentAlignment = Alignment.Center, modifier =  modifier.fillMaxHeight()) {
+        Text(text = "$tour тур", textAlign = TextAlign.Center)
     }
 
-    @Composable
-    fun TextTour(tour: Int, modifier: Modifier){
-        Box(contentAlignment = Alignment.Center, modifier =  modifier.fillMaxHeight()) {
-            Text(text = "$tour тур", textAlign = TextAlign.Center)
-        }
+}
 
+@Composable
+fun Teams(teamHome: String, teamGuest: String, modifier: Modifier){
+    Column(modifier = modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
+        Team(teamName = teamHome)
+        Spacer(modifier = Modifier.height(1.dp))
+        Team(teamName = teamGuest)
     }
+}
 
-    @Composable
-    fun Teams(teamHome: String, teamGuest: String, modifier: Modifier){
-        Column(modifier = modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
-            Team(teamName = teamHome)
-            Spacer(modifier = Modifier.height(1.dp))
-            Team(teamName = teamGuest)
-        }
-    }
-
-    @Composable
-    fun Team(teamName: String){
-        Row(verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            AsyncImage(
-                model = "${Constants.BASE_URL_IMAGE}$teamName.png",
+@Composable
+fun Team(teamName: String){
+    Row(verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        AsyncImage(
+            model = "${Constants.BASE_URL_IMAGE}$teamName.png",
 //                placeholder = painterResource(R.drawable.ic_healing_black_36dp),
-                error = painterResource(R.drawable.ic_healing_black_36dp),
-                contentDescription = null,
-                contentScale = ContentScale.Crop
+            error = painterResource(R.drawable.ic_healing_black_36dp),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+        Text(text = teamName, modifier = Modifier.fillMaxWidth().padding(start = 5.dp), textAlign = TextAlign.Start)
+    }
+}
+
+@Composable
+fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier){
+    Row(modifier = modifier) {
+        Divider(
+            color = Color.Gray,
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp)
+        )
+        Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
+            Text(text = "$goalHome", modifier = Modifier
+                .fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
-            Text(text = teamName, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start)
+            Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
+            Text(text = "$goalGuest", modifier = Modifier
+                .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
         }
     }
-
-    @Composable
-    fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier){
-        Row(modifier = modifier) {
-            Divider(
-                color = Color.Gray,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(1.dp)
+}
+@Composable
+fun DateAndStadium(matchDate: String, stadium: String, modifier: Modifier) {
+    Row(modifier = modifier) {
+        Divider(
+            color = Color.Gray,
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp)
+        )
+        Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
+            Text(text = matchDate, modifier = Modifier
+                .fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
-            Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
-                Text(text = "$goalHome", modifier = Modifier
-                    .fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-                Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
-                Text(text = "$goalGuest", modifier = Modifier
-                    .fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-            }
+            Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
+            Text(text = stadium, modifier = Modifier
+                .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }

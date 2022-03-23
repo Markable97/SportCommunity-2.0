@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.results.model
+package com.glushko.sportcommunity.data.matches.model
 
 import com.glushko.sportcommunity.data.main_screen.division.model.FootballDivision
 import com.glushko.sportcommunity.data.teams.model.FootballTeam
@@ -28,5 +28,19 @@ fun MatchFootball.toModel() = MatchFootballDisplayData(
     teamHomeName = teamHome.team_name,
     teamHomeGoal = goalHome,
     teamGuestName = teamGuest.team_name,
-    teamGuestGoal = goalGuest
+    teamGuestGoal = goalGuest,
+    played = played
+)
+fun MatchFootball.toModelCalendar() = MatchFootballDisplayData(
+    matchId = matchId,
+    leagueName = leagueName,
+    divisionName = divisionInfo.divisionName,
+    tour = tourId,
+    teamHomeName = teamHome.team_name,
+    teamHomeGoal = goalHome,
+    teamGuestName = teamGuest.team_name,
+    teamGuestGoal = goalGuest,
+    played = played,
+    matchDate = matchDate,
+    stadium = nameStadium
 )

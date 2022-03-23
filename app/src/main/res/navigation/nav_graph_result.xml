@@ -22,6 +22,6 @@
 
         <argument
             android:name="match"
-            app:argType="com.glushko.sportcommunity.data.results.model.MatchFootballDisplayData" />
+            app:argType="com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData" />
     </fragment>
 </navigation>

@@ -1,6 +1,5 @@
 package com.glushko.sportcommunity.presentation.match_detail.ui
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,23 +17,20 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.navArgs
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.match_detail.model.PlayerDisplayData
-import com.glushko.sportcommunity.data.results.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.match_detail.vm.DetailMatchViewModel
 import com.glushko.sportcommunity.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +40,7 @@ import timber.log.Timber
 class DetailMatchFragment: Fragment() {
     private val viewModel: DetailMatchViewModel by viewModels()
     private val args: DetailMatchFragmentArgs by navArgs()
-    private val match by lazy { args.match }
+    private val match: MatchFootballDisplayData by lazy { args.match }
 
     override fun onCreateView(
         inflater: LayoutInflater,

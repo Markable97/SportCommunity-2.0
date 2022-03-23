@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.results.model
+package com.glushko.sportcommunity.data.matches.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -12,5 +12,8 @@ data class MatchFootballDisplayData(
     val teamHomeName : String,
     val teamHomeGoal: Int,
     val teamGuestName: String,
-    val teamGuestGoal: Int
+    val teamGuestGoal: Int,
+    val played: Int,
+    val matchDate: String? = null,
+    val stadium: String? = null,
 ): Parcelable
