@@ -8,7 +8,11 @@ import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.glushko.sportcommunity.R
@@ -19,6 +23,7 @@ import com.glushko.sportcommunity.databinding.HeaderNavigationDrawerBinding
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -31,26 +36,37 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
+    private lateinit var toggle: ActionBarDrawerToggle
+
+    private val destinationWithBack = listOf(R.id.detailMatchFragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val toggle = ActionBarDrawerToggle(
-            this,
-            binding.drawerLayout,
-            binding.toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        binding.drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+        setupToolbar()
+        setupDrawerToggle()
+
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         binding.bottomNav.setupWithNavController(navController)
+        binding.bottomNav.setOnItemReselectedListener {item ->
+            val selectedMenuItemNavGraph = navController.graph.findNode(item.itemId) as? NavGraph?
+            selectedMenuItemNavGraph?.let { menuGraph ->
+                navController.popBackStack(menuGraph.startDestinationId, false)
+            }
+        }
+        navController.addOnDestinationChangedListener { t, destination, _ ->
+            Timber.d("Пришло в addOnDestinationChangedListener = ${destination.id}")
+            Timber.d("Пришло в addOnDestinationChangedListener = ${t.getBackStackEntry(destination.id).destination.label}")
+            if(destination.id in destinationWithBack){
+                showBackButton(true)
+            }else{
+                showBackButton(false)
+            }
+        }
 
 
         setupObservers()
@@ -62,6 +78,58 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.close()
             true
         }
+    }
+
+
+    private fun setupToolbar(){
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setHomeButtonEnabled(true)
+    }
+
+    private fun setupDrawerToggle() {
+        toggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        toggle.toolbarNavigationClickListener = View.OnClickListener {
+            if (toggle.isDrawerIndicatorEnabled) {
+                binding.drawerLayout.openDrawer(GravityCompat.START)
+            } else {
+                onBackPressed()
+            }
+        }
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+    }
+
+    private fun showBackButton(isBack: Boolean) {
+        toggle.isDrawerIndicatorEnabled = !isBack
+        supportActionBar?.setDisplayHomeAsUpEnabled(isBack)
+        toggle.syncState()
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            val fm: FragmentManager = supportFragmentManager
+            if (fm.backStackEntryCount > 0) {
+                fm.popBackStack()
+            } else {
+                super.onBackPressed()
+            }
+            showBackButton(false)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun setupObservers() {
