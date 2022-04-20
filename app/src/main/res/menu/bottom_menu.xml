@@ -11,7 +11,7 @@
         android:title="@string/bottom_tittle__results" />
 
     <item
-        android:id="@+id/tournamentTableFragment"
+        android:id="@+id/nav_graph_table"
         android:icon="@drawable/ic_tournament_table"
         android:title="@string/bottom_tittle__tournament_table" />
 </menu>

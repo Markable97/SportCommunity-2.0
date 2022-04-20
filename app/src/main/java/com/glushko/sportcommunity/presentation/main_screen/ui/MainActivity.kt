@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
 
     private val destinationWithBack = listOf(R.id.detailMatchFragment)
 
+    private var isClearBackStack = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
@@ -59,12 +61,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
         navController.addOnDestinationChangedListener { t, destination, _ ->
-            Timber.d("Пришло в addOnDestinationChangedListener = ${destination.id}")
-            Timber.d("Пришло в addOnDestinationChangedListener = ${t.getBackStackEntry(destination.id).destination.label}")
+            Timber.d("Пришло в addOnDestinationChangedListener = ${destination.id} parent = ${destination.parent?.startDestinationId}")
             if(destination.id in destinationWithBack){
                 showBackButton(true)
             }else{
                 showBackButton(false)
+            }
+            if(isClearBackStack){
+                isClearBackStack = !isClearBackStack
+                destination.parent?.startDestinationId?.let {startDestination ->
+                    if(startDestination != destination.id){
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo(R.id.calendarFragment, false)
+                            .build()
+
+                        navController.navigate(startDestination, null, navOptions)
+                    }
+                }
             }
         }
 
@@ -76,10 +89,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.chooseDivision(it.itemId)
             binding.toolbar.title = it.title
             binding.drawerLayout.close()
+            isClearBackStack = true
             true
         }
     }
-
 
     private fun setupToolbar(){
         setSupportActionBar(binding.toolbar)
@@ -169,6 +182,11 @@ class MainActivity : AppCompatActivity() {
             menu.add(Menu.NONE/*groupId*/, division.id, index, division.name).isCheckable = true
         }
         binding.navigationView.invalidate()
+        val firstItem = binding.navigationView.menu.getItem(0)
+        firstItem.isChecked = true
+        isClearBackStack = true
+        viewModel.chooseDivision(firstItem.itemId)
+        binding.toolbar.title = firstItem.title
     }
 
     override fun onDestroy() {
