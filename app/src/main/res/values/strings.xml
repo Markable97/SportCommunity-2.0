@@ -8,6 +8,8 @@
     <string name="bottom_tittle__calendar">Календарь</string>
     <string name="bottom_tittle__results">Результаты</string>
     <string name="bottom_tittle__tournament_table">Таблица</string>
+    <string name="error_network_default">Ошибка сервера</string>
+    <string name="error_network_connection">Ошибка сети</string>
 
 
 </resources>

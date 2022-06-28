@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 navController.popBackStack(menuGraph.startDestinationId, false)
             }
         }
-        navController.addOnDestinationChangedListener { t, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             Timber.d("Пришло в addOnDestinationChangedListener = ${destination.id} parent = ${destination.parent?.startDestinationId}")
             if(destination.id in destinationWithBack){
                 showBackButton(true)
