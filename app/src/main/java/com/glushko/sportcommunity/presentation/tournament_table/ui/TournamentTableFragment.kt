@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.tournament_table.model.TournamentTableDisplayData
@@ -114,8 +116,15 @@ class TournamentTableFragment : BaseFragment() {
         Row(modifier = Modifier
             .border(1.dp, Color.LightGray)
             .fillMaxWidth()
-            .wrapContentHeight(),
-            verticalAlignment = Alignment.CenterVertically){
+            .wrapContentHeight()
+            .clickable(
+                onClick = {
+                    findNavController().navigate(TournamentTableFragmentDirections.actionTournamentTableFragmentToTeamFragment(teamName = team.teamName))
+                }
+            ),
+            verticalAlignment = Alignment.CenterVertically,
+
+        ){
             TableCell(modifier = modifierOther, value = num.toString())
             TableCellIMage(modifier = modifierOther, value = team.teamName)
             TableCell(modifier = modifier, value = team.teamName)

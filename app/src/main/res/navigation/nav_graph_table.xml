@@ -9,6 +9,18 @@
         android:id="@+id/tournamentTableFragment"
         android:name="com.glushko.sportcommunity.presentation.tournament_table.ui.TournamentTableFragment"
         android:label="fragment_tournament_table"
-        tools:layout="@layout/fragment_tournament_table" />
+        tools:layout="@layout/fragment_tournament_table" >
+        <action
+            android:id="@+id/action_tournamentTableFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.glushko.sportcommunity.presentation.team.ui.TeamFragment"
+        android:label="TeamFragment" >
+        <argument
+            android:name="teamName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

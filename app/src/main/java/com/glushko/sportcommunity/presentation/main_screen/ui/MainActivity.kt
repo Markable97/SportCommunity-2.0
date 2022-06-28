@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
@@ -38,7 +39,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val destinationWithBack = listOf(R.id.detailMatchFragment)
+    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment)
+    private val destinationWithNotBottomBar = listOf(R.id.teamFragment)
+
+
+    private var backupTitle: String = ""
 
     private var isClearBackStack = false
 
@@ -48,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupToolbar()
         setupDrawerToggle()
-
+        setupObservers()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -67,6 +72,9 @@ class MainActivity : AppCompatActivity() {
             }else{
                 showBackButton(false)
             }
+
+            binding.bottomNav.isVisible = destination.id !in destinationWithNotBottomBar
+
             if(isClearBackStack){
                 isClearBackStack = !isClearBackStack
                 destination.parent?.startDestinationId?.let {startDestination ->
@@ -81,17 +89,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-        setupObservers()
-
         binding.navigationView.setNavigationItemSelectedListener {
             Timber.d("Клик по боковой менюшки id=${it.itemId}  title=${it.title} ")
             viewModel.chooseDivision(it.itemId)
-            binding.toolbar.title = it.title
+            backupTitle = it.title.toString()
+            setToolbarTitle(it.title.toString())
             binding.drawerLayout.close()
             isClearBackStack = true
             true
         }
+    }
+
+    fun setToolbarTitle(title: String){
+        binding.toolbar.title = title
     }
 
     private fun setupToolbar(){
@@ -136,6 +146,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 super.onBackPressed()
             }
+            setToolbarTitle(backupTitle)
             showBackButton(false)
         }
     }
@@ -186,7 +197,8 @@ class MainActivity : AppCompatActivity() {
         firstItem.isChecked = true
         isClearBackStack = true
         viewModel.chooseDivision(firstItem.itemId)
-        binding.toolbar.title = firstItem.title
+        backupTitle = firstItem.title.toString()
+        setToolbarTitle(backupTitle)
     }
 
     override fun onDestroy() {
