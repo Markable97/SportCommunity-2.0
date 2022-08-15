@@ -7,6 +7,7 @@ import com.glushko.sportcommunity.data.matches.network.ResponseFootballMatches
 import com.glushko.sportcommunity.data.teams.network.ResponseFootballTeams
 import com.glushko.sportcommunity.data.tournament_table.network.ResponseTournamentTableFootball
 import io.reactivex.Single
+import retrofit2.Response
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -31,7 +32,7 @@ interface ApiService {
     }
 
     @POST(GET_FOOTBALL_LEAGUES)
-    fun getFootballLeagues(): Single<ResponseFootballLeagues>
+    suspend fun getFootballLeagues(): Response<ResponseFootballLeagues>
 
     @FormUrlEncoded
     @POST(GET_FOOTBALL_DIVISIONS)

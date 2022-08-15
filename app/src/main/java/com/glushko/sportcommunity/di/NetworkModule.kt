@@ -1,11 +1,15 @@
 package com.glushko.sportcommunity.di
 
+import android.content.Context
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.util.Constants.BASE_URL
+import com.glushko.sportcommunity.util.NetworkUtils
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,10 +40,15 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        val gson = GsonBuilder()
+    fun provideGson(): Gson {
+        return GsonBuilder()
             .setLenient()
             .create()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BASE_URL)
@@ -53,5 +62,13 @@ class NetworkModule {
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
+
+
+    @Singleton
+    @Provides
+    fun provideNetworkUtil(retrofit: Retrofit, @ApplicationContext appContext: Context): NetworkUtils {
+        return NetworkUtils(retrofit, appContext)
+    }
+
 
 }

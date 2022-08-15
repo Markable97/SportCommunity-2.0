@@ -22,6 +22,8 @@ import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayD
 import com.glushko.sportcommunity.databinding.ActivityMainBinding
 import com.glushko.sportcommunity.databinding.HeaderNavigationDrawerBinding
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
+import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
         get() = _binding!!
+
+    private val bindingHeader: HeaderNavigationDrawerBinding
+        get() = HeaderNavigationDrawerBinding.bind(binding.navigationView.getHeaderView(0))
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -54,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         setupToolbar()
         setupDrawerToggle()
         setupObservers()
+        setupListener()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -97,6 +103,17 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.close()
             isClearBackStack = true
             true
+        }
+    }
+
+    private fun setupListener() {
+        bindingHeader.run {
+            btnRetry.setOnClickListener {
+                viewModel.getLeagues()
+                it.isVisible = false
+                textLeagueName.isVisible = true
+                spinnerLeagues.isVisible = true
+            }
         }
     }
 
@@ -159,9 +176,24 @@ class MainActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.apply {
             liveDataLeagues.observe(this@MainActivity){
-                initSpinnerLeagues(it)
+                when(it){
+                    is Resource.Error -> {
+                        toast(this@MainActivity, it.error!!.message ?: "")
+                        renderRetryHeader()
+                    }
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        initSpinnerLeagues(it.data!!)
+                    }
+                }
             }
         }
+    }
+
+    private fun renderRetryHeader() = bindingHeader.run {
+        textLeagueName.isVisible = false
+        spinnerLeagues.isVisible = false
+        btnRetry.isVisible = true
     }
 
     private fun initSpinnerLeagues(leagues: List<LeaguesDisplayData>) {
