@@ -20,10 +20,19 @@ class TournamentTableViewModel @Inject constructor(
     private val _liveDataTable: MutableLiveData<Resource<List<TournamentTableDisplayData>>> = MutableLiveData()
     val liveDataTable: LiveData<Resource<List<TournamentTableDisplayData>>> = _liveDataTable
 
-    fun getTournamentTable(divisionId: Int){
-        viewModelScope.launch {
-            _liveDataTable.postValue(Resource.Loading())
-            _liveDataTable.postValue(tournamentTableRepository.getTournamentTable(divisionId = divisionId))
+    private var divisionId: Int? = null
+
+    fun init(divisionId: Int){
+        this.divisionId = divisionId
+        getTournamentTable()
+    }
+
+    fun getTournamentTable(){
+        divisionId?.let {
+            viewModelScope.launch {
+                _liveDataTable.postValue(Resource.Loading())
+                _liveDataTable.postValue(tournamentTableRepository.getTournamentTable(divisionId = it))
+            }
         }
     }
 

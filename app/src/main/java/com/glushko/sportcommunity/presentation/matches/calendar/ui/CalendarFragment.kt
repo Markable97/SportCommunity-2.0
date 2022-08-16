@@ -24,8 +24,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
+import com.glushko.sportcommunity.presentation.core.DoSomething
+import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
 import com.glushko.sportcommunity.presentation.matches.calendar.vm.CalendarViewModel
+import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -52,17 +55,42 @@ class CalendarFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner){
             Timber.d("Пришел новый дивизион = $it")
-            viewModel.getCalendar(it)
+            viewModel.init(it)
         }
     }
 
     @Composable
-    fun ScreenCalendar(){
-        val response by viewModel.liveDataCalendar.observeAsState(emptyList())
+    private fun ScreenCalendar(){
+        val response by viewModel.liveDataCalendar.observeAsState(Resource.Empty())
+        CreateScreen(response = response)
+
+    }
+    @Composable
+    private fun CreateScreen(response: Resource<List<MatchFootballDisplayData>>){
+        Column {
+            when(response){
+                is Resource.Empty -> {}
+                is Resource.Error -> {
+                    DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
+                        viewModel.getCalendar()
+                    }
+                }
+                is Resource.Loading -> {
+                    Loader()
+                }
+                is Resource.Success -> {
+                    CalendarList(matches = response.data!!)
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun CalendarList(matches: List<MatchFootballDisplayData>){
         LazyColumn(modifier = Modifier
             .fillMaxSize()
             .background(Color.White)){
-            items(response){match ->
+            items(matches){match ->
                 CardMatch(match, findNavController())
             }
         }

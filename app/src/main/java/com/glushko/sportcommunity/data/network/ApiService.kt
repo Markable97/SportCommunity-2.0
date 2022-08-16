@@ -48,11 +48,11 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST(GET_FOOTBALL_MATCHES_DIVISION)
-    fun getFootballMatchesDivision(@FieldMap params: Map<String, String>): Single<ResponseFootballMatches>
+    suspend fun getFootballMatchesDivision(@FieldMap params: Map<String, String>): Response<ResponseFootballMatches>
 
     @FormUrlEncoded
     @POST(GET_FOOTBALL_MATCHES_CALENDAR_DIVISION)
-    fun getFootballMatchesCalendarDivision(@FieldMap params: Map<String, String>): Single<ResponseFootballMatches>
+    suspend fun getFootballMatchesCalendarDivision(@FieldMap params: Map<String, String>): Response<ResponseFootballMatches>
 
     @FormUrlEncoded
     @POST(GET_PLAYERS_IN_MATCH)

@@ -47,7 +47,7 @@ class TournamentTableFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner){
             Timber.d("Пришел новый дивизион = $it")
-            viewModel.getTournamentTable(it)
+            viewModel.init(it)
         }
     }
     override fun onCreateView(
@@ -78,7 +78,7 @@ class TournamentTableFragment : BaseFragment() {
                 is Resource.Error -> {
                     Timber.e(response.error?.message)
                     DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
-                        viewModel.getTournamentTable(1)
+                        viewModel.getTournamentTable()
                     }
                 }
                 is Resource.Loading -> {

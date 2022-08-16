@@ -28,9 +28,12 @@ import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
+import com.glushko.sportcommunity.presentation.core.DoSomething
+import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
 import com.glushko.sportcommunity.presentation.matches.results.vm.ResultsViewModel
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -57,20 +60,42 @@ class ResultsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner) {
             Timber.d("Пришел новый дивизион = $it")
-            viewModel.getResults(it)
+            viewModel.init(it)
         }
     }
 
     @Composable
-    fun ScreenResult() {
-        val response by viewModel.liveDataResults.observeAsState(emptyList())
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)){
-            items(response){match ->
-                CardMatch(match, findNavController())
+    private fun ScreenResult() {
+        val response by viewModel.liveDataResults.observeAsState(Resource.Empty())
+        CreateScreen(response = response)
+    }
+    @Composable
+    private fun CreateScreen(response: Resource<List<MatchFootballDisplayData>>){
+        when(response){
+            is Resource.Empty -> {}
+            is Resource.Error -> {
+                DoSomething(message = response.error?.message?:"", textButton = "Повторить") {
+                    viewModel.getResults()
+                }
+            }
+            is Resource.Loading -> {
+                Loader()
+            }
+            is Resource.Success -> {
+                ResultsList(response.data!!)
             }
         }
+    }
+
+     @Composable
+    private fun ResultsList(matches: List<MatchFootballDisplayData>) {
+         LazyColumn(modifier = Modifier
+             .fillMaxSize()
+             .background(Color.White)){
+             items(matches){match ->
+                 CardMatch(match, findNavController())
+             }
+         }
     }
 }
 @Composable
