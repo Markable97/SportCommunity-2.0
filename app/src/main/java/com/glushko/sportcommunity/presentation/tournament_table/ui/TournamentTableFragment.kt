@@ -30,8 +30,11 @@ import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.tournament_table.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.presentation.BaseFragment
+import com.glushko.sportcommunity.presentation.core.DoSomething
+import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.tournament_table.vm.TournamentTableViewModel
 import com.glushko.sportcommunity.util.Constants.BASE_URL_IMAGE
+import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -56,16 +59,37 @@ class TournamentTableFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 Surface(color = MaterialTheme.colors.background) {
-                    ScreenTournamentTable(viewModel)
+                    ScreenTournamentTable()
                 }
             }
         }
     }
 
     @Composable
-    fun ScreenTournamentTable(model: TournamentTableViewModel){
-        val response: List<TournamentTableDisplayData> by model.liveDataTable.observeAsState(emptyList())
-        CreateTable(response)
+    fun ScreenTournamentTable(){
+        val response: Resource<List<TournamentTableDisplayData>> by viewModel.liveDataTable.observeAsState(Resource.Empty())
+        CreateScreen(response)
+    }
+
+    @Composable
+    private fun CreateScreen(response: Resource<List<TournamentTableDisplayData>>) {
+        Column() {
+            when(response){
+                is Resource.Error -> {
+                    Timber.e(response.error?.message)
+                    DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
+                        viewModel.getTournamentTable(1)
+                    }
+                }
+                is Resource.Loading -> {
+                    Loader()
+                }
+                is Resource.Success -> {
+                    CreateTable(response = response.data!!)
+                }
+                is Resource.Empty -> {}
+            }
+        }
     }
 
     @Composable
@@ -119,7 +143,11 @@ class TournamentTableFragment : BaseFragment() {
             .wrapContentHeight()
             .clickable(
                 onClick = {
-                    findNavController().navigate(TournamentTableFragmentDirections.actionTournamentTableFragmentToTeamFragment(teamName = team.teamName))
+                    findNavController().navigate(
+                        TournamentTableFragmentDirections.actionTournamentTableFragmentToTeamFragment(
+                            teamName = team.teamName
+                        )
+                    )
                 }
             ),
             verticalAlignment = Alignment.CenterVertically,

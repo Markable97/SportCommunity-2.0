@@ -44,7 +44,7 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST(GET_TOURNAMENT_TABLE_FOOTBALL)
-    fun getTournamentTableFootball(@FieldMap params: Map<String, String>): Single<ResponseTournamentTableFootball>
+    suspend fun getTournamentTableFootball(@FieldMap params: Map<String, String>): Response<ResponseTournamentTableFootball>
 
     @FormUrlEncoded
     @POST(GET_FOOTBALL_MATCHES_DIVISION)
