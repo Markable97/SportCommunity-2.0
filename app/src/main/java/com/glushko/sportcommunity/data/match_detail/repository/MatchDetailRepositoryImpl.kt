@@ -6,6 +6,8 @@ import com.glushko.sportcommunity.data.match_detail.network.ResponsePlayersInMat
 import com.glushko.sportcommunity.data.match_detail.network.toModel
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.domain.repository.match_detail.MatchDetailRepository
+import com.glushko.sportcommunity.util.NetworkUtils
+import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.components.SingletonComponent
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,11 +16,18 @@ import it.czerwinski.android.hilt.annotations.BoundTo
 import javax.inject.Inject
 
 @BoundTo(supertype = MatchDetailRepository::class, component = SingletonComponent::class)
-class MatchDetailRepositoryImpl @Inject constructor(private val api: ApiService): MatchDetailRepository {
-    override fun getMatchDetail(matchId: Long): Single<List<PlayerDisplayData>> {
-        return api.getPlayersInMatch(ResponsePlayersInMatch.createMap(matchId))
-            .subscribeOn(Schedulers.io())
-            .map { it.toModel() }
-            .observeOn(AndroidSchedulers.mainThread())
+class MatchDetailRepositoryImpl @Inject constructor(
+    private val api: ApiService,
+    private val networkUtils: NetworkUtils
+    ): MatchDetailRepository {
+    override suspend fun getMatchDetail(matchId: Long): Resource<List<PlayerDisplayData>> {
+        val response = networkUtils.getResponse {
+            api.getPlayersInMatch(ResponsePlayersInMatch.createMap(matchId))
+        }
+        return if (response is Resource.Success){
+            Resource.Success(response.data!!.toModel())
+        } else {
+            Resource.Error(error = response.error)
+        }
     }
 }

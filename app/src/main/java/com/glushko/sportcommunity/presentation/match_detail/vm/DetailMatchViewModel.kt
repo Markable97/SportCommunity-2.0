@@ -2,27 +2,27 @@ package com.glushko.sportcommunity.presentation.match_detail.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.match_detail.model.PlayerDisplayData
 import com.glushko.sportcommunity.domain.repository.match_detail.MatchDetailRepository
 import com.glushko.sportcommunity.presentation.BaseViewModel
+import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailMatchViewModel @Inject constructor(private val matchDetailRepository: MatchDetailRepository): BaseViewModel() {
 
-    private val _liveDataPlayersInMatch: MutableLiveData<List<PlayerDisplayData>> = MutableLiveData()
-    val liveDataPlayersInMatch: LiveData<List<PlayerDisplayData>> = _liveDataPlayersInMatch
+    private val _liveDataPlayersInMatch: MutableLiveData<Resource<List<PlayerDisplayData>>> = MutableLiveData()
+    val liveDataPlayersInMatch: LiveData<Resource<List<PlayerDisplayData>>> = _liveDataPlayersInMatch
 
     fun getPlayersInMatch(matchId: Long){
-        disposable.add(
-            matchDetailRepository.getMatchDetail(matchId).subscribe({
-                _liveDataPlayersInMatch.postValue(it)
-            }, {
-                Timber.e("getPlayersInMatch ${it.message}")
-            })
-        )
+        viewModelScope.launch {
+            _liveDataPlayersInMatch.postValue(Resource.Loading())
+            _liveDataPlayersInMatch.postValue(matchDetailRepository.getMatchDetail(matchId))
+        }
     }
 
 }

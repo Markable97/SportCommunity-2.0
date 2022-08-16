@@ -31,8 +31,11 @@ import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.match_detail.model.PlayerDisplayData
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.core.DoSomething
+import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.match_detail.vm.DetailMatchViewModel
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -46,7 +49,7 @@ class DetailMatchFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         Timber.d("Матч инфо = $match")
         viewModel.getPlayersInMatch(match.matchId)
         return ComposeView(requireContext()).apply {
@@ -58,10 +61,29 @@ class DetailMatchFragment: Fragment() {
 
     @Composable
     fun DetailMatchMainScreen(){
-        val playersInMatch by viewModel.liveDataPlayersInMatch.observeAsState(initial = emptyList())
+        val response by viewModel.liveDataPlayersInMatch.observeAsState(Resource.Empty())
+        CreateScreen(response = response)
+    }
+
+    @Composable
+    private fun CreateScreen(response: Resource<List<PlayerDisplayData>>){
         Column {
             UpperCardMatch(match)
-            ActionsTeams(match, playersInMatch)
+            when(response){
+                is Resource.Empty -> {}
+                is Resource.Error -> {
+                    DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
+                    viewModel.getPlayersInMatch(match.matchId)
+                }
+                }
+                is Resource.Loading -> {
+                    Loader()
+                }
+                is Resource.Success -> {
+                    ActionsTeams(match, response.data!!)
+                }
+            }
+
         }
     }
 

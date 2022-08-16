@@ -56,6 +56,6 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST(GET_PLAYERS_IN_MATCH)
-    fun getPlayersInMatch(@FieldMap param: Map<String, String>): Single<ResponsePlayersInMatch>
+    suspend fun getPlayersInMatch(@FieldMap param: Map<String, String>): Response<ResponsePlayersInMatch>
 
 }
