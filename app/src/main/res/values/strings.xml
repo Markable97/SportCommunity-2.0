@@ -7,9 +7,12 @@
     <!-- Tittle item bottom navigate -->
     <string name="bottom_tittle__calendar">Календарь</string>
     <string name="bottom_tittle__results">Результаты</string>
-    <string name="bottom_tittle__tournament_table">Таблица</string>
+    <string name="bottom_tittle__tournament">Турнир</string>
+    <string name="bottom_tittle__events">События</string>
+
     <string name="error_network_default">Ошибка сервера</string>
     <string name="error_network_connection">Ошибка сети</string>
+
     <string name="team_btn_results">Результаты</string>
     <string name="team_btn_tournament_table">Таблица</string>
     <string name="team_btn_squad">Состав</string>
