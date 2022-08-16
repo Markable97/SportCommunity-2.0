@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
-import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
-import com.glushko.sportcommunity.presentation.BaseViewModel
+import com.glushko.sportcommunity.presentation.base.BaseViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

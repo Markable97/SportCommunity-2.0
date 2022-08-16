@@ -9,9 +9,6 @@ import com.glushko.sportcommunity.domain.repository.matches.MatchesRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.components.SingletonComponent
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import it.czerwinski.android.hilt.annotations.BoundTo
 import javax.inject.Inject
 

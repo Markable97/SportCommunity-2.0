@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation
+package com.glushko.sportcommunity.presentation.base
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels

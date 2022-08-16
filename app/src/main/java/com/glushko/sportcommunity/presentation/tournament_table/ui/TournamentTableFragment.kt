@@ -29,7 +29,7 @@ import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.tournament_table.model.TournamentTableDisplayData
-import com.glushko.sportcommunity.presentation.BaseFragment
+import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.tournament_table.vm.TournamentTableViewModel
