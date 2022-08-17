@@ -22,6 +22,14 @@
         android:id="@+id/eventsFragment"
         android:name="com.glushko.sportcommunity.presentation.events.EventsFragment"
         tools:layout="@layout/fragment_events" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.glushko.sportcommunity.presentation.about.AboutFragment"
+        android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.glushko.sportcommunity.presentation.setting.SettingFragment"
+        android:label="SettingFragment" />
 
 
 </navigation>

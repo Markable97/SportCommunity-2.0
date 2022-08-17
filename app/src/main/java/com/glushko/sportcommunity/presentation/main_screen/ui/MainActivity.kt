@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.glushko.sportcommunity.R
@@ -51,12 +52,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment)
-    private val destinationWithNotBottomBar = listOf(R.id.teamFragment)
-
-    private var divisionsIdPrev: Int? = null
-
+    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment)
+    private val destinationWithNotBottomBar = listOf(R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment)
+    private val destinationDrawerMenu = listOf(R.id.aboutFragment, R.id.settingFragment)
     private var backupTitle: String = ""
+    private var backupItem: Int? = null
 
     private var isClearBackStack = false
 
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 destination.parent?.startDestinationId?.let {startDestination ->
                     if(startDestination != destination.id){
                         val navOptions = NavOptions.Builder()
-                            .setPopUpTo(R.id.calendarFragment, false)
+                            .setPopUpTo(R.id.eventsFragment, false)
                             .build()
 
                         navController.navigate(startDestination, null, navOptions)
@@ -106,8 +106,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigationView.setNavigationItemSelectedListener {
             Timber.d("Клик по боковой менюшки id=${it.itemId}  title=${it.title} ")
-            viewModel.chooseDivision(it.itemId)
-            backupTitle = it.title.toString()
+            if (it.itemId in destinationDrawerMenu){
+                navController.navigate(it.itemId)
+            } else {
+                viewModel.chooseDivision(it.itemId)
+                backupTitle = it.title.toString()
+                backupItem = it.itemId
+            }
             setToolbarTitle(it.title.toString())
             binding.drawerLayout.close()
             isClearBackStack = true
@@ -117,8 +122,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupDrawerMenu() {
         binding.navigationView.menu.apply {
-            add(Menu.CATEGORY_SYSTEM/*groupId*/, MENU_ITEM_SETTING, MENU_ORDER_FOOTER, "Настройки").isCheckable = true
-            add(Menu.CATEGORY_SYSTEM/*groupId*/, MENU_ITEM_ABOUT, MENU_ORDER_FOOTER + 1, "О приложении").isCheckable = true
+            add(Menu.CATEGORY_SYSTEM/*groupId*/, R.id.settingFragment, MENU_ORDER_FOOTER, getString(R.string.menu_setting)).isCheckable = true
+            add(Menu.CATEGORY_SYSTEM/*groupId*/, R.id.aboutFragment, MENU_ORDER_FOOTER + 1, getString(R.string.menu_about)).isCheckable = true
         }
     }
 
@@ -180,6 +185,9 @@ class MainActivity : AppCompatActivity() {
                 super.onBackPressed()
             }
             setToolbarTitle(backupTitle)
+            backupItem?.let {
+                binding.navigationView.setCheckedItem(it)
+            }
             showBackButton(false)
         }
     }

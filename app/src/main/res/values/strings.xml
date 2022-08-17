@@ -10,6 +10,10 @@
     <string name="bottom_tittle__tournament">Турнир</string>
     <string name="bottom_tittle__events">События</string>
 
+    <string name="menu_setting">Настройки</string>
+    <string name="menu_about">О приложении</string>
+
+
     <string name="error_network_default">Ошибка сервера</string>
     <string name="error_network_connection">Ошибка сети</string>
 
