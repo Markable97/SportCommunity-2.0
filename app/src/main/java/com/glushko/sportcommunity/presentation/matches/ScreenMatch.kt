@@ -41,7 +41,7 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
         Column{
             ResultHeader(match.matchDate?:"14 Сентября 2022 (ПН)") //TODO проверит как приходит с сервера
             ResultFooter(match.stadium?:"Не назначено") //TODO проверит как приходит с сервера
-            Row(modifier = Modifier.padding(bottom = 10.dp)) {
+            Row(modifier = Modifier.padding(bottom = 10.dp, end = 10.dp)) {
                 val modifierTour= Modifier
                     .weight(0.1f)
                 TextTour(tour = match.tour,modifier = modifierTour)
@@ -63,10 +63,7 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
                 }
                 if(match.played==1){
                     Score(match.teamHomeGoal, match.teamGuestGoal,modifierScore)
-                }/*else{
-                    DateAndStadium(match.matchDate?:"", match.stadium?:"",modifierScore)
-                }*/
-                Spacer(modifier = Modifier.width(10.dp))
+                }
             }
         }
     }
@@ -120,7 +117,6 @@ fun Team(teamName: String){
     ) {
         AsyncImage(
             model = "${Constants.BASE_URL_IMAGE}$teamName.png",
-//                placeholder = painterResource(R.drawable.ic_healing_black_36dp),
             error = painterResource(R.drawable.ic_healing_black_36dp),
             contentDescription = null,
             contentScale = ContentScale.Crop
