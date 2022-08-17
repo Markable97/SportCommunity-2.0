@@ -24,7 +24,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
@@ -32,7 +31,6 @@ import com.glushko.sportcommunity.data.tournament_table.model.TournamentTableDis
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
-import com.glushko.sportcommunity.presentation.tournament_table.vm.TournamentTableViewModel
 import com.glushko.sportcommunity.util.Constants.BASE_URL_IMAGE
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,15 +39,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class TournamentTableFragment : BaseFragment() {
 
-    private val viewModel: TournamentTableViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner){
-            Timber.d("Пришел новый дивизион = $it")
-            viewModel.init(it)
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,7 +57,7 @@ class TournamentTableFragment : BaseFragment() {
 
     @Composable
     fun ScreenTournamentTable(){
-        val response: Resource<List<TournamentTableDisplayData>> by viewModel.liveDataTable.observeAsState(Resource.Empty())
+        val response: Resource<List<TournamentTableDisplayData>> by mainViewModel.liveDataTable.observeAsState(Resource.Empty())
         CreateScreen(response)
     }
 
@@ -78,7 +68,7 @@ class TournamentTableFragment : BaseFragment() {
                 is Resource.Error -> {
                     Timber.e(response.error?.message)
                     DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
-                        viewModel.getTournamentTable()
+                        mainViewModel.getTournamentTableRetry()
                     }
                 }
                 is Resource.Loading -> {
@@ -94,6 +84,7 @@ class TournamentTableFragment : BaseFragment() {
 
     @Composable
     fun CreateTable(response: List<TournamentTableDisplayData>) {
+        Timber.d("Отрисовка")
         Column(modifier = Modifier.fillMaxHeight()) {
             val modifierName = Modifier
                 .wrapContentHeight()

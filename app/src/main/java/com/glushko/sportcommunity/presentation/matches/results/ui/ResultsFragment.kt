@@ -17,22 +17,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
-import com.glushko.sportcommunity.presentation.matches.results.vm.ResultsViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
 class ResultsFragment : BaseFragment() {
-
-    private val viewModel: ResultsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,13 +48,12 @@ class ResultsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner) {
             Timber.d("Пришел новый дивизион = $it")
-            viewModel.init(it)
         }
     }
 
     @Composable
     private fun ScreenResult() {
-        val response by viewModel.liveDataResults.observeAsState(Resource.Empty())
+        val response by mainViewModel.liveDataResults.observeAsState(Resource.Empty())
         CreateScreen(response = response)
     }
     @Composable
@@ -67,7 +62,7 @@ class ResultsFragment : BaseFragment() {
             is Resource.Empty -> {}
             is Resource.Error -> {
                 DoSomething(message = response.error?.message?:"", textButton = "Повторить") {
-                    viewModel.getResults()
+                    mainViewModel.getResultsRetry()
                 }
             }
             is Resource.Loading -> {

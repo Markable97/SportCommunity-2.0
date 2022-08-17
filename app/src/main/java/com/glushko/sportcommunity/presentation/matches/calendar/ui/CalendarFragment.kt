@@ -20,22 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
-import com.glushko.sportcommunity.presentation.matches.calendar.vm.CalendarViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
 class CalendarFragment : BaseFragment() {
-
-    private val viewModel: CalendarViewModel by viewModels()
     
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,13 +51,12 @@ class CalendarFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner){
             Timber.d("Пришел новый дивизион = $it")
-            viewModel.init(it)
         }
     }
 
     @Composable
     private fun ScreenCalendar(){
-        val response by viewModel.liveDataCalendar.observeAsState(Resource.Empty())
+        val response by mainViewModel.liveDataCalendar.observeAsState(Resource.Empty())
         CreateScreen(response = response)
 
     }
@@ -72,7 +67,7 @@ class CalendarFragment : BaseFragment() {
                 is Resource.Empty -> {}
                 is Resource.Error -> {
                     DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
-                        viewModel.getCalendar()
+                        mainViewModel.getCalendarRetry()
                     }
                 }
                 is Resource.Loading -> {

@@ -254,6 +254,7 @@ class MainActivity : AppCompatActivity() {
         isClearBackStack = true
         viewModel.chooseDivision(firstItem.itemId)
         backupTitle = firstItem.title.toString()
+        backupItem = firstItem.itemId
         setToolbarTitle(backupTitle)
     }
 
