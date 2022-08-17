@@ -28,7 +28,7 @@ import com.glushko.sportcommunity.util.Constants
 fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
     Card(
         modifier = Modifier
-            .height(100.dp)
+            .height(150.dp)
             .padding(5.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Color.LightGray,
@@ -38,14 +38,14 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
             }
         }
     ){
-        Column(
-        )
-        {
-            ResultHeader(match.divisionName)
-            Row() {
+        Column{
+            ResultHeader(match.matchDate?:"14 Сентября 2022 (ПН)") //TODO проверит как приходит с сервера
+            ResultFooter(match.stadium?:"Не назначено") //TODO проверит как приходит с сервера
+            Row(modifier = Modifier.padding(bottom = 10.dp)) {
                 val modifierTour= Modifier
                     .weight(0.1f)
                 TextTour(tour = match.tour,modifier = modifierTour)
+                Spacer(modifier = Modifier.width(10.dp))
                 val modifierTeams= if(match.played == 1){
                     Modifier
                         .weight(0.8f)
@@ -63,9 +63,10 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
                 }
                 if(match.played==1){
                     Score(match.teamHomeGoal, match.teamGuestGoal,modifierScore)
-                }else{
+                }/*else{
                     DateAndStadium(match.matchDate?:"", match.stadium?:"",modifierScore)
-                }
+                }*/
+                Spacer(modifier = Modifier.width(10.dp))
             }
         }
     }
@@ -73,13 +74,22 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
 
 
 @Composable
-fun ResultHeader(divisionName: String) {
-    Column {
-        Text(text = divisionName,
+fun ResultHeader(date: String) {
+    Column(modifier = Modifier.padding(top = 5.dp)) {
+        Text(text = date,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
         )
-        Divider(color = Color.Gray)
+    }
+}
+
+@Composable
+fun ResultFooter(stadium: String) {
+    Row() {
+        Text(text = stadium,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -95,7 +105,9 @@ fun TextTour(tour: Int, modifier: Modifier){
 fun Teams(teamHome: String, teamGuest: String, modifier: Modifier){
     Column(modifier = modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
         Team(teamName = teamHome)
-        Spacer(modifier = Modifier.height(1.dp))
+        Divider(color = Color.Gray, modifier = Modifier
+            .fillMaxWidth()
+            .height(1.dp))
         Team(teamName = teamGuest)
     }
 }
@@ -113,6 +125,8 @@ fun Team(teamName: String){
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
-        Text(text = teamName, modifier = Modifier.fillMaxWidth().padding(start = 5.dp), textAlign = TextAlign.Start)
+        Text(text = teamName, modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 5.dp), textAlign = TextAlign.Start)
     }
 }
