@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/SportCommunity/app/src/main/res/drawable-v24/goal.xml" value="0.176" />
+        <entry key="..\:/Project/SportCommunity/app/src/main/res/drawable-v24/red_yellow_card.xml" value="0.1" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.2055" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/drawable/ic_calendar.xml" value="0.1785" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/drawable/ic_healing_black_36dp.xml" value="0.2455" />
@@ -16,10 +17,14 @@
         <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/fragment_calendar.xml" value="0.3625" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/fragment_container.xml" value="0.3625" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/fragment_events.xml" value="0.3614583333333333" />
+        <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/fragment_match_detail.xml" value="0.23076923076923078" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/fragment_results.xml" value="0.3625" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/fragment_setting.xml" value="0.5" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/fragment_tournament_table.xml" value="0.3625" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/header_navigation_drawer.xml" value="0.3625" />
+        <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/item_match_action_guest.xml" value="0.3138888888888889" />
+        <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/item_match_action_home.xml" value="0.22" />
+        <entry key="..\:/Project/SportCommunity/app/src/main/res/layout/item_match_segment.xml" value="0.3138888888888889" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/menu/bottom_menu.xml" value="0.3569230769230769" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/menu/drawer_main_menu.xml" value="0.3625" />
         <entry key="..\:/Project/SportCommunity/app/src/main/res/menu/menu_drawer.xml" value="0.3138888888888889" />

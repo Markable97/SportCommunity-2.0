@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="drawer_item_selected">#172196f3</color>
+    <color name="image_match_segments">#ff6161</color>
+    <color name="divider">#a6a6a6</color>
 </resources>

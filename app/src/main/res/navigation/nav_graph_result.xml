@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/detailMatchFragment"
-        android:name="com.glushko.sportcommunity.presentation.match_detail.ui.DetailMatchFragment"
+        android:name="com.glushko.sportcommunity.presentation.match_detail.ui.MatchDetailFragment"
         android:label="DetailMatchFragment">
 
         <argument

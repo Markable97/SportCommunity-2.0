@@ -23,5 +23,9 @@
     <string name="team_btn_calendar">Календарь</string>
     <string name="retry">Повторить</string>
 
+    <string name="match_detail_segment_start">Матч начался</string>
+    <string name="match_detail_segment_break">Перерыв</string>
+    <string name="match_detail_segment_end">Матч окончен</string>
+
 
 </resources>

@@ -31,8 +31,11 @@ import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.match_detail.model.PlayerDisplayData
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.databinding.FragmentMatchDetailBinding
+import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
+import com.glushko.sportcommunity.presentation.match_detail.adapters.MatchDetailAdapter
 import com.glushko.sportcommunity.presentation.match_detail.vm.DetailMatchViewModel
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
@@ -40,29 +43,71 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class DetailMatchFragment: Fragment() {
+class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.fragment_match_detail) {
     private val viewModel: DetailMatchViewModel by viewModels()
-    private val args: DetailMatchFragmentArgs by navArgs()
+    private val args: MatchDetailFragmentArgs by navArgs()
     private val match: MatchFootballDisplayData by lazy { args.match }
 
-    override fun onCreateView(
+    private val adapterMatchDetail by lazy { MatchDetailAdapter() }
+
+    override fun initBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        container: ViewGroup?
+    ): FragmentMatchDetailBinding = FragmentMatchDetailBinding.inflate(inflater)
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         Timber.d("Матч инфо = $match")
         viewModel.getPlayersInMatch(match.matchId)
-        return ComposeView(requireContext()).apply {
-            setContent {
-                DetailMatchMainScreen()
+        setupRecycler()
+        setupObservers()
+        renderCompose()
+    }
+
+    private fun setupRecycler() {
+        binding.recyclerMatchActionDetail.adapter = adapterMatchDetail
+    }
+
+    private fun renderCompose() {
+        binding.composableMatchHeader.setContent {
+            DetailMatchMainScreen()
+        }
+    }
+
+    private fun setupObservers() = viewModel.run {
+        liveDataPlayersInMatch.observe(viewLifecycleOwner){
+            Timber.d("Live data $it")
+            when(it){
+                is Resource.Empty -> {}
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    adapterMatchDetail.submitList(it.data!!)
+                }
             }
         }
     }
 
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        Timber.d("Матч инфо = $match")
+//        viewModel.getPlayersInMatch(match.matchId)
+//        return ComposeView(requireContext()).apply {
+//            setContent {
+//                DetailMatchMainScreen()
+//            }
+//        }
+//    }
+
     @Composable
     fun DetailMatchMainScreen(){
-        val response by viewModel.liveDataPlayersInMatch.observeAsState(Resource.Empty())
-        CreateScreen(response = response)
+        UpperCardMatch(match = match)
+//        val response by viewModel.liveDataPlayersInMatch.observeAsState(Resource.Empty())
+//        CreateScreen(response = response)
     }
 
     @Composable

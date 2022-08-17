@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.data.match_detail.model
 
 import com.google.gson.annotations.SerializedName
+import kotlin.random.Random
 
 data class Player(
     @SerializedName("player_id") val playerId: Long,
@@ -33,5 +34,6 @@ fun Player.toModel() = PlayerDisplayData(
     assist = assist,
     yellow = yellow,
     red = red,
-    ownGoal = ownGoal
+    ownGoal = ownGoal,
+    timeAction = Random.nextInt(1, 60)
 )
