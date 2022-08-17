@@ -47,13 +47,6 @@ class CalendarFragment : BaseFragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner){
-            Timber.d("Пришел новый дивизион = $it")
-        }
-    }
-
     @Composable
     private fun ScreenCalendar(){
         val response by mainViewModel.liveDataCalendar.observeAsState(Resource.Empty())

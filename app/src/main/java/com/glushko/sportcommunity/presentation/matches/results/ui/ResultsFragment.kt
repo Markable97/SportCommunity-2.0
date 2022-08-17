@@ -44,13 +44,6 @@ class ResultsFragment : BaseFragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mainViewModel.liveDataSelectedDivision.observe(viewLifecycleOwner) {
-            Timber.d("Пришел новый дивизион = $it")
-        }
-    }
-
     @Composable
     private fun ScreenResult() {
         val response by mainViewModel.liveDataResults.observeAsState(Resource.Empty())
