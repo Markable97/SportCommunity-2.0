@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -31,6 +32,12 @@ import timber.log.Timber
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    companion object{
+        private const val MENU_ITEM_SETTING = -1
+        private const val MENU_ITEM_ABOUT = -2
+        private const val MENU_ORDER_FOOTER = 50
+    }
+
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
         get() = _binding!!
@@ -47,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment)
     private val destinationWithNotBottomBar = listOf(R.id.teamFragment)
 
+    private var divisionsIdPrev: Int? = null
 
     private var backupTitle: String = ""
 
@@ -59,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         setupToolbar()
         setupDrawerToggle()
         setupObservers()
+        setupDrawerMenu()
         setupListener()
 
         val navHostFragment =
@@ -103,6 +112,13 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.close()
             isClearBackStack = true
             true
+        }
+    }
+
+    private fun setupDrawerMenu() {
+        binding.navigationView.menu.apply {
+            add(Menu.CATEGORY_SYSTEM/*groupId*/, MENU_ITEM_SETTING, MENU_ORDER_FOOTER, "Настройки").isCheckable = true
+            add(Menu.CATEGORY_SYSTEM/*groupId*/, MENU_ITEM_ABOUT, MENU_ORDER_FOOTER + 1, "О приложении").isCheckable = true
         }
     }
 
@@ -220,9 +236,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun addMenuItemInNavMenuDrawer(divisions: List<DivisionDisplayData>) {
         val menu = binding.navigationView.menu
-        menu.clear()
+        menu.removeGroup(Menu.FIRST)
         divisions.forEachIndexed { index, division ->
-            menu.add(Menu.NONE/*groupId*/, division.id, index, division.name).isCheckable = true
+            menu.add(Menu.FIRST/*groupId*/, division.id, index, division.name).isCheckable = true
         }
         binding.navigationView.invalidate()
         val firstItem = binding.navigationView.menu.getItem(0)
