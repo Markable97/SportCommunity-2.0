@@ -16,6 +16,7 @@
             android:gravity="center"
             android:text="@string/tournament__tournament_table"
             android:textAppearance="@style/text24_sp_bold"
+            android:foreground="?selectableItemBackground"
             app:drawableEndCompat="@drawable/ic_arrow_right"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

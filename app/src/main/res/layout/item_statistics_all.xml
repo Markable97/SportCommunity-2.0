@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:foreground="?selectableItemBackground"
             android:text="@string/tournament__statistics"
             android:textAppearance="@style/text24_sp_bold"
             app:drawableEndCompat="@drawable/ic_arrow_right"

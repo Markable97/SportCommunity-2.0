@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_tournament"
-    app:startDestination="@id/tournamentTableFragment">
+    app:startDestination="@id/tournamentFragment">
 
     <fragment
         android:id="@+id/tournamentTableFragment"
@@ -22,5 +22,10 @@
             android:name="teamName"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/tournamentFragment"
+        android:name="com.glushko.sportcommunity.presentation.tournament.TournamentFragment"
+        android:label="TournamentFragment"
+        tools:layout="@layout/fragment_tournament"/>
 
 </navigation>

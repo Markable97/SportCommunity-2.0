@@ -4,7 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:weightSum="100"
-    android:padding="5dp"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp"
+    android:paddingTop="5dp"
     android:orientation="horizontal">
 
     <TextView
@@ -16,6 +18,7 @@
         tools:text="1"
         />
     <ImageView
+        android:id="@+id/imageTeam"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
