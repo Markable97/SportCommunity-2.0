@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="5dp"
+    android:orientation="vertical">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        layout="@layout/item_tournament_table"/>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        layout="@layout/item_statistics_all"/>
+
+    <Button
+        android:id="@+id/buttonGames"
+        style="@style/Widget.Button.OutlinedButton.Big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/tournament__games"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:id="@+id/buttonMedia"
+        style="@style/Widget.Button.OutlinedButton.Big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/tournament__media"
+        android:textColor="@color/black"/>
+    <Button
+        android:id="@+id/buttonKdk"
+        style="@style/Widget.Button.OutlinedButton.Big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/tournament__kdk"
+        android:textColor="@color/black"/>
+
+</LinearLayout>

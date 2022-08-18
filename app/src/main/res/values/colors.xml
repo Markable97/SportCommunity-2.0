@@ -14,4 +14,5 @@
     <color name="divider">#a6a6a6</color>
     <color name="bg_tournament_table_header">#80D1D1D1</color>
     <color name="dot_default">#BFBFBF</color>
+    <color name="outline_button">#BFBFBF</color>
 </resources>

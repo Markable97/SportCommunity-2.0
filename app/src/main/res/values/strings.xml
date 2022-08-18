@@ -38,11 +38,15 @@
 
     <string name="tournament__tournament_table">Турнирная таблица</string>
     <string name="tournament__statistics">Стастистика игроков</string>
+    <string name="tournament__games">Игры</string>
+    <string name="tournament__media">Медия</string>
+    <string name="tournament__kdk">КДК</string>
 
     <string name="statistics_goals">Голы</string>
     <string name="statistics_assist">Передачи</string>
     <string name="statistics_yellow">Желтые карточки</string>
     <string name="statistics_red">Красные карточки</string>
+
 
 
 </resources>
