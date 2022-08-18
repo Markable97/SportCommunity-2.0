@@ -37,6 +37,12 @@
     <string name="label_points">О</string>
 
     <string name="tournament__tournament_table">Турнирная таблица</string>
+    <string name="tournament__statistics">Стастистика игроков</string>
+
+    <string name="statistics_goals">Голы</string>
+    <string name="statistics_assist">Передачи</string>
+    <string name="statistics_yellow">Желтые карточки</string>
+    <string name="statistics_red">Красные карточки</string>
 
 
 </resources>

@@ -30,6 +30,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="text20_sp_medium" parent="FontMedium">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="text24_sp_bold" parent="FontBold">
         <item name="android:textSize">24sp</item>
     </style>

@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextViewTableRow">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textAppearance">@style/text14_sp_regular</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="TextViewTableHeader">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textAppearance">@style/text16_sp_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="CardViewTournament">
         <item name="contentPadding">5dp</item>
         <item name="cardCornerRadius">20dp</item>
         <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="TabLayout.Dots" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="elevation">0dp</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabBackground">@drawable/selector_dot_tab</item>
+        <item name="tabGravity">center</item>
+        <item name="tabIndicatorHeight">0dp</item>
     </style>
 </resources>
