@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:weightSum="100"
+    android:background="@drawable/bg_tournament_table_header"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textPosition"
+        android:layout_weight="7.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_position"
+        />
+
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textTeamName"
+        android:layout_weight="47.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_name"
+        />
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textGames"
+        android:layout_weight="7.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_games"
+        />
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textWins"
+        android:layout_weight="7.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_wins"
+        />
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textDraws"
+        android:layout_weight="7.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_draws"
+        />
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textLoses"
+        android:layout_weight="7.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_loses"
+        />
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textDifferences"
+        android:layout_weight="7.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_differences"
+        />
+    <TextView
+        style="@style/TextViewTableHeader"
+        android:id="@+id/textPoints"
+        android:layout_weight="7.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_points"
+        />
+
+
+</LinearLayout>

@@ -27,5 +27,16 @@
     <string name="match_detail_segment_break">Перерыв</string>
     <string name="match_detail_segment_end">Матч окончен</string>
 
+    <string name="label_position">№</string>
+    <string name="label_name">Команда</string>
+    <string name="label_games">И</string>
+    <string name="label_wins">В</string>
+    <string name="label_draws">Н</string>
+    <string name="label_loses">П</string>
+    <string name="label_differences">РМ</string>
+    <string name="label_points">О</string>
+
+    <string name="tournament__tournament_table">Турнирная таблица</string>
+
 
 </resources>
