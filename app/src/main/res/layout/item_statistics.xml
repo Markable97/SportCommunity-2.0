@@ -16,19 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Голы" />
-
-    <View
-        android:id="@+id/dividerTop"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/textSubtitle"/>
     <include
         android:id="@+id/itemFirst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dividerTop"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/textSubtitle"
         layout="@layout/item_statistics_row"/>
     <include
         android:id="@+id/itemSecond"
@@ -42,12 +35,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/itemSecond"
         layout="@layout/item_statistics_row"/>
-    <View
-        android:id="@+id/dividerBottom"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/itemThird"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

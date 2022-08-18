@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
-import com.glushko.sportcommunity.data.tournament_table.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
 import com.glushko.sportcommunity.domain.repository.matches.MatchesRepository
-import com.glushko.sportcommunity.domain.repository.tournament_table.TournamentTableRepository
+import com.glushko.sportcommunity.domain.repository.tournament.TournamentRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository,
-    private val tournamentTableRepository: TournamentTableRepository,
+    private val tournamentRepository: TournamentRepository,
     private val matchesRepository: MatchesRepository
 ): BaseViewModel() {
 
@@ -30,6 +31,9 @@ class MainViewModel @Inject constructor(
 
     private val _liveDataTable: MutableLiveData<Resource<List<TournamentTableDisplayData>>> = MutableLiveData()
     val liveDataTable: LiveData<Resource<List<TournamentTableDisplayData>>> = _liveDataTable
+
+    private val _liveDataStatistics: MutableLiveData<Resource<List<PlayerStatisticAdapter>>> = MutableLiveData()
+    val liveDataStatistics: LiveData<Resource<List<PlayerStatisticAdapter>>> = _liveDataStatistics
 
     private val _liveDataCalendar: MutableLiveData<Resource<List<MatchFootballDisplayData>>> = MutableLiveData()
     val liveDataCalendar: LiveData<Resource<List<MatchFootballDisplayData>>> = _liveDataCalendar
@@ -55,7 +59,13 @@ class MainViewModel @Inject constructor(
             getCalendar(divisionId)
             getResults(divisionId)
             getTournamentTable(divisionId)
+            getStatistics(divisionId)
         }
+    }
+
+    private fun getStatistics(divisionId: Int) {
+        _liveDataStatistics.postValue(Resource.Loading())
+        _liveDataStatistics.postValue(tournamentRepository.getStatistics(divisionId))
     }
 
     private suspend fun getCalendar(divisionId: Int){
@@ -70,7 +80,7 @@ class MainViewModel @Inject constructor(
 
     private suspend fun getTournamentTable(divisionId: Int){
         _liveDataTable.postValue(Resource.Loading())
-        _liveDataTable.postValue(tournamentTableRepository.getTournamentTable(divisionId = divisionId))
+        _liveDataTable.postValue(tournamentRepository.getTournamentTable(divisionId = divisionId))
     }
 
     fun getCalendarRetry(){

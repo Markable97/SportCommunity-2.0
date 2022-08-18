@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import coil.load
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.tournament_table.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.databinding.FragmentTournamentBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
+import com.glushko.sportcommunity.presentation.tournament.adapters.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.toast
+import com.google.android.material.tabs.TabLayoutMediator
 
 class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fragment_tournament) {
 
@@ -44,6 +48,18 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
                 }
             }
         }
+        liveDataStatistics.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Empty -> {}
+                is Resource.Error -> {
+                    toast(requireContext(), it.error!!.message ?: "")
+                }
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    renderStatistics(it.data!!)
+                }
+            }
+        }
     }
 
     private fun setupListener() {
@@ -51,6 +67,9 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
 
         }
         binding.itemTournamentTable.textTitle.setOnClickListener {
+
+        }
+        binding.itemStatistics.textTitle.setOnClickListener {
 
         }
     }
@@ -74,6 +93,12 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
             textDifferences.text = row.scCon.toString()
             textPoints.text = row.points.toString()
         }
+    }
+
+    private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
+        viewPagerStatistics.adapter = StatisticsTournamentAdapter().apply { submitList(data) }
+        viewPagerStatistics.addOnPageSelectedListener {  }
+        TabLayoutMediator(tabLayoutStatistics, viewPagerStatistics) { _, _ -> }.attach()
     }
 
 }

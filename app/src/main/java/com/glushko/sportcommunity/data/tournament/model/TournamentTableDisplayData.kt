@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.tournament_table.model
+package com.glushko.sportcommunity.data.tournament.model
 
 data class TournamentTableDisplayData(
     val teamId: Int,

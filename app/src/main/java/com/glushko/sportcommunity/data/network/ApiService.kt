@@ -1,12 +1,9 @@
 package com.glushko.sportcommunity.data.network
 
-import com.glushko.sportcommunity.data.main_screen.division.network.ResponseFootballDivisions
 import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.data.match_detail.network.ResponsePlayersInMatch
 import com.glushko.sportcommunity.data.matches.network.ResponseFootballMatches
-import com.glushko.sportcommunity.data.teams.network.ResponseFootballTeams
-import com.glushko.sportcommunity.data.tournament_table.network.ResponseTournamentTableFootball
-import io.reactivex.Single
+import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
 import retrofit2.Response
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
