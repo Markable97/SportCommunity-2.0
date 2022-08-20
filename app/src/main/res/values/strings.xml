@@ -47,6 +47,14 @@
     <string name="statistics_yellow">Желтые карточки</string>
     <string name="statistics_red">Красные карточки</string>
 
+    <string name="team_leader">Лидеры</string>
+    <string name="team_squad">Состав</string>
+    <string name="team_games">Игры</string>
+    <string name="team_history">История</string>
+    <string name="team_media">Медия</string>
+
+
+
 
 
 </resources>
