@@ -21,11 +21,21 @@
         <argument
             android:name="teamName"
             app:argType="string" />
+        <argument
+            android:name="teamId"
+            app:argType="integer"/>
     </fragment>
     <fragment
         android:id="@+id/tournamentFragment"
         android:name="com.glushko.sportcommunity.presentation.tournament.TournamentFragment"
         android:label="TournamentFragment"
-        tools:layout="@layout/fragment_tournament"/>
+        tools:layout="@layout/fragment_tournament">
+        <action
+            android:id="@+id/action_tournamentFragment_to_tournamentTableFragment"
+            app:destination="@id/tournamentTableFragment" />
+        <action
+            android:id="@+id/action_tournamentFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
 
 </navigation>

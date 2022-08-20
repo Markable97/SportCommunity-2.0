@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.data.tournament.model
 
 data class TournamentTableDisplayData(
+    val position: Int,
     val teamId: Int,
     val teamName: String,
     val games: Int,

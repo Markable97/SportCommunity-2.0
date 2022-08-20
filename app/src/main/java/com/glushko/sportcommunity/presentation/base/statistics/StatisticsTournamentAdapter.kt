@@ -1,19 +1,19 @@
-package com.glushko.sportcommunity.presentation.tournament.adapters
+package com.glushko.sportcommunity.presentation.base.statistics
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
-import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
 import com.glushko.sportcommunity.data.statistics.model.title
 import com.glushko.sportcommunity.databinding.ItemStatisticsBinding
 import com.glushko.sportcommunity.databinding.ItemStatisticsRowBinding
 
-class StatisticsTournamentAdapter: ListAdapter<PlayerStatisticAdapter, StatisticsTournamentAdapter.ViewHolder>(DiffCallback) {
+class StatisticsTournamentAdapter: ListAdapter<PlayerStatisticAdapter, StatisticsTournamentAdapter.ViewHolder>(
+    DiffCallback
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

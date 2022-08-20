@@ -18,7 +18,7 @@ data class TournamentTableFootball(
     val points: Int
 )
 
-fun TournamentTableFootball.toModel() = TournamentTableDisplayData(
+fun TournamentTableFootball.toModel(positionTable: Int) = TournamentTableDisplayData(
     teamId = teamId.toInt(),
     teamName = teamName,
     games = games,
@@ -26,5 +26,6 @@ fun TournamentTableFootball.toModel() = TournamentTableDisplayData(
     draws = draws,
     losses = losses,
     scCon = scCon,
-    points = points
+    points = points,
+    position = positionTable
 )

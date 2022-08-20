@@ -136,7 +136,8 @@ class TournamentTableFragment : BaseFragment() {
                 onClick = {
                     findNavController().navigate(
                         TournamentTableFragmentDirections.actionTournamentTableFragmentToTeamFragment(
-                            teamName = team.teamName
+                            teamName = team.teamName,
+                            teamId = team.teamId
                         )
                     )
                 }

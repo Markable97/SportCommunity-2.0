@@ -1,137 +1,109 @@
 package com.glushko.sportcommunity.presentation.team.ui
 
-import androidx.compose.ui.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.glushko.sportcommunity.R
+import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.databinding.FragmentTeamBinding
+import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
+import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.team.TeamViewModel
+import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
+import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
+import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
-class TeamFragment: Fragment() {
+@AndroidEntryPoint
+class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team) {
 
     private val args: TeamFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        (requireActivity() as? MainActivity)?.setToolbarTitle(args.teamName)
-        return ComposeView(requireContext()).apply {
-            setContent {
-                Surface(color = MaterialTheme.colors.background) {
-                    ScreenTeam()
+    private val viewModel: TeamViewModel by viewModels()
+
+    override fun initBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentTeamBinding {
+        return FragmentTeamBinding.inflate(inflater)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.init(args.teamId)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        setupObservers()
+    }
+
+    private fun initView() = binding.run {
+        (requireActivity() as MainActivity).setToolbarTitle(args.teamName)
+        imageTeam.load("${Constants.BASE_URL_IMAGE}${args.teamName}.png")
+        textTeamName.text = args.teamName
+    }
+
+    private fun setupObservers() = viewModel.run {
+        liveDataTable.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Empty -> {}
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    renderTournamentTable(it.data!!)
+                }
+            }
+        }
+        liveDataStatistics.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Empty -> {}
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    renderStatistics(it.data!!)
                 }
             }
         }
     }
 
-    @Composable
-    private fun ScreenTeam() {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-//            TestElements()
-//            FooterTeam()
-            Button(onClick = { /*TODO*/ }) {
-                
+    private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
+        renderRow(data[0],  itemRowFirst)
+        renderRow(data[1],  itemRowSecond)
+        renderRow(data[2],  itemRowThird)
+        renderRow(data[3],  itemRowFourth)
+    }
+
+    private fun renderRow(row: TournamentTableDisplayData, bindingRow: ItemTournamentTableRowBinding){
+        bindingRow.apply {
+            if (row.teamId == args.teamId) {
+                root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.drawer_item_selected))
+                textTeamName.setTextColor(ContextCompat.getColor(requireContext(), R.color.bg_tournament_table_team_selected))
             }
-            Button(onClick = { /*TODO*/ }) {
-                
-            }
+            textPosition.text = row.position.toString()
+            imageTeam.load("${Constants.BASE_URL_IMAGE}${row.teamName}.png")
+            textTeamName.text = row.teamName
+            textGames.text = row.games.toString()
+            textWins.text = row.wins.toString()
+            textDraws.text = row.draws.toString()
+            textLoses.text = row.losses.toString()
+            textDifferences.text = row.scCon.toString()
+            textPoints.text = row.points.toString()
         }
     }
 
-    @Composable
-    fun TestElements() {
-        Column()
-        {
-            Box(modifier = Modifier
-                .background(Color.Red)
-                .fillMaxWidth()
-                .weight(1f))
-            Box(modifier = Modifier
-                .background(Color.Yellow)
-                .fillMaxWidth()
-                .weight(3f))
-            Box(modifier = Modifier
-                .background(Color.Green)
-                .fillMaxWidth()
-                .weight(2f))
-        }
+    private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
+        viewPagerStatistics.adapter = StatisticsTournamentAdapter().apply { submitList(data) }
+        viewPagerStatistics.addOnPageSelectedListener {  }
+        TabLayoutMediator(tabLayoutStatistics, viewPagerStatistics) { _, _ -> }.attach()
     }
 
-    @Preview
-    @Composable
-    private fun FooterTeam(){
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            ) {
-            Box(modifier = Modifier
-                .height(150.dp)
-                .background(Color.Red)
-                .fillMaxWidth()){
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .padding(16.dp, 0.dp),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Text(text = getString(R.string.team_btn_results))
-                }
-            }
-            Box(modifier = Modifier
-                .background(Color.Yellow)
-                .fillMaxWidth()) {
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()) {
-                    Button(
-                        modifier = Modifier
-                            .weight(1F)
-                            .padding(16.dp, 0.dp, 4.dp, 0.dp),
-                        onClick = { /*TODO*/ }
-                    ) {
-                        Text(text = getString(R.string.team_btn_tournament_table))
-                    }
-                    Button(
-                        modifier = Modifier
-                            .weight(1F)
-                            .padding(4.dp, 0.dp, 16.dp, 0.dp),
-                        onClick = { /*TODO*/ }
-                    ) {
-                        Text(text = getString(R.string.team_btn_squad))
-                    }
-                }
-            }
-            Box(modifier = Modifier
-                .background(Color.Green)
-                .fillMaxWidth()) {
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(16.dp, 0.dp),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Text(text = getString(R.string.team_btn_calendar))
-                }
-            }
-        }
-    }
+
 }

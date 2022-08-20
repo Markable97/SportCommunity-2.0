@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?selectableItemBackground"
     android:weightSum="100"
     android:paddingStart="5dp"
     android:paddingEnd="5dp"
@@ -31,6 +32,7 @@
         android:layout_weight="40"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/text14_sp_medium"
         tools:text="Длинное название"
         />
     <TextView

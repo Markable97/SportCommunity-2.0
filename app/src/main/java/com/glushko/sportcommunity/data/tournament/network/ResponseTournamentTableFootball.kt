@@ -22,4 +22,6 @@ class ResponseTournamentTableFootball(success: Int = 0,
     }
 }
 
-fun ResponseTournamentTableFootball.toModel() = tournamentTable.map { it.toModel() }
+fun ResponseTournamentTableFootball.toModel() = tournamentTable.mapIndexed { position, data ->
+    data.toModel(position + 1)
+}

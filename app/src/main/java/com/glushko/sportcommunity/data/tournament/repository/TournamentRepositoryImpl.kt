@@ -13,13 +13,22 @@ import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.components.SingletonComponent
 import it.czerwinski.android.hilt.annotations.BoundTo
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.random.Random
 
+@Singleton
 @BoundTo(supertype =  TournamentRepository::class, component = SingletonComponent::class)
 class TournamentRepositoryImpl @Inject constructor(
     private val api: ApiService,
     private val networkUtils: NetworkUtils
     ): TournamentRepository {
+
+    companion object {
+        const val COUNT_FOR_TABLE = 4
+    }
+
+    private var tournamentTable = listOf<TournamentTableDisplayData>()
+
     override suspend fun getTournamentTable(
         divisionId: Int,
         seasonId: Int,
@@ -30,13 +39,38 @@ class TournamentRepositoryImpl @Inject constructor(
         }
 
         return if (response is Resource.Success){
-            Resource.Success(response.data!!.toModel())
+            tournamentTable = response.data!!.toModel()
+            Resource.Success(response.data.toModel())
         } else {
             Resource.Error(error = response.error)
         }
     }
 
     override fun getStatistics(divisionId: Int): Resource<List<PlayerStatisticAdapter>> {
+        return Resource.Success(getSamples())
+    }
+
+    override suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>? {
+        val team = tournamentTable.find { it.teamId == teamId }
+        val indexTeam = tournamentTable.indexOf(team)
+        return when {
+            indexTeam < COUNT_FOR_TABLE -> {
+               Resource.Success( tournamentTable.take(COUNT_FOR_TABLE))
+            }
+            tournamentTable.size - COUNT_FOR_TABLE < indexTeam -> {
+                Resource.Success( tournamentTable.takeLast(COUNT_FOR_TABLE))
+            }
+            else -> {
+                val newList = mutableListOf<TournamentTableDisplayData>()
+                for (position in indexTeam - 1 until indexTeam + COUNT_FOR_TABLE){
+                    newList.add(tournamentTable[position])
+                }
+                Resource.Success(newList)
+            }
+        }
+    }
+
+    override suspend fun getStatisticsTeam(teamId: Int): Resource<List<PlayerStatisticAdapter>> {
         return Resource.Success(getSamples())
     }
 

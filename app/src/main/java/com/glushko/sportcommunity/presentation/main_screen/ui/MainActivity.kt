@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment)
+    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment)
     private val destinationWithNotBottomBar = listOf(R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment)
     private val destinationDrawerMenu = listOf(R.id.aboutFragment, R.id.settingFragment)
     private var backupTitle: String = ""

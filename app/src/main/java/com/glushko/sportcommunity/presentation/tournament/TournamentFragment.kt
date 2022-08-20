@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
@@ -13,7 +14,7 @@ import com.glushko.sportcommunity.databinding.FragmentTournamentBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
-import com.glushko.sportcommunity.presentation.tournament.adapters.StatisticsTournamentAdapter
+import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
@@ -67,7 +68,7 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
 
         }
         binding.itemTournamentTable.textTitle.setOnClickListener {
-
+            findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentTableFragment())
         }
         binding.itemStatistics.textTitle.setOnClickListener {
 
@@ -83,6 +84,11 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
 
     private fun renderRow(row: TournamentTableDisplayData, position: Int, bindingRow: ItemTournamentTableRowBinding){
         bindingRow.apply {
+            root.setOnClickListener{
+                findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTeamFragment(
+                    row.teamName, row.teamId
+                ))
+            }
             textPosition.text = position.toString()
             imageTeam.load("${Constants.BASE_URL_IMAGE}${row.teamName}.png")
             textTeamName.text = row.teamName
