@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@id/itemStatistics"
              />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSquad"
             style="@style/Widget.Button.OutlinedButton"
             android:layout_width="0dp"
@@ -84,6 +84,7 @@
             android:textAppearance="@style/text14_sp_regular"
             android:textColor="@color/black"
             android:layout_marginEnd="5dp"
+            android:drawableEnd="@drawable/ic_people"
             app:layout_constraintEnd_toStartOf="@+id/buttonGames"
             app:layout_constraintTop_toBottomOf="@id/itemTournamentTable"
             app:layout_constraintStart_toStartOf="@id/itemTournamentTable"/>
@@ -98,6 +99,7 @@
             android:textAppearance="@style/text14_sp_regular"
             android:textColor="@color/black"
             android:layout_marginStart="5dp"
+            android:drawableEnd="@drawable/ic_ball_soccer_small"
             app:layout_constraintStart_toEndOf="@id/buttonSquad"
             app:layout_constraintTop_toBottomOf="@id/itemTournamentTable"
             app:layout_constraintEnd_toEndOf="@id/itemTournamentTable"/>
@@ -111,6 +113,7 @@
             android:text="@string/team_history"
             android:textAppearance="@style/text14_sp_regular"
             android:textColor="@color/black"
+            android:drawableEnd="@drawable/ic_history"
             app:layout_constraintTop_toBottomOf="@id/buttonSquad"
             app:layout_constraintStart_toStartOf="@id/buttonSquad"
             app:layout_constraintEnd_toEndOf="@id/buttonGames"/>
@@ -125,6 +128,7 @@
             android:text="@string/team_media"
             android:textAppearance="@style/text14_sp_regular"
             android:textColor="@color/black"
+            android:drawableEnd="@drawable/ic_media"
             app:layout_constraintTop_toBottomOf="@id/buttonHistory"
             app:layout_constraintStart_toStartOf="@id/buttonSquad"
             app:layout_constraintEnd_toEndOf="@id/buttonGames"
