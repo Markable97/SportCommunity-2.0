@@ -50,6 +50,10 @@ class TournamentRepositoryImpl @Inject constructor(
         return Resource.Success(getSamples())
     }
 
+    override suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>> {
+        return Resource.Success(getSamplesForStatisticsScreen())
+    }
+
     override suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>? {
         val team = tournamentTable.find { it.teamId == teamId }
         val indexTeam = tournamentTable.indexOf(team)
@@ -73,6 +77,19 @@ class TournamentRepositoryImpl @Inject constructor(
     override suspend fun getStatisticsTeam(teamId: Int): Resource<List<PlayerStatisticAdapter>> {
         return Resource.Success(getSamples())
     }
+
+    private fun getSamplesForStatisticsScreen() = listOf(
+        getPlayer(),
+        getPlayer(),
+        getPlayer(),
+        getPlayer(),
+        getPlayer(),
+        getPlayer(),
+        getPlayer(),
+        getPlayer(),
+        getPlayer(),
+        getPlayer()
+    ).sortedByDescending { it.points }
 
     private fun getSamples() = listOf (
             getForAdapter(TypeStatistics.GOALS),

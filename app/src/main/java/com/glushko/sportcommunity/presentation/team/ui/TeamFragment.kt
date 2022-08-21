@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.glushko.sportcommunity.R
@@ -43,12 +44,25 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         super.onViewCreated(view, savedInstanceState)
         initView()
         setupObservers()
+        setupListeners()
     }
 
     private fun initView() = binding.run {
         (requireActivity() as MainActivity).setToolbarTitle(args.teamName)
         imageTeam.load("${Constants.BASE_URL_IMAGE}${args.teamName}.png")
         textTeamName.text = args.teamName
+    }
+
+    private fun setupListeners() = binding.run {
+        itemStatistics.textTitle.setOnClickListener {
+            findNavController().navigate(
+                TeamFragmentDirections.actionTeamFragmentToStatisticsFragment(
+                    args.teamName,
+                    Constants.OPEN_FROM_TEAM,
+                    args.teamId
+                )
+            )
+        }
     }
 
     private fun setupObservers() = viewModel.run {

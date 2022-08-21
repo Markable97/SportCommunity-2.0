@@ -63,15 +63,18 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
         }
     }
 
-    private fun setupListener() {
-        binding.apply {
-
-        }
-        binding.itemTournamentTable.textTitle.setOnClickListener {
+    private fun setupListener() = binding.run {
+        itemTournamentTable.textTitle.setOnClickListener {
             findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentTableFragment())
         }
-        binding.itemStatistics.textTitle.setOnClickListener {
-
+        itemStatistics.textTitle.setOnClickListener {
+            viewModel.liveDataSelectedDivision.value?.let {divisionId ->
+                findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToStatisticsFragment(
+                    null,
+                    Constants.OPEN_FROM_TOURNAMENT,
+                    divisionId
+                ))
+            }
         }
     }
 

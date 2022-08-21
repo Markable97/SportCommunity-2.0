@@ -13,6 +13,7 @@ import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -52,8 +53,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment)
-    private val destinationWithNotBottomBar = listOf(R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment)
+    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment, R.id.statisticsFragment)
+    private val destinationWithNotBottomBar = listOf(R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment, R.id.statisticsFragment)
     private val destinationDrawerMenu = listOf(R.id.aboutFragment, R.id.settingFragment)
     private var backupTitle: String = ""
     private var backupItem: Int? = null

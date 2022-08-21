@@ -45,9 +45,11 @@
     <string name="statistics_goals">Голы</string>
     <string name="statistics_assist">Передачи</string>
     <string name="statistics_yellow">Желтые карточки</string>
+    <string name="statistics_yellow_short">ЖК</string>
     <string name="statistics_red">Красные карточки</string>
+    <string name="statistics_red_short">КК</string>
 
-    <string name="team_leader">Лидеры</string>
+    <string name="team_leaders">Лидеры</string>
     <string name="team_squad">Состав</string>
     <string name="team_games">Игры</string>
     <string name="team_history">История</string>

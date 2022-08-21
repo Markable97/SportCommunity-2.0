@@ -17,6 +17,7 @@
     <fragment
         android:id="@+id/teamFragment"
         android:name="com.glushko.sportcommunity.presentation.team.ui.TeamFragment"
+        tools:layout="@layout/fragment_team"
         android:label="TeamFragment" >
         <argument
             android:name="teamName"
@@ -24,6 +25,9 @@
         <argument
             android:name="teamId"
             app:argType="integer"/>
+        <action
+            android:id="@+id/action_teamFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
     <fragment
         android:id="@+id/tournamentFragment"
@@ -36,6 +40,28 @@
         <action
             android:id="@+id/action_tournamentFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
+        <action
+            android:id="@+id/action_tournamentFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.glushko.sportcommunity.presentation.statistics.StatisticsFragment"
+        android:label="StatisticsFragment"
+        tools:layout="@layout/fragment_statistics">
+
+        <argument
+            android:name="teamName"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="openFrom"
+            app:argType="integer" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+    </fragment>
+
 
 </navigation>
