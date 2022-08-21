@@ -188,7 +188,6 @@ class MainActivity : AppCompatActivity() {
             backupItem?.let {
                 binding.navigationView.setCheckedItem(it)
             }
-            showBackButton(false)
         }
     }
 
