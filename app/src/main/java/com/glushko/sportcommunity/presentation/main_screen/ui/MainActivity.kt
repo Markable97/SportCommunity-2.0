@@ -9,14 +9,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.glushko.sportcommunity.R
@@ -53,8 +50,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment, R.id.statisticsFragment)
-    private val destinationWithNotBottomBar = listOf(R.id.teamFragment, R.id.aboutFragment, R.id.settingFragment, R.id.statisticsFragment)
+    private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment,
+        R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment, R.id.statisticsFragment,
+        R.id.squadFragment, R.id.squadFragment
+    )
+    private val destinationWithBottomBar = listOf(
+        R.id.eventsFragment, R.id.calendarFragment, R.id.resultsFragment, R.id.tournamentTableFragment
+    )
     private val destinationDrawerMenu = listOf(R.id.aboutFragment, R.id.settingFragment)
     private var backupTitle: String = ""
     private var backupItem: Int? = null
@@ -89,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                 showBackButton(false)
             }
 
-            binding.bottomNav.isVisible = destination.id !in destinationWithNotBottomBar
+            binding.bottomNav.isVisible = destination.id in destinationWithBottomBar
 
             if(isClearBackStack){
                 isClearBackStack = !isClearBackStack
