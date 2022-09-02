@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#8E8E93</color>
+    <color name="gray">#8c8c8c</color>
 
     <color name="drawer_item_selected">#172196f3</color>
     <color name="image_match_segments">#ff6161</color>
