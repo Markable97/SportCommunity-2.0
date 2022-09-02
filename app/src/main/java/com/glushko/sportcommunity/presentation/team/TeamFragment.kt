@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation.team.ui
+package com.glushko.sportcommunity.presentation.team
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,6 @@ import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayDa
 import com.glushko.sportcommunity.databinding.FragmentTeamBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
-import com.glushko.sportcommunity.presentation.team.TeamViewModel
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.util.Constants
@@ -59,6 +58,13 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
                 TeamFragmentDirections.actionTeamFragmentToStatisticsFragment(
                     args.teamName,
                     Constants.OPEN_FROM_TEAM,
+                    args.teamId
+                )
+            )
+        }
+        buttonSquad.setOnClickListener{
+            findNavController().navigate(
+                TeamFragmentDirections.actionTeamFragmentToSquadFragment(
                     args.teamId
                 )
             )
