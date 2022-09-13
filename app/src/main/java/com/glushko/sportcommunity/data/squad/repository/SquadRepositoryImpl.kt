@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.data.squad.repository
 
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.squad.model.SquadPlayer
+import com.glushko.sportcommunity.data.squad.model.toModel
 import com.glushko.sportcommunity.domain.repository.squad.SquadRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
@@ -16,42 +17,13 @@ class SquadRepositoryImpl @Inject constructor(
 ): SquadRepository{
 
     override suspend fun getSquad(teamId: Int): Resource<List<SquadPlayer>> {
-//        val response = networkUtils.getResponse {
-//
-//        }
-        return Resource.Success(getSamples())
+        val response = networkUtils.getResponse {
+            api.getFootballSquad(teamId)
+        }
+        return if (response is Resource.Success){
+            Resource.Success(response.data!!.players.map { it.toModel() })
+        } else {
+            Resource.Error(error = response.error)
+        }
     }
-
-    private fun getSamples() = listOf(
-        SquadPlayer(
-            playerId = 0,
-            playerName = "Глушко 1",
-            amplua = "Вратарь",
-            avatarUrl = ""
-        ),
-        SquadPlayer(
-            playerId = 0,
-            playerName = "Глушко 12",
-            amplua = "Защитник",
-            avatarUrl = ""
-        ),
-        SquadPlayer(
-            playerId = 0,
-            playerName = "Глушко 123",
-            amplua = "Полузащитник",
-            avatarUrl = ""
-        ),
-        SquadPlayer(
-            playerId = 0,
-            playerName = "Глушко 1234",
-            amplua = "Нападающий",
-            avatarUrl = ""
-        ),
-        SquadPlayer(
-            playerId = 0,
-            playerName = "Глушко 12345",
-            amplua = "Нападающий",
-            avatarUrl = ""
-        ),
-    )
 }
