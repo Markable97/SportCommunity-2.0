@@ -5,7 +5,7 @@ import com.glushko.sportcommunity.util.Resource
 import io.reactivex.Single
 
 interface MatchesRepository {
-    suspend fun getResults(divisionId: Int): Resource<List<MatchFootballDisplayData>>
+    fun getResults(): List<MatchFootballDisplayData>
 
-    suspend fun getCalendar(divisionId: Int): Resource<List<MatchFootballDisplayData>>
+    fun getCalendar(): List<MatchFootballDisplayData>
 }

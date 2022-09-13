@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.data.network
 
 import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
+import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.match_detail.network.ResponsePlayersInMatch
 import com.glushko.sportcommunity.data.matches.network.ResponseFootballMatches
 import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
@@ -19,6 +20,7 @@ interface ApiService {
         const val GET_FOOTBALL_MATCHES_DIVISION= "GetFootballMatchesDivision"
         const val GET_FOOTBALL_MATCHES_CALENDAR_DIVISION= "GetFootballMatchesCalendarDivision"
         const val GET_PLAYERS_IN_MATCH = "GetPlayersInMatch"
+        const val GET_MAIN_SCREEN = "MainScreen"
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
         const val PARAM_FOOTBALL_DIVISION_ID = "division_id"
@@ -46,5 +48,9 @@ interface ApiService {
     @FormUrlEncoded
     @POST(GET_PLAYERS_IN_MATCH)
     suspend fun getPlayersInMatch(@FieldMap param: Map<String, String>): Response<ResponsePlayersInMatch>
+
+    @FormUrlEncoded
+    @POST(GET_MAIN_SCREEN)
+    suspend fun getMainScreen(@FieldMap param: Map<String, String>): Response<ResponseMainScreen>
 
 }

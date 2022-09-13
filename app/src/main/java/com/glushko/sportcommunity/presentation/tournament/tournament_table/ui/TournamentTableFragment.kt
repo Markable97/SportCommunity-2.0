@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation.tournament_table.ui
+package com.glushko.sportcommunity.presentation.tournament.tournament_table.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
@@ -31,6 +32,7 @@ import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayDa
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
+import com.glushko.sportcommunity.presentation.tournament.TournamentViewModel
 import com.glushko.sportcommunity.util.Constants.BASE_URL_IMAGE
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +41,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class TournamentTableFragment : BaseFragment() {
 
+    private val viewModel: TournamentViewModel by hiltNavGraphViewModels(R.id.nav_graph_tournament)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,28 +60,15 @@ class TournamentTableFragment : BaseFragment() {
 
     @Composable
     fun ScreenTournamentTable(){
-        val response: Resource<List<TournamentTableDisplayData>> by mainViewModel.liveDataTable.observeAsState(Resource.Empty())
+        val response: List<TournamentTableDisplayData> by viewModel.liveDataTable.observeAsState(
+            emptyList())
         CreateScreen(response)
     }
 
     @Composable
-    private fun CreateScreen(response: Resource<List<TournamentTableDisplayData>>) {
+    private fun CreateScreen(response: List<TournamentTableDisplayData>) {
         Column() {
-            when(response){
-                is Resource.Error -> {
-                    Timber.e(response.error?.message)
-                    DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
-                        mainViewModel.getTournamentTableRetry()
-                    }
-                }
-                is Resource.Loading -> {
-                    Loader()
-                }
-                is Resource.Success -> {
-                    CreateTable(response = response.data!!)
-                }
-                is Resource.Empty -> {}
-            }
+            CreateTable(response = response)
         }
     }
 

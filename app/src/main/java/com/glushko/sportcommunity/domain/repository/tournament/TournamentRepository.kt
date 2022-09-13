@@ -7,8 +7,8 @@ import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayDa
 import com.glushko.sportcommunity.util.Resource
 
 interface TournamentRepository {
-    suspend fun getTournamentTable(divisionId: Int, seasonId: Int = 0, teamId: Long = 0) : Resource<List<TournamentTableDisplayData>>
-    fun getStatistics(divisionId: Int): Resource<List<PlayerStatisticAdapter>>
+    fun getTournamentTable() : List<TournamentTableDisplayData>
+    fun getStatistics(): List<PlayerStatisticAdapter>
     suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>>
     suspend fun getStatisticsTeam(teamId: Int): Resource<List<PlayerStatisticAdapter>>
     suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>?

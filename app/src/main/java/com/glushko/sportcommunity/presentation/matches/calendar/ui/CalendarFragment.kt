@@ -20,19 +20,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
+import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
+import com.glushko.sportcommunity.presentation.matches.calendar.CalendarViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class CalendarFragment : BaseFragment() {
-    
+
+    private val viewModel: CalendarViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,12 +54,12 @@ class CalendarFragment : BaseFragment() {
 
     @Composable
     private fun ScreenCalendar(){
-        val response by mainViewModel.liveDataCalendar.observeAsState(Resource.Empty())
+        val response by mainViewModel.liveDataMainScreen.observeAsState(Resource.Empty())
         CreateScreen(response = response)
 
     }
     @Composable
-    private fun CreateScreen(response: Resource<List<MatchFootballDisplayData>>){
+    private fun CreateScreen(response: Resource<ResponseMainScreen>){
         Column {
             when(response){
                 is Resource.Empty -> {}
@@ -67,7 +72,9 @@ class CalendarFragment : BaseFragment() {
                     Loader()
                 }
                 is Resource.Success -> {
-                    CalendarList(matches = response.data!!)
+                    viewModel.init()
+                    val calendar by viewModel.liveDataCalendar.observeAsState(emptyList())
+                    CalendarList(matches = calendar)
                 }
             }
         }

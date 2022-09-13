@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.glushko.sportcommunity.R
@@ -20,10 +22,13 @@ import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.toast
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fragment_tournament) {
 
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModelMain: MainViewModel by activityViewModels()
+    private val viewModel: TournamentViewModel by hiltNavGraphViewModels(R.id.nav_graph_tournament)
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -36,29 +41,27 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
         setupListener()
     }
 
-    private fun setupObservers() = viewModel.run {
-        liveDataTable.observe(viewLifecycleOwner){
-            when(it){
-                is Resource.Empty -> {}
-                is Resource.Error -> {
-                    toast(requireContext(), it.error!!.message ?: "")
-                }
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    renderTournamentTable(it.data!!)
+    private fun setupObservers() {
+        viewModelMain.run {
+            liveDataMainScreen.observe(viewLifecycleOwner){
+                when(it){
+                    is Resource.Empty -> {}
+                    is Resource.Error -> {
+                        toast(requireContext(), it.error!!.message ?: "")
+                    }
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        viewModel.init()
+                    }
                 }
             }
         }
-        liveDataStatistics.observe(viewLifecycleOwner){
-            when(it){
-                is Resource.Empty -> {}
-                is Resource.Error -> {
-                    toast(requireContext(), it.error!!.message ?: "")
-                }
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    renderStatistics(it.data!!)
-                }
+        viewModel.run {
+            liveDataTable.observe(viewLifecycleOwner){
+                renderTournamentTable(it)
+            }
+            liveDataStatistics.observe(viewLifecycleOwner){
+                renderStatistics(it)
             }
         }
     }
@@ -68,7 +71,7 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
             findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentTableFragment())
         }
         itemStatistics.textTitle.setOnClickListener {
-            viewModel.liveDataSelectedDivision.value?.let {divisionId ->
+            viewModelMain.liveDataSelectedDivision.value?.let { divisionId ->
                 findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToStatisticsFragment(
                     null,
                     Constants.OPEN_FROM_TOURNAMENT,

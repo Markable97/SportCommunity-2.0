@@ -17,18 +17,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
+import com.glushko.sportcommunity.presentation.matches.results.ResultsViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class ResultsFragment : BaseFragment() {
+
+    private val viewModel: ResultsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,11 +50,11 @@ class ResultsFragment : BaseFragment() {
 
     @Composable
     private fun ScreenResult() {
-        val response by mainViewModel.liveDataResults.observeAsState(Resource.Empty())
+        val response by mainViewModel.liveDataMainScreen.observeAsState(Resource.Empty())
         CreateScreen(response = response)
     }
     @Composable
-    private fun CreateScreen(response: Resource<List<MatchFootballDisplayData>>){
+    private fun CreateScreen(response: Resource<ResponseMainScreen>){
         when(response){
             is Resource.Empty -> {}
             is Resource.Error -> {
@@ -62,7 +66,9 @@ class ResultsFragment : BaseFragment() {
                 Loader()
             }
             is Resource.Success -> {
-                ResultsList(response.data!!)
+                viewModel.init()
+                val matches by viewModel.liveDataResults.observeAsState(emptyList())
+                ResultsList(matches)
             }
         }
     }

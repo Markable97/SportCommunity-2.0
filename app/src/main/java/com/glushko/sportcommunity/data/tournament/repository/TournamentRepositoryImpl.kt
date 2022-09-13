@@ -7,6 +7,7 @@ import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.network.toModel
+import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
 import com.glushko.sportcommunity.domain.repository.tournament.TournamentRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
@@ -16,38 +17,23 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random
 
-@Singleton
 @BoundTo(supertype =  TournamentRepository::class, component = SingletonComponent::class)
 class TournamentRepositoryImpl @Inject constructor(
     private val api: ApiService,
-    private val networkUtils: NetworkUtils
+    private val networkUtils: NetworkUtils,
+    private val mainRepository: MainRepository
     ): TournamentRepository {
 
     companion object {
         const val COUNT_FOR_TABLE = 4
     }
 
-    private var tournamentTable = listOf<TournamentTableDisplayData>()
-
-    override suspend fun getTournamentTable(
-        divisionId: Int,
-        seasonId: Int,
-        teamId: Long
-    ): Resource<List<TournamentTableDisplayData>> {
-        val response = networkUtils.getResponse {
-            api.getTournamentTableFootball(ResponseTournamentTableFootball.createMap(division_id = divisionId, season_id = 0, team_id = 0))
-        }
-
-        return if (response is Resource.Success){
-            tournamentTable = response.data!!.toModel()
-            Resource.Success(response.data.toModel())
-        } else {
-            Resource.Error(error = response.error)
-        }
+    override fun getTournamentTable(): List<TournamentTableDisplayData> {
+        return mainRepository.tournamentTable
     }
 
-    override fun getStatistics(divisionId: Int): Resource<List<PlayerStatisticAdapter>> {
-        return Resource.Success(getSamples())
+    override fun getStatistics(): List<PlayerStatisticAdapter>{
+        return mainRepository.statistics
     }
 
     override suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>> {
@@ -55,6 +41,7 @@ class TournamentRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>? {
+        val tournamentTable = mainRepository.tournamentTable
         val team = tournamentTable.find { it.teamId == teamId }
         val indexTeam = tournamentTable.indexOf(team)
         return when {

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
+import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
@@ -18,9 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
-    private val tournamentRepository: TournamentRepository,
-    private val matchesRepository: MatchesRepository
+    private val mainRepository: MainRepository
 ): BaseViewModel() {
 
     private val _liveDataLeagues: MutableLiveData<Resource<List<LeaguesDisplayData>>> = MutableLiveData()
@@ -29,17 +28,8 @@ class MainViewModel @Inject constructor(
     private val _liveDataSelectedDivision: MutableLiveData<Int> = MutableLiveData()
     val liveDataSelectedDivision: LiveData<Int> = _liveDataSelectedDivision
 
-    private val _liveDataTable: MutableLiveData<Resource<List<TournamentTableDisplayData>>> = MutableLiveData()
-    val liveDataTable: LiveData<Resource<List<TournamentTableDisplayData>>> = _liveDataTable
-
-    private val _liveDataStatistics: MutableLiveData<Resource<List<PlayerStatisticAdapter>>> = MutableLiveData()
-    val liveDataStatistics: LiveData<Resource<List<PlayerStatisticAdapter>>> = _liveDataStatistics
-
-    private val _liveDataCalendar: MutableLiveData<Resource<List<MatchFootballDisplayData>>> = MutableLiveData()
-    val liveDataCalendar: LiveData<Resource<List<MatchFootballDisplayData>>> = _liveDataCalendar
-
-    private val _liveDataResults: MutableLiveData<Resource<List<MatchFootballDisplayData>>> = MutableLiveData()
-    val liveDataResults: LiveData<Resource<List<MatchFootballDisplayData>>> = _liveDataResults
+    private val _liveDataMainScreen = MutableLiveData<Resource<ResponseMainScreen>>()
+    val liveDataMainScreen: LiveData<Resource<ResponseMainScreen>> = _liveDataMainScreen
 
     init {
         getLeagues()
@@ -56,56 +46,20 @@ class MainViewModel @Inject constructor(
     fun chooseDivision(divisionId: Int){
         _liveDataSelectedDivision.value = divisionId
         viewModelScope.launch {
-            getCalendar(divisionId)
-            getResults(divisionId)
-            getTournamentTable(divisionId)
-            getStatistics(divisionId)
+            _liveDataMainScreen.postValue(Resource.Loading())
+            _liveDataMainScreen.postValue(mainRepository.getMainScreen(divisionId))
         }
-    }
-
-    private fun getStatistics(divisionId: Int) {
-        _liveDataStatistics.postValue(Resource.Loading())
-        _liveDataStatistics.postValue(tournamentRepository.getStatistics(divisionId))
-    }
-
-    private suspend fun getCalendar(divisionId: Int){
-        _liveDataCalendar.postValue(Resource.Loading())
-        _liveDataCalendar.postValue(matchesRepository.getCalendar(divisionId))
-    }
-
-    private suspend fun getResults(divisionId: Int){
-        _liveDataResults.postValue(Resource.Loading())
-        _liveDataResults.postValue(matchesRepository.getResults(divisionId))
-    }
-
-    private suspend fun getTournamentTable(divisionId: Int){
-        _liveDataTable.postValue(Resource.Loading())
-        _liveDataTable.postValue(tournamentRepository.getTournamentTable(divisionId = divisionId))
     }
 
     fun getCalendarRetry(){
         _liveDataSelectedDivision.value?.let {
-            viewModelScope.launch{
-                _liveDataCalendar.postValue(Resource.Loading())
-                _liveDataCalendar.postValue(matchesRepository.getCalendar(it))
-            }
-        }
-    }
-
-    fun getTournamentTableRetry(){
-        _liveDataSelectedDivision.value?.let {
-            viewModelScope.launch{
-                getTournamentTable(it)
-            }
+            chooseDivision(it)
         }
     }
 
     fun getResultsRetry(){
         _liveDataSelectedDivision.value?.let {
-            viewModelScope.launch {
-                _liveDataResults.postValue(Resource.Loading())
-                _liveDataResults.postValue(matchesRepository.getResults(it))
-            }
+            chooseDivision(it)
         }
     }
 
