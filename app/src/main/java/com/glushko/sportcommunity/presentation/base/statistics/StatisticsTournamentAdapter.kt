@@ -32,9 +32,15 @@ class StatisticsTournamentAdapter: ListAdapter<PlayerStatisticAdapter, Statistic
             binding.textSubtitle.text = binding.root.context.getText(
                 item.typeStatistics.title
             )
-            renderRow(binding.itemFirst, item.firstPlayer)
-            renderRow(binding.itemSecond, item.secondPlayer)
-            renderRow(binding.itemThird, item.thirdPlayer)
+            item.firstPlayer?.let {
+                renderRow(binding.itemFirst, it)
+            }
+            item.secondPlayer?.let {
+                renderRow(binding.itemSecond, it)
+            }
+            item.thirdPlayer?.let {
+                renderRow(binding.itemThird, it)
+            }
         }
 
         private fun renderRow (bindingRow: ItemStatisticsRowBinding, player: PlayerStatisticDisplayData){

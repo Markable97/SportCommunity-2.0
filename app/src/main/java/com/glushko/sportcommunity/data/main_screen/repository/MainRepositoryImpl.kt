@@ -2,15 +2,13 @@ package com.glushko.sportcommunity.data.main_screen.repository
 
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.main_screen.leagues.network.toModel
-import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
-import com.glushko.sportcommunity.data.main_screen.model.toCalendar
-import com.glushko.sportcommunity.data.main_screen.model.toResults
-import com.glushko.sportcommunity.data.main_screen.model.toTournamentTable
+import com.glushko.sportcommunity.data.main_screen.model.*
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
+import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatistics
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.data.tournament.model.toModel
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
@@ -32,7 +30,7 @@ class MainRepositoryImpl @Inject constructor(
     override var tournamentTable: List<TournamentTableDisplayData> = emptyList()
     override var calendar: List<MatchFootballDisplayData> = emptyList()
     override var results: List<MatchFootballDisplayData> = emptyList()
-    override var statistics: List<PlayerStatisticAdapter> = emptyList()
+    override var statistics: PlayersWithStatistics = PlayersWithStatistics()
 
 
     override suspend fun getLeagues(): Resource<List<LeaguesDisplayData>> {
@@ -54,7 +52,7 @@ class MainRepositoryImpl @Inject constructor(
             tournamentTable = response.data!!.toTournamentTable()
             calendar = response.data.toCalendar()
             results = response.data.toResults()
-            statistics = getSamples()
+            statistics = response.data.statistics
         }
         return response
     }

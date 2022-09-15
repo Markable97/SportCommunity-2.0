@@ -4,6 +4,7 @@ import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
+import com.glushko.sportcommunity.data.statistics.network.toModelTournament
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.network.toModel
@@ -33,7 +34,7 @@ class TournamentRepositoryImpl @Inject constructor(
     }
 
     override fun getStatistics(): List<PlayerStatisticAdapter>{
-        return mainRepository.statistics
+        return mainRepository.statistics.toModelTournament()
     }
 
     override suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>> {

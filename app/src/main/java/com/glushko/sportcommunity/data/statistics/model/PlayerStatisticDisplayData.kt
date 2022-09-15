@@ -5,9 +5,9 @@ import com.glushko.sportcommunity.R
 
 data class PlayerStatisticAdapter(
     val typeStatistics: TypeStatistics,
-    val firstPlayer: PlayerStatisticDisplayData,
-    val secondPlayer: PlayerStatisticDisplayData,
-    val thirdPlayer: PlayerStatisticDisplayData
+    val firstPlayer: PlayerStatisticDisplayData?,
+    val secondPlayer: PlayerStatisticDisplayData?,
+    val thirdPlayer: PlayerStatisticDisplayData?
 )
 
 data class PlayerStatisticDisplayData(
