@@ -63,6 +63,11 @@ fun PlayersWithStatistics.toModelTournament(): List<PlayerStatisticAdapter> {
     )
 }
 
+fun PlayersWithStatistics.toModelGoals() = playersWithGoals.map { it.toModel() }
+fun PlayersWithStatistics.toModelAssists() = playersWithAssists.map { it.toModel() }
+fun PlayersWithStatistics.toModelYellowCards() = playersWithYellowCard.map { it.toModel() }
+fun PlayersWithStatistics.toModelRedCards() = playersWithRedCards.map { it.toModel() }
+
 data class PlayerWithStatistics(
     @SerializedName("team_id")
     val teamId: Int,
@@ -83,8 +88,3 @@ fun PlayerWithStatistics.toModel() = PlayerStatisticDisplayData(
     points = points
     //TODO прокинуть url на фотку игрока
 )
-
- fun ResponseFootballStatistics.toModelGoals() = playersWithGoals.map { it.toModel() }
- fun ResponseFootballStatistics.toModelAssists() = playersWithAssists.map { it.toModel() }
- fun ResponseFootballStatistics.toModelYellowCards() = playersWithYellowCard.map { it.toModel() }
- fun ResponseFootballStatistics.toModelRedCards() = playersWithRedCards.map { it.toModel() }

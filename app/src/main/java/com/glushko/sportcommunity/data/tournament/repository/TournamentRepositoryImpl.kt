@@ -4,7 +4,7 @@ import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
-import com.glushko.sportcommunity.data.statistics.network.toModelTournament
+import com.glushko.sportcommunity.data.statistics.network.*
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.network.toModel
@@ -38,7 +38,13 @@ class TournamentRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>> {
-        return Resource.Success(getSamplesForStatisticsScreen())
+        val list = when(type){
+            TypeStatistics.GOALS ->mainRepository.statistics.toModelGoals()
+             TypeStatistics.ASSISTS -> mainRepository.statistics.toModelAssists()
+            TypeStatistics.YELLOW_CARDS -> mainRepository.statistics.toModelYellowCards()
+            TypeStatistics.RED_CARDS -> mainRepository.statistics.toModelRedCards()
+        }
+        return Resource.Success(list)
     }
 
     override suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>? {
