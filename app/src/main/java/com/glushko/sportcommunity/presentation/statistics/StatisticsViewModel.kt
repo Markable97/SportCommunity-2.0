@@ -37,7 +37,7 @@ class StatisticsViewModel @Inject constructor(
                     _liveDataStatisticsPlayers.postValue(tournamentRepository.getStatisticsType(type))
                 }
                 Constants.OPEN_FROM_TEAM -> {
-                    _liveDataStatisticsPlayers.postValue(Resource.Error(error = Exception("Пока нет данных")))
+                    _liveDataStatisticsPlayers.postValue(squadRepository.getSquadStatisticsAll(type))
                 }
             }
         }

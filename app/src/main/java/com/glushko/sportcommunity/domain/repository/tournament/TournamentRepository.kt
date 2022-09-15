@@ -10,6 +10,5 @@ interface TournamentRepository {
     fun getTournamentTable() : List<TournamentTableDisplayData>
     fun getStatistics(): List<PlayerStatisticAdapter>
     suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>>
-    suspend fun getStatisticsTeam(teamId: Int): Resource<List<PlayerStatisticAdapter>>
     suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>?
 }

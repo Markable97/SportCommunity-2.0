@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.databinding.ItemStatisticsRowBinding
+import com.glushko.sportcommunity.util.Constants
 
-class StatisticsAllAdapter: ListAdapter<PlayerStatisticDisplayData, StatisticsAllAdapter.ViewHolder>(DiffCallback) {
+class StatisticsAllAdapter(private val fromOpen: Int): ListAdapter<PlayerStatisticDisplayData, StatisticsAllAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,7 +28,7 @@ class StatisticsAllAdapter: ListAdapter<PlayerStatisticDisplayData, StatisticsAl
     ): RecyclerView.ViewHolder(binding.root){
         fun onBind(item: PlayerStatisticDisplayData) = binding.run{
             textPlayerName.text = item.playerName
-            textPlayerTeam.text = item.playerTeam
+            textDopInfo.text = if (fromOpen == Constants.OPEN_FROM_TEAM) item.amplua else item.playerTeam
             textPoints.text = item.points.toString()
         }
     }

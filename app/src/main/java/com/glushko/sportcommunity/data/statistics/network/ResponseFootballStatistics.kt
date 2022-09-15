@@ -1,36 +1,36 @@
 package com.glushko.sportcommunity.data.statistics.network
 
 import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.squad.model.SquadPlayerUI
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
-import com.glushko.sportcommunity.data.teams.model.FootballTeam
 import com.google.gson.annotations.SerializedName
 
 class ResponseFootballStatistics(success: Int,
                                  message: String,
                                  @SerializedName("players_with_goals")
-                                 val playersWithGoals: MutableList<PlayerWithStatistics> = mutableListOf(),
+                                 val playersWithGoals: MutableList<PlayerWithStatisticsRes> = mutableListOf(),
                                  @SerializedName("players_with_assists")
-                                 val playersWithAssists: MutableList<PlayerWithStatistics> = mutableListOf(),
+                                 val playersWithAssists: MutableList<PlayerWithStatisticsRes> = mutableListOf(),
                                  @SerializedName("players_with_yellow_cards")
-                                 val playersWithYellowCard: MutableList<PlayerWithStatistics> = mutableListOf(),
+                                 val playersWithYellowCard: MutableList<PlayerWithStatisticsRes> = mutableListOf(),
                                  @SerializedName("players_with_red_cars")
-                                 val playersWithRedCards: MutableList<PlayerWithStatistics> = mutableListOf()
+                                 val playersWithRedCards: MutableList<PlayerWithStatisticsRes> = mutableListOf()
 ): BaseResponse(success, message)
 
-data class PlayersWithStatistics(
+data class PlayersWithStatisticsRes(
     @SerializedName("players_with_goals")
-    val playersWithGoals: MutableList<PlayerWithStatistics> = mutableListOf(),
+    val playersWithGoals: MutableList<PlayerWithStatisticsRes> = mutableListOf(),
     @SerializedName("players_with_assists")
-    val playersWithAssists: MutableList<PlayerWithStatistics> = mutableListOf(),
+    val playersWithAssists: MutableList<PlayerWithStatisticsRes> = mutableListOf(),
     @SerializedName("players_with_yellow_cards")
-    val playersWithYellowCard: MutableList<PlayerWithStatistics> = mutableListOf(),
+    val playersWithYellowCard: MutableList<PlayerWithStatisticsRes> = mutableListOf(),
     @SerializedName("players_with_red_cars")
-    val playersWithRedCards: MutableList<PlayerWithStatistics> = mutableListOf()
+    val playersWithRedCards: MutableList<PlayerWithStatisticsRes> = mutableListOf()
 )
 
-fun PlayersWithStatistics.toModelTournament(): List<PlayerStatisticAdapter> {
+fun PlayersWithStatisticsRes.toModelWidget(): List<PlayerStatisticAdapter> {
     val goals = playersWithGoals.map { it.toModel() }
     val assists = playersWithAssists.map { it.toModel() }
     val yellowCards = playersWithYellowCard.map { it.toModel() }
@@ -63,12 +63,17 @@ fun PlayersWithStatistics.toModelTournament(): List<PlayerStatisticAdapter> {
     )
 }
 
-fun PlayersWithStatistics.toModelGoals() = playersWithGoals.map { it.toModel() }
-fun PlayersWithStatistics.toModelAssists() = playersWithAssists.map { it.toModel() }
-fun PlayersWithStatistics.toModelYellowCards() = playersWithYellowCard.map { it.toModel() }
-fun PlayersWithStatistics.toModelRedCards() = playersWithRedCards.map { it.toModel() }
+fun PlayersWithStatisticsRes.toModelGoals() = playersWithGoals.map { it.toModel() }
+fun PlayersWithStatisticsRes.toModelAssists() = playersWithAssists.map { it.toModel() }
+fun PlayersWithStatisticsRes.toModelYellowCards() = playersWithYellowCard.map { it.toModel() }
+fun PlayersWithStatisticsRes.toModelRedCards() = playersWithRedCards.map { it.toModel() }
 
-data class PlayerWithStatistics(
+fun PlayersWithStatisticsRes.toModelSquad(): List<SquadPlayerUI> {
+    val listAll = playersWithGoals.union(playersWithAssists).union(playersWithYellowCard)
+        .union(playersWithRedCards)
+    return listAll.distinctBy { it.playerId }.sortedBy { it.playerName }.map { it.toModelSquad() }
+}
+data class PlayerWithStatisticsRes(
     @SerializedName("team_id")
     val teamId: Int,
     @SerializedName("team_name")
@@ -78,13 +83,22 @@ data class PlayerWithStatistics(
     @SerializedName("player_name")
     val playerName: String,
     @SerializedName("points")
-    val points: Int
+    val points: Int,
+    @SerializedName("amplua")
+    val amplua: String
 )
 
-fun PlayerWithStatistics.toModel() = PlayerStatisticDisplayData(
+fun PlayerWithStatisticsRes.toModel() = PlayerStatisticDisplayData(
     playerId = playerId,
     playerName = playerName,
     playerTeam = teamName,
-    points = points
+    points = points,
+    amplua = amplua
     //TODO прокинуть url на фотку игрока
+)
+fun PlayerWithStatisticsRes.toModelSquad() = SquadPlayerUI(
+    playerId = playerId,
+    playerName = playerName,
+    amplua = "",
+    avatarUrl = ""
 )

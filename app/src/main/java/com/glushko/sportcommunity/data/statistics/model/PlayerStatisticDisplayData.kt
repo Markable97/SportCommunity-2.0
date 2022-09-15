@@ -15,6 +15,7 @@ data class PlayerStatisticDisplayData(
     val playerName: String,
     val playerTeam: String,
     val points: Int,
+    val amplua: String,
     val urlAvatar: String? = null
 )
 

@@ -30,7 +30,7 @@
         tools:text="Глушко Даниил"/>
 
     <TextView
-        android:id="@+id/textPlayerTeam"
+        android:id="@+id/textDopInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/text14_sp_regular"

@@ -25,7 +25,7 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
     private val args: StatisticsFragmentArgs by navArgs()
 
     private val adapterStatistics by lazy {
-        StatisticsAllAdapter()
+        StatisticsAllAdapter(args.openFrom)
     }
 
     override fun initBinding(

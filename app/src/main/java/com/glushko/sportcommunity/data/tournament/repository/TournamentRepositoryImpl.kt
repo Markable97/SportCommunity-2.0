@@ -6,8 +6,6 @@ import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayDa
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
 import com.glushko.sportcommunity.data.statistics.network.*
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
-import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
-import com.glushko.sportcommunity.data.tournament.network.toModel
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
 import com.glushko.sportcommunity.domain.repository.tournament.TournamentRepository
 import com.glushko.sportcommunity.util.NetworkUtils
@@ -15,8 +13,6 @@ import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.components.SingletonComponent
 import it.czerwinski.android.hilt.annotations.BoundTo
 import javax.inject.Inject
-import javax.inject.Singleton
-import kotlin.random.Random
 
 @BoundTo(supertype =  TournamentRepository::class, component = SingletonComponent::class)
 class TournamentRepositoryImpl @Inject constructor(
@@ -34,7 +30,7 @@ class TournamentRepositoryImpl @Inject constructor(
     }
 
     override fun getStatistics(): List<PlayerStatisticAdapter>{
-        return mainRepository.statistics.toModelTournament()
+        return mainRepository.statistics.toModelWidget()
     }
 
     override suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>> {
@@ -67,49 +63,4 @@ class TournamentRepositoryImpl @Inject constructor(
             }
         }
     }
-
-    override suspend fun getStatisticsTeam(teamId: Int): Resource<List<PlayerStatisticAdapter>> {
-        return Resource.Success(getSamples())
-    }
-
-    private fun getSamplesForStatisticsScreen() = listOf(
-        getPlayer(),
-        getPlayer(),
-        getPlayer(),
-        getPlayer(),
-        getPlayer(),
-        getPlayer(),
-        getPlayer(),
-        getPlayer(),
-        getPlayer(),
-        getPlayer()
-    ).sortedByDescending { it.points }
-
-    private fun getSamples() = listOf (
-            getForAdapter(TypeStatistics.GOALS),
-            getForAdapter(TypeStatistics.ASSISTS),
-            getForAdapter(TypeStatistics.YELLOW_CARDS),
-            getForAdapter(TypeStatistics.RED_CARDS),
-        )
-
-    private fun getForAdapter(typeStatistics: TypeStatistics): PlayerStatisticAdapter{
-        val actionsPlayer = listOf(
-            getPlayer(),
-            getPlayer(),
-            getPlayer()
-        ).sortedByDescending { it.points }
-        return PlayerStatisticAdapter(
-            typeStatistics = typeStatistics,
-            firstPlayer = actionsPlayer[0],
-            secondPlayer = actionsPlayer[1],
-            thirdPlayer = actionsPlayer[2]
-        )
-    }
-
-    private fun getPlayer() = PlayerStatisticDisplayData(
-        playerId = Random.nextInt(),
-        playerName = "Глушко ${Random.nextInt(0, 10)}",
-        playerTeam = "Команда ${Random.nextInt(1, 7)}",
-        points = Random.nextInt(0, 25)
-    )
 }

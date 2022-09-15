@@ -10,8 +10,9 @@ import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayDa
 import com.glushko.sportcommunity.data.statistics.model.title
 import com.glushko.sportcommunity.databinding.ItemStatisticsBinding
 import com.glushko.sportcommunity.databinding.ItemStatisticsRowBinding
+import com.glushko.sportcommunity.util.Constants
 
-class StatisticsTournamentAdapter: ListAdapter<PlayerStatisticAdapter, StatisticsTournamentAdapter.ViewHolder>(
+class StatisticsTournamentAdapter(private val fromOpen: Int): ListAdapter<PlayerStatisticAdapter, StatisticsTournamentAdapter.ViewHolder>(
     DiffCallback
 ) {
 
@@ -46,7 +47,7 @@ class StatisticsTournamentAdapter: ListAdapter<PlayerStatisticAdapter, Statistic
         private fun renderRow (bindingRow: ItemStatisticsRowBinding, player: PlayerStatisticDisplayData){
             bindingRow.apply {
                 textPlayerName.text = player.playerName
-                textPlayerTeam.text = player.playerTeam
+                textDopInfo.text = if (fromOpen == Constants.OPEN_FROM_TEAM) player.amplua else player.playerTeam
                 textPoints.text = player.points.toString()
             }
         }

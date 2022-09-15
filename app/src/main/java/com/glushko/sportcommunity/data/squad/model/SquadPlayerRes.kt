@@ -10,14 +10,14 @@ data class SquadPlayerRes(
     val amplua: String,
 )
 
-fun SquadPlayerRes.toModel() = SquadPlayer(
+fun SquadPlayerRes.toModel() = SquadPlayerUI(
     playerId = this.playerId,
     playerName = this.playerName,
     amplua = this.amplua,
     avatarUrl= "" //TODO подгрузать фотку игрока
 )
 
-data class SquadPlayer(
+data class SquadPlayerUI(
     val playerId: Int,
     val playerName: String,
     val amplua: String,

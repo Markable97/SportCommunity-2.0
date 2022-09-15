@@ -20,6 +20,7 @@ import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
+import com.glushko.sportcommunity.util.extensions.toast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,6 +83,21 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
                 }
             }
         }
+        liveDataSquadInfo.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Empty -> {}
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    if (it.data?.success == 1){
+                        viewModel.getStatistics()
+                    } else {
+                        toast(requireContext(), it.data?.message ?: getString(R.string.error_network_default))
+
+                    }
+                }
+            }
+        }
         liveDataStatistics.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Empty -> {}
@@ -120,7 +136,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
     }
 
     private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
-        viewPagerStatistics.adapter = StatisticsTournamentAdapter().apply { submitList(data) }
+        viewPagerStatistics.adapter = StatisticsTournamentAdapter(Constants.OPEN_FROM_TEAM).apply { submitList(data) }
         viewPagerStatistics.addOnPageSelectedListener {  }
         TabLayoutMediator(tabLayoutStatistics, viewPagerStatistics) { _, _ -> }.attach()
     }

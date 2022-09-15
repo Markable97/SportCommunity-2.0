@@ -108,7 +108,7 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
     }
 
     private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
-        viewPagerStatistics.adapter = StatisticsTournamentAdapter().apply { submitList(data) }
+        viewPagerStatistics.adapter = StatisticsTournamentAdapter(Constants.OPEN_FROM_TOURNAMENT).apply { submitList(data) }
         viewPagerStatistics.addOnPageSelectedListener {  }
         TabLayoutMediator(tabLayoutStatistics, viewPagerStatistics) { _, _ -> }.attach()
     }

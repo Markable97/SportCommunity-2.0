@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentSquadBinding
@@ -12,6 +13,7 @@ import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.team.squad.adapters.SquadAdapters
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -64,14 +66,7 @@ class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squ
 
     private fun setObservers() = viewModel.run {
         liveDataSquadList.observe(viewLifecycleOwner){
-            when(it){
-                is Resource.Empty -> {}
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    adapterSquad.setData(it.data!!)
-                }
-            }
+            adapterSquad.setData(it)
         }
     }
 

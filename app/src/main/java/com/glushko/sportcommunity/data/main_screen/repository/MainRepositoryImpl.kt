@@ -8,9 +8,8 @@ import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
-import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatistics
+import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
-import com.glushko.sportcommunity.data.tournament.model.toModel
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
@@ -30,7 +29,7 @@ class MainRepositoryImpl @Inject constructor(
     override var tournamentTable: List<TournamentTableDisplayData> = emptyList()
     override var calendar: List<MatchFootballDisplayData> = emptyList()
     override var results: List<MatchFootballDisplayData> = emptyList()
-    override var statistics: PlayersWithStatistics = PlayersWithStatistics()
+    override var statistics: PlayersWithStatisticsRes = PlayersWithStatisticsRes()
 
 
     override suspend fun getLeagues(): Resource<List<LeaguesDisplayData>> {
@@ -56,32 +55,4 @@ class MainRepositoryImpl @Inject constructor(
         }
         return response
     }
-
-    private fun getSamples() = listOf (
-        getForAdapter(TypeStatistics.GOALS),
-        getForAdapter(TypeStatistics.ASSISTS),
-        getForAdapter(TypeStatistics.YELLOW_CARDS),
-        getForAdapter(TypeStatistics.RED_CARDS),
-    )
-
-    private fun getForAdapter(typeStatistics: TypeStatistics): PlayerStatisticAdapter{
-        val actionsPlayer = listOf(
-            getPlayer(),
-            getPlayer(),
-            getPlayer()
-        ).sortedByDescending { it.points }
-        return PlayerStatisticAdapter(
-            typeStatistics = typeStatistics,
-            firstPlayer = actionsPlayer[0],
-            secondPlayer = actionsPlayer[1],
-            thirdPlayer = actionsPlayer[2]
-        )
-    }
-
-    private fun getPlayer() = PlayerStatisticDisplayData(
-        playerId = Random.nextInt(),
-        playerName = "Глушко ${Random.nextInt(0, 10)}",
-        playerTeam = "Команда ${Random.nextInt(1, 7)}",
-        points = Random.nextInt(0, 25)
-    )
 }
