@@ -4,13 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentAssignMatchesBinding
 import com.glushko.sportcommunity.presentation.admin.assign_mathes.adapters.AssignMatchesTabAdapter
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AssignMatchesFragment: BaseXmlFragment<FragmentAssignMatchesBinding>(R.layout.fragment_assign_matches) {
+
+    private val viewModel: AssignMatchesViewModel by viewModels()
+
     override fun initBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

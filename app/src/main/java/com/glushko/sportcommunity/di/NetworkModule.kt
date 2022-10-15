@@ -64,8 +64,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNetworkUtil(retrofit: Retrofit, @ApplicationContext appContext: Context): NetworkUtils {
-        return NetworkUtils(retrofit, appContext)
+    fun provideNetworkUtil(@ApplicationContext appContext: Context, gson: Gson): NetworkUtils {
+        return NetworkUtils(appContext, gson)
     }
 
 

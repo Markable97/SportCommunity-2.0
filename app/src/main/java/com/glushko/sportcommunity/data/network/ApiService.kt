@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.data.network
 
+import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatches
 import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.match_detail.network.ResponsePlayersInMatch
@@ -7,6 +8,7 @@ import com.glushko.sportcommunity.data.matches.network.ResponseFootballMatches
 import com.glushko.sportcommunity.data.squad.network.ResponseFootballSquad
 import com.glushko.sportcommunity.data.statistics.network.ResponseFootballStatistics
 import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
+import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -24,6 +26,7 @@ interface ApiService {
         const val GET_MAIN_SCREEN = "MainScreen"
         const val GET_STATISTICS_TEAM = "GetFootballStatisticsTeam"
         const val GET_STATISTICS_TOURNAMENT = "GetFootballStatisticsTournament"
+        const val GET_ASSIGN_MATCHES = "GetAssignedMatches"
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
         const val PARAM_FOOTBALL_DIVISION_ID = "division_id"
@@ -64,4 +67,7 @@ interface ApiService {
 
     @GET(GET_STATISTICS_TOURNAMENT)
     suspend fun getStatisticsTournament(@Query(PARAM_FOOTBALL_DIVISION_ID) divisionId: Int): Response<ResponseFootballStatistics>
+
+    @GET(GET_ASSIGN_MATCHES)
+    suspend fun getAssignMatches(@Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int): Response<JsonObject>
 }
