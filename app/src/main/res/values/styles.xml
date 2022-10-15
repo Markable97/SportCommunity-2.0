@@ -63,4 +63,15 @@
         <item name="android:textAppearance">@style/text24_sp_bold</item>
     </style>
 
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="BottomSheet" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:background">@drawable/bg_white_rounded</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
 </resources>
