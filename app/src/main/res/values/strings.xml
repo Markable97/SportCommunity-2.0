@@ -61,6 +61,9 @@
     <string name="admin_menu__assign_matches">Назначенные матчи</string>
     <string name="admin_menu__schedule">Расписание</string>
 
+    <string name="assign_matches__tab_matches">Назначенные</string>
+    <string name="assign_matches__tab_create">Создать</string>
+
 
 
 </resources>
