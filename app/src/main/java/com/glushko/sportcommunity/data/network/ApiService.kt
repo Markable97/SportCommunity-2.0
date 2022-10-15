@@ -27,12 +27,18 @@ interface ApiService {
         const val GET_STATISTICS_TEAM = "GetFootballStatisticsTeam"
         const val GET_STATISTICS_TOURNAMENT = "GetFootballStatisticsTournament"
         const val GET_ASSIGN_MATCHES = "GetAssignedMatches"
+        const val GET_DIVISIONS = "GetDivisions"
+        const val GET_UNASSIGNED_TOURS = "GetUnassignedTours"
+        const val GET_UNASSIGNED_MATCHES = "GetUnassignedMatches"
+
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
         const val PARAM_FOOTBALL_DIVISION_ID = "division_id"
         const val PARAM_FOOTBALL_SEASON_ID = "season_id"
         const val PARAM_TEAM_ID = "team_id"
         const val PARAM_MATCH_ID = "match_id"
+        const val PARAM_TOURNAMENT_ID = "tournament_id"
+        const val PARAM_TOURS = "tours"
 
     }
 
@@ -70,4 +76,17 @@ interface ApiService {
 
     @GET(GET_ASSIGN_MATCHES)
     suspend fun getAssignMatches(@Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int): Response<JsonObject>
+
+    @GET(GET_DIVISIONS)
+    suspend fun getDivisions(@Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int): Response<JsonObject>
+
+    @GET(GET_UNASSIGNED_TOURS)
+    suspend fun getUnassignedTours(@Query(PARAM_TOURNAMENT_ID) tournamentId: Int): Response<JsonObject>
+
+    @GET(GET_ASSIGN_MATCHES)
+    suspend fun getUnassignedMatches(
+        @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int,
+        @Query(PARAM_TOURNAMENT_ID) tournamentId: Int,
+        @Query(PARAM_TOURS) tours: String
+    ): Response<JsonObject>
 }
