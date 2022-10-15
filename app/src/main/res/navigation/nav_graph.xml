@@ -18,6 +18,11 @@
     <include
         android:id="@+id/graphTournament"
         app:graph="@navigation/nav_graph_tournament" />
+
+    <include
+        android:id="@+id/graphAdmin"
+        app:graph="@navigation/nav_graph_admin" />
+
     <fragment
         android:id="@+id/eventsFragment"
         android:name="com.glushko.sportcommunity.presentation.events.EventsFragment"

@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         R.id.squadFragment, R.id.squadFragment
     )
     private val destinationWithBottomBar = listOf(
-        R.id.eventsFragment, R.id.calendarFragment, R.id.resultsFragment, R.id.tournamentFragment
+        R.id.eventsFragment, R.id.calendarFragment, R.id.resultsFragment, R.id.tournamentFragment, R.id.adminFragment
     )
     private val destinationDrawerMenu = listOf(R.id.aboutFragment, R.id.settingFragment)
     private var backupTitle: String = ""

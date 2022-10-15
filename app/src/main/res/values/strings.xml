@@ -9,6 +9,7 @@
     <string name="bottom_tittle__results">Результаты</string>
     <string name="bottom_tittle__tournament">Турнир</string>
     <string name="bottom_tittle__events">События</string>
+    <string name="bottom_tittle__admin">Админка</string>
 
     <string name="menu_setting">Настройки</string>
     <string name="menu_about">О приложении</string>
@@ -56,6 +57,9 @@
     <string name="team_media">Медия</string>
 
     <string name="squad__search_hint">Введите имя</string>
+
+    <string name="admin_menu__assign_matches">Назначенные матчи</string>
+    <string name="admin_menu__schedule">Расписание</string>
 
 
 
