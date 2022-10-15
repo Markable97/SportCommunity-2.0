@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentAdminBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 
 class AdminFragment: BaseXmlFragment<FragmentAdminBinding>(R.layout.fragment_admin) {
 
@@ -27,14 +29,15 @@ class AdminFragment: BaseXmlFragment<FragmentAdminBinding>(R.layout.fragment_adm
 
     private fun setupListeners() = binding.run {
         layoutAssignMatches.root.setOnClickListener {
-            navigateMenu(AdminFragmentDirections.actionAdminFragmentToAssignMatchesFragment())
+            navigateMenu(AdminFragmentDirections.actionAdminFragmentToAssignMatchesFragment(), R.string.admin_menu__assign_matches)
         }
         layoutSchedule.root.setOnClickListener {
-            navigateMenu(AdminFragmentDirections.actionAdminFragmentToScheduleFragment())
+            navigateMenu(AdminFragmentDirections.actionAdminFragmentToScheduleFragment(), R.string.admin_menu__schedule)
         }
     }
 
-    private fun navigateMenu(action: NavDirections){
+    private fun navigateMenu(action: NavDirections, @StringRes title: Int){
+        (requireActivity() as? MainActivity)?.setToolbarTitle(getString(title))
         findNavController().navigate(action)
     }
 

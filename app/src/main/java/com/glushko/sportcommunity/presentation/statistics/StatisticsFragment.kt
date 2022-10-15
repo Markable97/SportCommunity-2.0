@@ -58,7 +58,9 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
                 is Resource.Error -> {}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    adapterStatistics.submitList(it.data)
+                    adapterStatistics.submitList(it.data) {
+                        binding.recyclerStatistics.scrollToPosition(0)
+                    }
                 }
             }
         }
@@ -79,6 +81,7 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
+                binding.recyclerStatistics.scrollToPosition(0)
             }
 
         }

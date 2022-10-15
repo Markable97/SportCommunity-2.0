@@ -48,7 +48,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
     }
 
     private fun initView() = binding.run {
-        (requireActivity() as MainActivity).setToolbarTitle(args.teamName)
+        (requireActivity() as? MainActivity)?.setToolbarTitle(args.teamName)
         imageTeam.load("${Constants.BASE_URL_IMAGE}${args.teamName}.png")
         textTeamName.text = args.teamName
     }
