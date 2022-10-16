@@ -10,6 +10,7 @@ import com.glushko.sportcommunity.data.divisions.model.DivisionUI
 import com.glushko.sportcommunity.data.divisions.model.toChooseModel
 import com.glushko.sportcommunity.domain.repository.admin.assign_matches.AssignMatchesRepository
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,8 +37,17 @@ class AssignMatchesViewModel @Inject constructor(
     private val _liveDataCheckButtonAssign = MutableLiveData<Boolean>(false)
     val liveDataCheckButtonAssign: LiveData<Boolean> = _liveDataCheckButtonAssign
 
+    private val _liveDataCheckButtonDelete = MutableLiveData<Boolean>(false)
+    val liveDataCheckButtonDelete: LiveData<Boolean> = _liveDataCheckButtonDelete
+
+    private val _eventAssignMatches = EventLiveData<Result<String>>()
+    val eventAssignMatches: LiveData<Result<String>> = _eventAssignMatches
+
+    private val _eventDeleteMatches = EventLiveData<Result<String>>()
+    val eventDeleteMatches: LiveData<Result<String>> = _eventDeleteMatches
+
     private var selectDivision: DivisionUI? = null
-    private var selectionTour: String? = null
+    private var selectionTour: ChooseModel? = null
 
     private var divisionChooseModel: MutableList<ChooseModel> = mutableListOf()
 
@@ -93,7 +103,7 @@ class AssignMatchesViewModel @Inject constructor(
     fun getUnassignedMatches(tourChoose: ChooseModel){
         viewModelScope.launch {
             _liveDataTours.value?.data?.getOrNull(tourChoose.position ?: -1)?.let { tour ->
-                selectionTour = tour
+                selectionTour = tourChoose
                 if (selectDivision != null){
                     _liveDataUnassignedMatches.postValue(Result.Loading)
                     _liveDataUnassignedMatches.postValue(assignMatchesRepository.getUnassignedMatches(
@@ -105,8 +115,52 @@ class AssignMatchesViewModel @Inject constructor(
         }
     }
 
+    private fun getUnassignedMatches(){
+        selectionTour?.let {
+            getUnassignedMatches(it)
+        }
+    }
+
     fun checkButtonAssign() {
         _liveDataCheckButtonAssign.value = _liveDataUnassignedMatches.value?.data?.firstOrNull { it.isSelect } != null
+    }
+
+    fun checkButtonDelete() {
+        _liveDataCheckButtonDelete.value = _liveDataAssignMatches.value?.data?.firstOrNull { it.isSelect } != null
+    }
+
+    fun assignMatches(){
+        viewModelScope.launch {
+            _eventAssignMatches.postValue(Result.Loading)
+            val assignMatches = _liveDataUnassignedMatches.value?.data?.filter { it.isSelect }?: emptyList()
+            val response = assignMatchesRepository.addAssignMatch(assignMatches)
+            if (response is Result.Success){
+                _liveDataUnassignedMatches.postValue(Result.Success(_liveDataUnassignedMatches.value?.data?.minus(
+                    assignMatches.toSet()
+                )?: emptyList()))
+                getAssignMatches()
+            }
+            _eventAssignMatches.postValue(response)
+        }
+    }
+
+    fun deleteMatches() {
+        viewModelScope.launch {
+            _eventDeleteMatches.postValue(Result.Loading)
+            val deletingMatches = _liveDataAssignMatches.value?.data?.filter { it.isSelect } ?: emptyList()
+            val response = assignMatchesRepository.addAssignMatch(deletingMatches, true)
+            if (response is Result.Success){
+                _liveDataAssignMatches.postValue(
+                    Result.Success(
+                        _liveDataAssignMatches.value?.data?.minus(
+                            deletingMatches.toSet()
+                        ) ?: emptyList()
+                    )
+                )
+                getUnassignedMatches()
+            }
+            _eventDeleteMatches.postValue(response)
+        }
     }
 
 }

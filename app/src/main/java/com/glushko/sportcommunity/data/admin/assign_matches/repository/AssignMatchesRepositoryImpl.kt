@@ -7,6 +7,7 @@ import com.glushko.sportcommunity.data.divisions.model.DivisionUI
 import com.glushko.sportcommunity.data.divisions.network.ResponseDivisions
 import com.glushko.sportcommunity.data.divisions.network.toModel
 import com.glushko.sportcommunity.data.network.ApiService
+import com.glushko.sportcommunity.data.network.BaseResponse
 import com.glushko.sportcommunity.data.tours.ResponseUnassignedTours
 import com.glushko.sportcommunity.data.tours.toModel
 import com.glushko.sportcommunity.domain.repository.admin.assign_matches.AssignMatchesRepository
@@ -66,6 +67,24 @@ class AssignMatchesRepositoryImpl @Inject constructor(
             is Result.Error -> Result.Error(response.exception)
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(response.data.toModel())
+        }
+    }
+
+    override suspend fun addAssignMatch(
+        matches: List<MatchUI>,
+        isDeleting: Boolean
+    ): Result<String> {
+        val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java) {
+            api.addAssignMatches(
+                matches.joinToString(",") {
+                    it.matchId.toString()
+                }, deleting = isDeleting
+            )
+        }
+        return when (response) {
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(response.data.message)
         }
     }
 

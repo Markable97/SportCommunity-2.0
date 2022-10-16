@@ -69,6 +69,9 @@ class AssignMatchesCreate :
         layoutChooserTour.root.setOnClickListener {
             chooseOption(layoutChooserTour.textTitle.text.toString(), viewModel.getTours())
         }
+        buttonAssign.setOnClickListener {
+            viewModel.assignMatches()
+        }
     }
 
     private fun chooseOption(title: String, dataset: List<ChooseModel>) {

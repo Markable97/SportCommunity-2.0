@@ -30,6 +30,7 @@ interface ApiService {
         const val GET_DIVISIONS = "GetDivisions"
         const val GET_UNASSIGNED_TOURS = "GetUnassignedTours"
         const val GET_UNASSIGNED_MATCHES = "GetUnassignedMatches"
+        const val ADD_ASSIGN_MATCHES = "AddAssignMatches"
 
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -39,6 +40,8 @@ interface ApiService {
         const val PARAM_MATCH_ID = "match_id"
         const val PARAM_TOURNAMENT_ID = "tournament_id"
         const val PARAM_TOURS = "tours"
+        const val PARAM_NATCHES = "matches"
+        const val PARAM_ACTION_DELETE = "deleting"
 
     }
 
@@ -88,5 +91,11 @@ interface ApiService {
         @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int,
         @Query(PARAM_TOURNAMENT_ID) tournamentId: Int,
         @Query(PARAM_TOURS) tours: String
+    ): Response<JsonObject>
+
+    @GET(ADD_ASSIGN_MATCHES)
+    suspend fun addAssignMatches(
+        @Query(PARAM_NATCHES) matches: String,
+        @Query(PARAM_ACTION_DELETE) deleting: Boolean = false
     ): Response<JsonObject>
 }

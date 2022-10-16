@@ -10,4 +10,5 @@ interface AssignMatchesRepository {
     suspend fun getDivisions(leagueId: Int = 1): Result<List<DivisionUI>>
     suspend fun getUnassignedTours(tournamentId: Int): Result<List<String>>
     suspend fun getUnassignedMatches(leagueId: Int = 1, tournamentId: Int, tours: String): Result<List<MatchUI>>
+    suspend fun addAssignMatch(matches: List<MatchUI>, isDeleting: Boolean = false): Result<String>
 }
