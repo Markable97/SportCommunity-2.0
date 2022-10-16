@@ -4,6 +4,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
+    <string name="choose">Выбрать</string>
+
     <!-- Tittle item bottom navigate -->
     <string name="bottom_tittle__calendar">Календарь</string>
     <string name="bottom_tittle__results">Результаты</string>
@@ -63,6 +65,7 @@
 
     <string name="assign_matches__tab_matches">Назначенные</string>
     <string name="assign_matches__tab_create">Создать</string>
+
 
 
 

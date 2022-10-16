@@ -16,6 +16,7 @@
     <color name="bg_tournament_table_header">#80D1D1D1</color>
     <color name="dot_default">#BFBFBF</color>
     <color name="outline_button">#BFBFBF</color>
+    <color name="buttons">#D9D9D9</color>
     <color name="bg_team_header">#d1d1d1</color>
     <color name="bg_tournament_table_team_selected">#2196f3</color>
 </resources>

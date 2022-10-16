@@ -20,6 +20,8 @@ abstract class BaseAdapter<T, V : ViewBinding> :
         notifyDataSetChanged()
     }
 
+    fun getData() = items
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewBindingHolder {
         return ViewBindingHolder(getBinding(LayoutInflater.from(parent.context), parent, viewType))
     }
