@@ -80,7 +80,7 @@ class AssignMatchesViewModel @Inject constructor(
 
     fun getTours() = toursChooseModel
 
-    fun getUnassignedTours(divisionChoose: ChooseModel?) {
+    fun getUnassignedTours(divisionChoose: ChooseModel?, isClearMatches: Boolean = true) {
         viewModelScope.launch {
             val divisionUI = _liveDataDivisions.value?.data?.getOrNull(divisionChoose?.position?:-1)
             divisionUI?.let { division ->
@@ -93,7 +93,9 @@ class AssignMatchesViewModel @Inject constructor(
                         valueType = Constants.TYPE_VALUE_TOUR,
                         position = index
                     ) }.toMutableList()
-                    _liveDataUnassignedMatches.postValue(Result.Success(emptyList()))
+                    if (isClearMatches){
+                        _liveDataUnassignedMatches.postValue(Result.Success(emptyList()))
+                    }
                 }
                 _liveDataTours.postValue(response)
             }
@@ -147,9 +149,9 @@ class AssignMatchesViewModel @Inject constructor(
             val assignMatches = _liveDataUnassignedMatches.value?.data?.filter { it.isSelect }?: emptyList()
             val response = assignMatchesRepository.addAssignMatch(assignMatches)
             if (response is Result.Success){
-                _liveDataUnassignedMatches.postValue(Result.Success(_liveDataUnassignedMatches.value?.data?.minus(
+                _liveDataUnassignedMatches.value = Result.Success(_liveDataUnassignedMatches.value?.data?.minus(
                     assignMatches.toSet()
-                )?: emptyList()))
+                )?: emptyList())
                 getAssignMatches()
                 checkButtonAssign()
             }
@@ -163,15 +165,12 @@ class AssignMatchesViewModel @Inject constructor(
             val deletingMatches = _liveDataAssignMatches.value?.data?.filter { it.isSelect } ?: emptyList()
             val response = assignMatchesRepository.addAssignMatch(deletingMatches, true)
             if (response is Result.Success){
-                _liveDataAssignMatches.postValue(
-                    Result.Success(
-                        _liveDataAssignMatches.value?.data?.minus(
-                            deletingMatches.toSet()
-                        ) ?: emptyList()
-                    )
-                )
+                val deletedMatches = _liveDataAssignMatches.value?.data?.minus(
+                    deletingMatches.toSet()
+                ) ?: emptyList()
+                _liveDataAssignMatches.value = Result.Success(deletedMatches)
                 getUnassignedMatchesAfterDeleting(deletingMatches)
-                getUnassignedTours(selectDivision)
+                getUnassignedTours(selectDivision, false)
                 checkButtonDelete()
             }
             _eventDeleteMatches.postValue(response)
