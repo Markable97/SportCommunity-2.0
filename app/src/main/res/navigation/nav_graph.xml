@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/eventsFragment">
+    app:startDestination="@id/nav_graph_admin">
 
     <fragment
         android:id="@+id/calendarFragment"
@@ -12,15 +12,12 @@
         tools:layout="@layout/fragment_calendar" />
 
     <include
-        android:id="@+id/graphResult"
         app:graph="@navigation/nav_graph_result" />
 
     <include
-        android:id="@+id/graphTournament"
         app:graph="@navigation/nav_graph_tournament" />
 
     <include
-        android:id="@+id/graphAdmin"
         app:graph="@navigation/nav_graph_admin" />
 
     <fragment

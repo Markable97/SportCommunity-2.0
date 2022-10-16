@@ -21,7 +21,11 @@ class AssignMatchesCreate :
     private val viewModel: AssignMatchesViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     private val matchesAdapter by lazy{
-        AssignMatchesListAdapter()
+        AssignMatchesListAdapter().apply {
+            onClickItem = {
+                viewModel.checkButtonAssign()
+            }
+        }
     }
 
     override fun initBinding(
@@ -41,9 +45,7 @@ class AssignMatchesCreate :
             when(it){
                 is Result.Error -> {}
                 Result.Loading -> {}
-                is Result.Success -> {
-                    binding.layoutChooserTour.textSubtitle.text = ""
-                }
+                is Result.Success -> {}
             }
         }
         liveDataUnassignedMatches.observe(viewLifecycleOwner){
@@ -54,6 +56,9 @@ class AssignMatchesCreate :
                     matchesAdapter.setData(it.data)
                 }
             }
+        }
+        liveDataCheckButtonAssign.observe(viewLifecycleOwner){
+            binding.buttonAssign.isEnabled = it
         }
     }
 
@@ -77,6 +82,7 @@ class AssignMatchesCreate :
                 when (option.valueType) {
                     Constants.TYPE_VALUE_DIVISION -> {
                         binding.layoutChooserDivision.textSubtitle.text = option.valueDisplay
+                        binding.layoutChooserTour.textSubtitle.text = ""
                         viewModel.getToursFromServer(option)
                     }
                     Constants.TYPE_VALUE_TOUR -> {

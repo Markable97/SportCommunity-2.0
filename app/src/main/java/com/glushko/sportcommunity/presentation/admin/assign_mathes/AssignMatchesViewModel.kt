@@ -14,6 +14,7 @@ import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +32,9 @@ class AssignMatchesViewModel @Inject constructor(
 
     private val _liveDataUnassignedMatches = MutableLiveData<Result<List<MatchUI>>>()
     val liveDataUnassignedMatches: LiveData<Result<List<MatchUI>>> = _liveDataUnassignedMatches
+
+    private val _liveDataCheckButtonAssign = MutableLiveData<Boolean>(false)
+    val liveDataCheckButtonAssign: LiveData<Boolean> = _liveDataCheckButtonAssign
 
     private var selectDivision: DivisionUI? = null
     private var selectionTour: String? = null
@@ -79,6 +83,7 @@ class AssignMatchesViewModel @Inject constructor(
                         valueType = Constants.TYPE_VALUE_TOUR,
                         position = index
                     ) }.toMutableList()
+                    _liveDataUnassignedMatches.postValue(Result.Success(emptyList()))
                 }
                 _liveDataTours.postValue(response)
             }
@@ -98,6 +103,10 @@ class AssignMatchesViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun checkButtonAssign() {
+        _liveDataCheckButtonAssign.value = _liveDataUnassignedMatches.value?.data?.firstOrNull { it.isSelect } != null
     }
 
 }
