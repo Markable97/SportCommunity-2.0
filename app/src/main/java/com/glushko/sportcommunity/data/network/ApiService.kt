@@ -83,7 +83,7 @@ interface ApiService {
     @GET(GET_UNASSIGNED_TOURS)
     suspend fun getUnassignedTours(@Query(PARAM_TOURNAMENT_ID) tournamentId: Int): Response<JsonObject>
 
-    @GET(GET_ASSIGN_MATCHES)
+    @GET(GET_UNASSIGNED_MATCHES)
     suspend fun getUnassignedMatches(
         @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int,
         @Query(PARAM_TOURNAMENT_ID) tournamentId: Int,

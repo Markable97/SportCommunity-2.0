@@ -31,7 +31,8 @@ data class MatchUI(
     var teamHomeId: Int,
     var teamHomeName: String,
     var teamGuestId: Int,
-    var teamGuestName: String
+    var teamGuestName: String,
+    var isSelect: Boolean = false
 )
 
 fun Match.toModel() = MatchUI(

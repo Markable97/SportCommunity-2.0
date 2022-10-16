@@ -9,6 +9,7 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.choose.model.ChooseModel
 import com.glushko.sportcommunity.databinding.FragmentAssignMatchesCreateBinding
 import com.glushko.sportcommunity.presentation.admin.assign_mathes.AssignMatchesViewModel
+import com.glushko.sportcommunity.presentation.admin.assign_mathes.adapters.AssignMatchesListAdapter
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.ChooseDialog
 import com.glushko.sportcommunity.util.Constants
@@ -18,6 +19,10 @@ class AssignMatchesCreate :
     BaseXmlFragment<FragmentAssignMatchesCreateBinding>(R.layout.fragment_assign_matches_create) {
 
     private val viewModel: AssignMatchesViewModel by viewModels(ownerProducer = { requireParentFragment() })
+
+    private val matchesAdapter by lazy{
+        AssignMatchesListAdapter()
+    }
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -36,7 +41,18 @@ class AssignMatchesCreate :
             when(it){
                 is Result.Error -> {}
                 Result.Loading -> {}
-                is Result.Success -> {}
+                is Result.Success -> {
+                    binding.layoutChooserTour.textSubtitle.text = ""
+                }
+            }
+        }
+        liveDataUnassignedMatches.observe(viewLifecycleOwner){
+            when(it){
+                is Result.Error -> {}
+                Result.Loading -> {}
+                is Result.Success -> {
+                    matchesAdapter.setData(it.data)
+                }
             }
         }
     }
@@ -65,6 +81,7 @@ class AssignMatchesCreate :
                     }
                     Constants.TYPE_VALUE_TOUR -> {
                         binding.layoutChooserTour.textSubtitle.text = option.valueDisplay
+                        viewModel.getUnassignedMatches(option)
                     }
                 }
             }
@@ -74,6 +91,7 @@ class AssignMatchesCreate :
     private fun initViews() = binding.run {
         layoutChooserDivision.textTitle.text = getString(R.string.assign_matches__division)
         layoutChooserTour.textTitle.text = getString(R.string.assign_matches__tour)
+        recyclerMatches.adapter = matchesAdapter
     }
 
 }

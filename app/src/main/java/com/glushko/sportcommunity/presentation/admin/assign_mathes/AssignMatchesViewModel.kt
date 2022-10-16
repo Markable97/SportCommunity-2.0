@@ -29,6 +29,12 @@ class AssignMatchesViewModel @Inject constructor(
 
     private val _liveDataTours = MutableLiveData<Result<List<String>>>()
 
+    private val _liveDataUnassignedMatches = MutableLiveData<Result<List<MatchUI>>>()
+    val liveDataUnassignedMatches: LiveData<Result<List<MatchUI>>> = _liveDataUnassignedMatches
+
+    private var selectDivision: DivisionUI? = null
+    private var selectionTour: String? = null
+
     private var divisionChooseModel: MutableList<ChooseModel> = mutableListOf()
 
     private var toursChooseModel: MutableList<ChooseModel> = mutableListOf()
@@ -64,6 +70,7 @@ class AssignMatchesViewModel @Inject constructor(
         viewModelScope.launch {
             val divisionUI = _liveDataDivisions.value?.data?.getOrNull(divisionChoose.position?:-1)
             divisionUI?.let { division ->
+                selectDivision = division
                 _liveDataTours.postValue(Result.Loading)
                 val response = assignMatchesRepository.getUnassignedTours(division.id)
                 if(response is Result.Success){
@@ -72,6 +79,22 @@ class AssignMatchesViewModel @Inject constructor(
                         valueType = Constants.TYPE_VALUE_TOUR,
                         position = index
                     ) }.toMutableList()
+                }
+                _liveDataTours.postValue(response)
+            }
+        }
+    }
+
+    fun getUnassignedMatches(tourChoose: ChooseModel){
+        viewModelScope.launch {
+            _liveDataTours.value?.data?.getOrNull(tourChoose.position ?: -1)?.let { tour ->
+                selectionTour = tour
+                if (selectDivision != null){
+                    _liveDataUnassignedMatches.postValue(Result.Loading)
+                    _liveDataUnassignedMatches.postValue(assignMatchesRepository.getUnassignedMatches(
+                        tournamentId = selectDivision!!.id,
+                        tours = tour)
+                    )
                 }
             }
         }
