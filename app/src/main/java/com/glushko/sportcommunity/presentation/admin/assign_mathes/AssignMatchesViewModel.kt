@@ -9,7 +9,9 @@ import com.glushko.sportcommunity.data.choose.model.ChooseModel
 import com.glushko.sportcommunity.data.divisions.model.DivisionUI
 import com.glushko.sportcommunity.data.divisions.model.toChooseModel
 import com.glushko.sportcommunity.domain.repository.admin.assign_matches.AssignMatchesRepository
+import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.data
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +27,11 @@ class AssignMatchesViewModel @Inject constructor(
     private val _liveDataDivisions = MutableLiveData<Result<List<DivisionUI>>>()
     val liveDataDivisions: LiveData<Result<List<DivisionUI>>> = _liveDataDivisions
 
+    private val _liveDataTours = MutableLiveData<Result<List<String>>>()
+
     private var divisionChooseModel: MutableList<ChooseModel> = mutableListOf()
+
+    private var toursChooseModel: MutableList<ChooseModel> = mutableListOf()
 
     init {
         viewModelScope.launch {
@@ -51,5 +57,24 @@ class AssignMatchesViewModel @Inject constructor(
     }
 
     fun getDivisions() = divisionChooseModel
+
+    fun getTours() = toursChooseModel
+
+    fun getToursFromServer(divisionChoose: ChooseModel) {
+        viewModelScope.launch {
+            val divisionUI = _liveDataDivisions.value?.data?.getOrNull(divisionChoose.position?:-1)
+            divisionUI?.let { division ->
+                _liveDataTours.postValue(Result.Loading)
+                val response = assignMatchesRepository.getUnassignedTours(division.id)
+                if(response is Result.Success){
+                    toursChooseModel = response.data.mapIndexed { index, tour -> ChooseModel(
+                        valueDisplay = tour,
+                        valueType = Constants.TYPE_VALUE_TOUR,
+                        position = index
+                    ) }.toMutableList()
+                }
+            }
+        }
+    }
 
 }

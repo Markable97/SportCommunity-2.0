@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class ChooseModel(
     val valueDisplay: String,
     val valueType: Int,
-    var position: Int? = null,
+    val position: Int? = null,
     var isChoose: Boolean = false
 ) : Parcelable

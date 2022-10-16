@@ -46,7 +46,7 @@ class AssignMatchesCreate :
             chooseOption(layoutChooserDivision.textTitle.text.toString(), viewModel.getDivisions())
         }
         layoutChooserTour.root.setOnClickListener {
-
+            chooseOption(layoutChooserTour.textTitle.text.toString(), viewModel.getTours())
         }
     }
 
@@ -58,12 +58,14 @@ class AssignMatchesCreate :
             )
         ) { bundle ->
             (bundle.getParcelable(ChooseDialog.BUNDLE_DATA) as? ChooseModel)?.let { option ->
-                val position = option.position ?: 0
                 when (option.valueType) {
                     Constants.TYPE_VALUE_DIVISION -> {
                         binding.layoutChooserDivision.textSubtitle.text = option.valueDisplay
+                        viewModel.getToursFromServer(option)
                     }
-                    Constants.TYPE_VALUE_TOUR -> {}
+                    Constants.TYPE_VALUE_TOUR -> {
+                        binding.layoutChooserTour.textSubtitle.text = option.valueDisplay
+                    }
                 }
             }
         }
