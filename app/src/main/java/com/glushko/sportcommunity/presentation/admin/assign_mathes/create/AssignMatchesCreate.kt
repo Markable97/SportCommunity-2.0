@@ -86,7 +86,7 @@ class AssignMatchesCreate :
                     Constants.TYPE_VALUE_DIVISION -> {
                         binding.layoutChooserDivision.textSubtitle.text = option.valueDisplay
                         binding.layoutChooserTour.textSubtitle.text = ""
-                        viewModel.getToursFromServer(option)
+                        viewModel.getUnassignedTours(option)
                     }
                     Constants.TYPE_VALUE_TOUR -> {
                         binding.layoutChooserTour.textSubtitle.text = option.valueDisplay

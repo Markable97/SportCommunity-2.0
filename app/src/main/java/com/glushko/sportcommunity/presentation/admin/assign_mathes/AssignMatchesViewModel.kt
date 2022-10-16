@@ -46,8 +46,8 @@ class AssignMatchesViewModel @Inject constructor(
     private val _eventDeleteMatches = EventLiveData<Result<String>>()
     val eventDeleteMatches: LiveData<Result<String>> = _eventDeleteMatches
 
-    private var selectDivision: DivisionUI? = null
-    private var selectionTour: ChooseModel? = null
+    private var selectDivision: ChooseModel? = null
+    private var selectionTour: String? = null
 
     private var divisionChooseModel: MutableList<ChooseModel> = mutableListOf()
 
@@ -80,11 +80,11 @@ class AssignMatchesViewModel @Inject constructor(
 
     fun getTours() = toursChooseModel
 
-    fun getToursFromServer(divisionChoose: ChooseModel) {
+    fun getUnassignedTours(divisionChoose: ChooseModel?) {
         viewModelScope.launch {
-            val divisionUI = _liveDataDivisions.value?.data?.getOrNull(divisionChoose.position?:-1)
+            val divisionUI = _liveDataDivisions.value?.data?.getOrNull(divisionChoose?.position?:-1)
             divisionUI?.let { division ->
-                selectDivision = division
+                selectDivision = divisionChoose
                 _liveDataTours.postValue(Result.Loading)
                 val response = assignMatchesRepository.getUnassignedTours(division.id)
                 if(response is Result.Success){
@@ -103,11 +103,12 @@ class AssignMatchesViewModel @Inject constructor(
     fun getUnassignedMatches(tourChoose: ChooseModel){
         viewModelScope.launch {
             _liveDataTours.value?.data?.getOrNull(tourChoose.position ?: -1)?.let { tour ->
-                selectionTour = tourChoose
-                if (selectDivision != null){
+                selectionTour = tour
+                val tournament = _liveDataDivisions.value?.data?.getOrNull(selectDivision?.position?:-1)
+                if (tournament != null){
                     _liveDataUnassignedMatches.postValue(Result.Loading)
                     _liveDataUnassignedMatches.postValue(assignMatchesRepository.getUnassignedMatches(
-                        tournamentId = selectDivision!!.id,
+                        tournamentId = tournament.id,
                         tours = tour)
                     )
                 }
@@ -115,9 +116,20 @@ class AssignMatchesViewModel @Inject constructor(
         }
     }
 
-    private fun getUnassignedMatches(){
-        selectionTour?.let {
-            getUnassignedMatches(it)
+    private fun getUnassignedMatchesAfterDeleting(deletingMatches: List<MatchUI>){
+        val tournament = _liveDataDivisions.value?.data?.getOrNull(selectDivision?.position?:-1)
+        if (selectionTour!= null && tournament != null){
+            val unassignedMatches = _liveDataUnassignedMatches.value?.data ?: emptyList()
+            if (unassignedMatches.isNotEmpty()){
+                val newUnassignedMatches = deletingMatches.filter {
+                    it.tournamentId == tournament.id && it.tour == selectionTour
+                }.map { it.copy(isSelect = false) }
+
+                if (newUnassignedMatches.isNotEmpty()){
+
+                    _liveDataUnassignedMatches.postValue(Result.Success(unassignedMatches.plus(newUnassignedMatches)))
+                }
+            }
         }
     }
 
@@ -139,6 +151,7 @@ class AssignMatchesViewModel @Inject constructor(
                     assignMatches.toSet()
                 )?: emptyList()))
                 getAssignMatches()
+                checkButtonAssign()
             }
             _eventAssignMatches.postValue(response)
         }
@@ -157,7 +170,9 @@ class AssignMatchesViewModel @Inject constructor(
                         ) ?: emptyList()
                     )
                 )
-                getUnassignedMatches()
+                getUnassignedMatchesAfterDeleting(deletingMatches)
+                getUnassignedTours(selectDivision)
+                checkButtonDelete()
             }
             _eventDeleteMatches.postValue(response)
         }
