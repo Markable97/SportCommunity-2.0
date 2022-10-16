@@ -86,6 +86,7 @@
     <style name="RadioButton">
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
+        <item name="android:buttonTint">@color/purple_200</item>
     </style>
 
 </resources>

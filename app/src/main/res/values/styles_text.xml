@@ -5,6 +5,11 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
+    <style name="FontLight">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="fontWeight">200</item>
+    </style>
+
     <style name="FontMedium">
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
@@ -19,6 +24,10 @@
     </style>
 
     <style name="text14_sp_medium" parent="FontMedium">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="text14_sp_light" parent="FontLight">
         <item name="android:textSize">14sp</item>
     </style>
 

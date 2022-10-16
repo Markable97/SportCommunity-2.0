@@ -1,5 +1,7 @@
 package com.glushko.sportcommunity.data.divisions.model
 
+import com.glushko.sportcommunity.data.choose.model.ChooseModel
+import com.glushko.sportcommunity.util.Constants
 import com.google.gson.annotations.SerializedName
 
 data class Division(
@@ -19,4 +21,11 @@ fun Division.toModel() = DivisionUI(
 data class DivisionUI(
     val id: Int,
     val name: String
+)
+
+fun DivisionUI.toChooseModel(index: Int) = ChooseModel(
+    valueDisplay = name,
+    valueType = Constants.TYPE_VALUE_DIVISION,
+    position = index
+
 )

@@ -6,4 +6,8 @@ object Constants {
 
     const val OPEN_FROM_TOURNAMENT = 1
     const val OPEN_FROM_TEAM = 2
+
+    //Region type value for ChooseDialog
+    const val TYPE_VALUE_DIVISION = 0
+    const val TYPE_VALUE_TOUR = 1
 }

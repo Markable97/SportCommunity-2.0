@@ -11,14 +11,18 @@ class ChooseAdapter(var choosePosition: Int): BaseAdapter<ChooseModel, ItemChoos
     init {
         listenerWithPosition = {item, position ->
             item.isChoose = !item.isChoose
-            notifyItemChanged(choosePosition)
             choosePosition = if (choosePosition != position) {
+                if (choosePosition != -1){
+                    items[choosePosition].isChoose = false
+                    notifyItemChanged(choosePosition)
+                }
                 position
             } else {
+                notifyItemChanged(choosePosition)
                 -1
             }
-            onClickItem?.invoke(choosePosition != -1)
             notifyItemChanged(choosePosition)
+            onClickItem?.invoke(choosePosition != -1)
         }
     }
 

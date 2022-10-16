@@ -18,11 +18,11 @@ class ChooseDialog(): BaseBottomSheetDialogFragment<DialogChooseBinding>() {
         const val BUNDLE_HEIGHT = "BUNDLE_MAX_HEIGHT"
         const val ARGUMENT_KEY_REQUEST = "ARGUMENT_KEY_REQUEST"
 
-        fun prepareBundle(title: String, data: List<ChooseModel>, height: Double = 0.5): Bundle{
+        fun prepareBundle(title: String, data: List<ChooseModel>, height: Double = 1.0): Bundle{
             return bundleOf(
                 BUNDLE_TITLE to title,
                 BUNDLE_DATA to data,
-                BUNDLE_HEIGHT to BUNDLE_HEIGHT
+                BUNDLE_HEIGHT to height
             )
         }
 
@@ -61,6 +61,7 @@ class ChooseDialog(): BaseBottomSheetDialogFragment<DialogChooseBinding>() {
     private fun initRecycler() = binding.run {
         arguments?.getParcelableArrayList<ChooseModel>(BUNDLE_DATA)?.let { data ->
             val choosePosition = data.indexOfFirst { it.isChoose }
+            buttonChoose.isEnabled = choosePosition != -1
             chooseAdapter = ChooseAdapter(choosePosition).apply {
                 setData(data)
                 onClickItem = {

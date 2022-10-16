@@ -4,13 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/layoutChooserDivision"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Создать"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        layout="@layout/item_chooser"/>
+    <include
+        android:id="@+id/layoutChooserTour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layoutChooserDivision"
+        layout="@layout/item_chooser"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMatches"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/layoutChooserTour"
+        app:layout_constraintBottom_toTopOf="@id/buttonAssign"/>
+
+    <Button
+        style="@style/Button"
+        android:id="@+id/buttonAssign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="27dp"
+        android:layout_marginHorizontal="11dp"
+        android:text="@string/assign_matches__button_assign"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

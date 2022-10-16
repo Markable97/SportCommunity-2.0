@@ -65,6 +65,9 @@
 
     <string name="assign_matches__tab_matches">Назначенные</string>
     <string name="assign_matches__tab_create">Создать</string>
+    <string name="assign_matches__button_assign">Назначить</string>
+    <string name="assign_matches__division">Дивизион</string>
+    <string name="assign_matches__tour">Тур</string>
 
 
 
