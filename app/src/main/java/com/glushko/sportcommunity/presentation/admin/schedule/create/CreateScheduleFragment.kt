@@ -6,18 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.util.Pair
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import com.glushko.sportcommunity.R
+import com.glushko.sportcommunity.data.choose.model.ChooseModel
 import com.glushko.sportcommunity.databinding.FragmentScheduleBinding
 import com.glushko.sportcommunity.databinding.FragmentScheduleCreateBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.ChooseDialog
+import com.glushko.sportcommunity.util.Result
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class CreateScheduleFragment: BaseXmlFragment<FragmentScheduleCreateBinding>(R.layout.fragment_schedule_create) {
+
+    private val viewModel: CreateScheduleViewModel by viewModels()
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -28,6 +36,19 @@ class CreateScheduleFragment: BaseXmlFragment<FragmentScheduleCreateBinding>(R.l
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setupListener()
+        setupObservers()
+    }
+
+    private fun setupObservers() = viewModel.run {
+        liveDataStadiums.observe(viewLifecycleOwner){
+            when(it){
+                is Result.Error -> {}
+                Result.Loading -> {}
+                is Result.Success -> {
+
+                }
+            }
+        }
     }
 
     private fun setupListener() = binding.run {
@@ -38,7 +59,15 @@ class CreateScheduleFragment: BaseXmlFragment<FragmentScheduleCreateBinding>(R.l
             showTimeDialog()
         }
         layoutSelectStadium.root.setOnClickListener {
-
+            openChooseDialog(ChooseDialog.prepareBundle(
+                binding.layoutSelectStadium.textTitle.text.toString(),
+                viewModel.getStadiums()
+            )){ data ->
+                data?.let {
+                    viewModel.selectStadium(it)
+                    binding.layoutSelectStadium.textSubtitle.text = it.valueDisplay
+                }
+            }
         }
         switchHalfBreak.setOnCheckedChangeListener { _, isChecked ->
             textInputHalfBreakTime.isVisible = isChecked

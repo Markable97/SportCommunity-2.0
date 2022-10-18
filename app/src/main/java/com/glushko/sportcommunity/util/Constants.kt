@@ -10,4 +10,5 @@ object Constants {
     //Region type value for ChooseDialog
     const val TYPE_VALUE_DIVISION = 0
     const val TYPE_VALUE_TOUR = 1
+    const val TYPE_VALUE_STADIUM = 2
 }

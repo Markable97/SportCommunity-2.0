@@ -80,8 +80,8 @@ class AssignMatchesCreate :
                 title = title,
                 data = dataset
             )
-        ) { bundle ->
-            (bundle.getParcelable(ChooseDialog.BUNDLE_DATA) as? ChooseModel)?.let { option ->
+        ) { data ->
+            data?.let { option ->
                 when (option.valueType) {
                     Constants.TYPE_VALUE_DIVISION -> {
                         binding.layoutChooserDivision.textSubtitle.text = option.valueDisplay

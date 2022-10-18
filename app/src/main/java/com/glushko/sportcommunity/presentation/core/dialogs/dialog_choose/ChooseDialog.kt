@@ -18,7 +18,7 @@ class ChooseDialog(): BaseBottomSheetDialogFragment<DialogChooseBinding>() {
         const val BUNDLE_HEIGHT = "BUNDLE_MAX_HEIGHT"
         const val ARGUMENT_KEY_REQUEST = "ARGUMENT_KEY_REQUEST"
 
-        fun prepareBundle(title: String, data: List<ChooseModel>, height: Double = 1.0): Bundle{
+        fun prepareBundle(title: String, data: List<ChooseModel>, height: Double = 0.8): Bundle{
             return bundleOf(
                 BUNDLE_TITLE to title,
                 BUNDLE_DATA to data,
