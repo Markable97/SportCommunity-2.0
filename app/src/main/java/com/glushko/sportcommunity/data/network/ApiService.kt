@@ -32,6 +32,7 @@ interface ApiService {
         const val GET_UNASSIGNED_MATCHES = "GetUnassignedMatches"
         const val ADD_ASSIGN_MATCHES = "AddAssignMatches"
         const val GET_STADIUMS = "GetStadiums"
+        const val ADD_SCHEDULE = "AddSchedule"
 
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -40,6 +41,7 @@ interface ApiService {
         const val PARAM_TEAM_ID = "team_id"
         const val PARAM_MATCH_ID = "match_id"
         const val PARAM_TOURNAMENT_ID = "tournament_id"
+        const val PARAM_STADIUM_ID = "stadium_id"
         const val PARAM_TOURS = "tours"
         const val PARAM_NATCHES = "matches"
         const val PARAM_ACTION_DELETE = "deleting"
@@ -103,5 +105,16 @@ interface ApiService {
     @GET(GET_STADIUMS)
     suspend fun getStadiums(
         @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int
+    ): Response<JsonObject>
+
+    @GET(ADD_SCHEDULE)
+    suspend fun createSchedule(
+        @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int,
+        @Query(PARAM_STADIUM_ID) stadiumId: Int,
+        @Query("time_start") timeStart: Long,
+        @Query("time_game") timeGame: Int,
+        @Query("time_break_between") timeBreakHalf: Int,
+        @Query("time_break_after") timeBreakBetween: Int,
+        @Query("count_game") countGame: Int
     ): Response<JsonObject>
 }
