@@ -11,7 +11,7 @@
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
         android:drawablePadding="5dp"
         android:textAppearance="@style/text16_sp_medium"
@@ -32,6 +32,7 @@
         tools:text="Subtitle" />
 
     <ImageView
+        android:id="@+id/imageRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -43,10 +44,13 @@
 
     <View
         android:id="@+id/divider"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/textSubtitle" />
+        app:layout_constraintStart_toStartOf="@id/textTitle"
+        app:layout_constraintTop_toBottomOf="@id/textSubtitle"
+        app:layout_constraintEnd_toEndOf="@id/imageRight"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

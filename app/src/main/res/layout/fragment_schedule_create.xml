@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonCreate">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/layoutSelectData"
+                layout="@layout/item_chooser" />
+
+            <include
+                android:id="@+id/layoutSelectTime"
+                layout="@layout/item_chooser" />
+
+            <include
+                android:id="@+id/layoutSelectStadium"
+                layout="@layout/item_chooser" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/CreateScheduleTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/schedule_create__game_count">
+
+                <EditText
+                    android:id="@+id/editGameCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    tools:ignore="LabelFor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/CreateScheduleTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/schedule_create__half_time">
+
+                <EditText
+                    android:id="@+id/editHalfTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    tools:ignore="LabelFor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.SwitchCompat
+                style="@style/CreateScheduleSwitch"
+                android:id="@+id/switchHalfBreak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/schedule_create__half_break"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/CreateScheduleTextInputLayout"
+                android:id="@+id/textInputHalfBreakTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/schedule_create__half_break_time"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <EditText
+                    android:id="@+id/editHalfBreakTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    tools:ignore="LabelFor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.SwitchCompat
+                style="@style/CreateScheduleSwitch"
+                android:id="@+id/switchBetweenBreak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/schedule_create__break_between_game"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/CreateScheduleTextInputLayout"
+                android:id="@+id/textInputBreakBetweenTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/schedule_create__break_between_game_time"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <EditText
+                    android:id="@+id/editBreakBetweenTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    tools:ignore="LabelFor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+        <Button
+            style="@style/Button"
+            android:id="@+id/buttonCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_gravity="bottom"
+            android:text="@string/schedule_create__button"
+            android:layout_marginBottom="27dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

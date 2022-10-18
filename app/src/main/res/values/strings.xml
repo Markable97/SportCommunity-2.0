@@ -70,6 +70,17 @@
     <string name="assign_matches__division">Дивизион</string>
     <string name="assign_matches__tour">Тур</string>
 
+    <string name="schedule_create__button">Создать</string>
+    <string name="schedule_create__date">Дата</string>
+    <string name="schedule_create__game_start">Время старта</string>
+    <string name="schedule_create__stadium">Стадион</string>
+    <string name="schedule_create__game_count">Количество игр*</string>
+    <string name="schedule_create__half_time">Время тайма*</string>
+    <string name="schedule_create__half_break">Перерыв между таймами</string>
+    <string name="schedule_create__half_break_time">Время перерыва</string>
+    <string name="schedule_create__break_between_game">Перерыв между матчами</string>
+    <string name="schedule_create__break_between_game_time">Время перерыва</string>
+
 
 
 
