@@ -8,13 +8,14 @@
 
     <TextView
         android:id="@+id/textStadiumName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="11dp"
         tools:text="Название стадиона"
         android:textAppearance="@style/text16_sp_regular"
         android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/imageOpen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,6 +32,7 @@
         android:layout_marginEnd="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
