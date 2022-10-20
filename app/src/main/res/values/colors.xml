@@ -20,4 +20,5 @@
     <color name="bg_team_header">#d1d1d1</color>
     <color name="bg_tournament_table_team_selected">#2196f3</color>
     <color name="schedule_create_text_hint">#6C6C72</color>
+    <color name="schedule_bg_item_stadium">#A37AFF</color>
 </resources>

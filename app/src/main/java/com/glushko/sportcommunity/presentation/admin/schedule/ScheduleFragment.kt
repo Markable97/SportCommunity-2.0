@@ -18,8 +18,6 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textView2.setOnClickListener {
-            findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToCreateScheduleFragment())
-        }
+
     }
 }

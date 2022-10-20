@@ -19,6 +19,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="text12_sp_regular" parent="FontRegular">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="text12_sp_medium" parent="FontMedium">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="text14_sp_regular" parent="FontRegular">
         <item name="android:textSize">14sp</item>
     </style>
