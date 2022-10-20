@@ -1,6 +1,8 @@
 package com.glushko.sportcommunity.data.admin.schedule.repository
 
 
+import android.icu.util.Calendar
+import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.toModel
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseStadiums
@@ -11,8 +13,8 @@ import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent
 import it.czerwinski.android.hilt.annotations.BoundTo
-import kotlinx.coroutines.yield
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 @BoundTo(supertype =  ScheduleRepository::class, component = SingletonComponent::class)
@@ -60,6 +62,41 @@ class ScheduleRepositoryImpl @Inject constructor(
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(response.data.message)
         }
+    }
+
+    private fun getNamingDayOfWeek(dayOfWeek: Int): String {
+        return when(dayOfWeek){
+            1 -> "ВС"
+            2 -> "ПН"
+            3 -> "ВТ"
+            4 -> "СР"
+            5 -> "ЧТ"
+            6 -> "ПТ"
+            else -> "СБ"
+        }
+    }
+
+    private fun getCalendarDayUI(calendar: Calendar): CalendarDayUI {
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val unixTime = calendar.timeInMillis / 1000
+        return CalendarDayUI(
+            unixTime = unixTime,
+            dayOfMonth = dayOfMonth,
+            dayOfWeek = getNamingDayOfWeek(dayOfWeek),
+            isSelect = true
+        )
+    }
+
+    override fun getCalendar(): List<CalendarDayUI> {
+        val calendar = Calendar.getInstance()
+        val days = mutableListOf<CalendarDayUI>()
+        days.add(getCalendarDayUI(calendar))
+        for (day in 1..14){
+            calendar.add(Calendar.DATE, 1)
+            days.add(getCalendarDayUI(calendar))
+        }
+        return days.toMutableList()
     }
 
 }

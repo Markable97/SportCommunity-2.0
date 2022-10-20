@@ -4,14 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentScheduleBinding
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.CalendarAdapter
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.ScheduleAdapter
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragment_schedule) {
+
+    private val viewModel: ScheduleViewModel by viewModels()
 
     private val adapterSchedule by lazy {
         ScheduleAdapter(
@@ -37,6 +42,13 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
+        setupObservers()
+    }
+
+    private fun setupObservers() = viewModel.run {
+        liveDataCalendar.observe(viewLifecycleOwner){
+            adapterCalendar.setData(it)
+        }
     }
 
     private fun initRecycler() = binding.run {

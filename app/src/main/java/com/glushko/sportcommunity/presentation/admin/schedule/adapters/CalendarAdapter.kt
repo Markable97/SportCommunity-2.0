@@ -7,12 +7,13 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
 import com.glushko.sportcommunity.databinding.ItemCalendarDayBinding
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
+import com.glushko.sportcommunity.util.extensions.setTextColorRes
 
 class CalendarAdapter(
     private val onItemClick: (CalendarDayUI) -> Unit
 ): BaseAdapter<CalendarDayUI, ItemCalendarDayBinding>() {
 
-    private var selectPosition = -1
+    private var selectPosition = 0
 
     init {
         listenerWithPosition = { item, position ->
@@ -33,9 +34,15 @@ class CalendarAdapter(
 
     override fun bindViewHolder(holder: ViewBindingHolder, data: CalendarDayUI) = holder.binding.run {
         textDayOfWeek.text = data.dayOfWeek
-        textDayOfWeek.typeface = if (holder.adapterPosition == selectPosition) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
-        textDayOfMonth.text = data.dayOfMonth
-        textDayOfMonth.background = root.context.getDrawable(if (holder.adapterPosition == selectPosition) R.drawable.bg_rounded_day_of_mounth_select else R.drawable.bg_rounded_day_of_mounth )
-
+        textDayOfMonth.text = data.dayOfMonth.toString()
+        if (holder.adapterPosition == selectPosition) {
+            textDayOfWeek.typeface = Typeface.DEFAULT_BOLD
+            textDayOfMonth.background = root.context.getDrawable(R.drawable.bg_rounded_day_of_mounth_select)
+            textDayOfMonth.setTextColorRes(R.color.white)
+        } else {
+            textDayOfWeek.typeface = Typeface.DEFAULT
+            textDayOfMonth.background = root.context.getDrawable(R.drawable.bg_rounded_day_of_mounth)
+            textDayOfMonth.setTextColorRes(R.color.black)
+        }
     }
 }
