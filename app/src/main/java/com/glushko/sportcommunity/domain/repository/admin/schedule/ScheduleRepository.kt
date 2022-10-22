@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.domain.repository.admin.schedule
 
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
+import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
 import com.glushko.sportcommunity.util.Result
 
@@ -18,4 +19,5 @@ interface ScheduleRepository {
         leagueId: Int = 1
     ): Result<String>
     fun getCalendar(): List<CalendarDayUI>
+    suspend fun getSchedule(unixDate: Long, leagueId: Int = 1): Result<List<ScheduleUI>>
 }

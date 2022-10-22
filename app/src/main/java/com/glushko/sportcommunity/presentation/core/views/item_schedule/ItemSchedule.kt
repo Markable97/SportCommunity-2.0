@@ -1,14 +1,19 @@
 package com.glushko.sportcommunity.presentation.core.views.item_schedule
 
+import android.R.attr
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI
 import com.glushko.sportcommunity.databinding.ViewScheduleItemBinding
 import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
+import com.google.android.flexbox.*
+
 
 class ItemSchedule @JvmOverloads constructor(
     context: Context,
@@ -45,6 +50,12 @@ class ItemSchedule @JvmOverloads constructor(
     init {
         setListeners()
         binding.recyclerTime.adapter = adapterTime
+        binding.recyclerTime.layoutManager = FlexboxLayoutManager(context).apply {
+            justifyContent = JustifyContent.CENTER
+            alignItems = AlignItems.CENTER
+            flexDirection = FlexDirection.ROW
+            flexWrap = FlexWrap.WRAP
+        }
     }
 
     private fun setListeners() = binding.run {
@@ -57,12 +68,17 @@ class ItemSchedule @JvmOverloads constructor(
     }
 
     private fun logicOpen(isOpen: Boolean) = binding.run {
-        imageOpen.rotation = 180F
         recyclerTime.isVisible = isOpen
+        imageOpen.setImageDrawable(
+            context.getDrawable(
+                if (isOpen) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
+            )
+        )
+        divider.isVisible = !isOpen
         root.setBackgroundColor(if (isOpen) R.color.bg_tournament_table_team_selected else R.color.white)
     }
 
-    private fun setTimes(list: List<TimeScheduleUI>){
+    fun setTimes(list: List<TimeScheduleUI>){
         adapterTime.setData(list)
     }
 

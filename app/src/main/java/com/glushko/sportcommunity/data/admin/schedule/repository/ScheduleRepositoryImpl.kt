@@ -3,9 +3,12 @@ package com.glushko.sportcommunity.data.admin.schedule.repository
 
 import android.icu.util.Calendar
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
+import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.toModel
+import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseSchedule
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseStadiums
+import com.glushko.sportcommunity.data.admin.schedule.stadium.network.toModel
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.network.BaseResponse
 import com.glushko.sportcommunity.domain.repository.admin.schedule.ScheduleRepository
@@ -13,8 +16,6 @@ import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent
 import it.czerwinski.android.hilt.annotations.BoundTo
-import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 @BoundTo(supertype =  ScheduleRepository::class, component = SingletonComponent::class)
@@ -81,7 +82,7 @@ class ScheduleRepositoryImpl @Inject constructor(
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val unixTime = calendar.timeInMillis / 1000
         return CalendarDayUI(
-            unixTime = unixTime,
+            unixDate = unixTime,
             dayOfMonth = dayOfMonth,
             dayOfWeek = getNamingDayOfWeek(dayOfWeek),
             isSelect = true
@@ -97,6 +98,19 @@ class ScheduleRepositoryImpl @Inject constructor(
             days.add(getCalendarDayUI(calendar))
         }
         return days.toMutableList()
+    }
+
+    override suspend fun getSchedule(unixDate: Long, leagueId: Int): Result<List<ScheduleUI>> {
+        val response = networkUtils.getResponseResult<ResponseSchedule>(ResponseSchedule::class.java){
+            api.getSchedule(leagueId, unixDate)
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(
+                response.data.toModel()
+            )
+        }
     }
 
 }

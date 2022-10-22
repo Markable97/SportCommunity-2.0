@@ -22,6 +22,7 @@ class ScheduleAdapter(
     override fun bindViewHolder(holder: ViewBindingHolder, data: ScheduleUI) = holder.binding.root.run{
         nameStadium = data.stadium.name
         isOpen = data.isOpen
+        setTimes(data.times)
         setOnOpenClickListener {
             data.isOpen = !data.isOpen
             notifyItemChanged(holder.adapterPosition)

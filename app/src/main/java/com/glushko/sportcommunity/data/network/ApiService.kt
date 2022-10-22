@@ -33,6 +33,7 @@ interface ApiService {
         const val ADD_ASSIGN_MATCHES = "AddAssignMatches"
         const val GET_STADIUMS = "GetStadiums"
         const val ADD_SCHEDULE = "AddSchedule"
+        const val GET_SCHEDULE = "GetSchedule"
 
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -117,4 +118,10 @@ interface ApiService {
         @Query("time_break_after") timeBreakBetween: Int,
         @Query("count_game") countGame: Int
     ): Response<JsonObject>
+
+    @GET(GET_SCHEDULE)
+    suspend fun getSchedule(
+        @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int,
+        @Query("date") date: Long
+    ) : Response<JsonObject>
 }

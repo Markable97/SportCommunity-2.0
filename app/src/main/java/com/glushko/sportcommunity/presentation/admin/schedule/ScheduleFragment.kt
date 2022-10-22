@@ -10,6 +10,7 @@ import com.glushko.sportcommunity.databinding.FragmentScheduleBinding
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.CalendarAdapter
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.ScheduleAdapter
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.util.Result
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -30,6 +31,7 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
         CalendarAdapter(
             onItemClick = {
                 Timber.d("Новый день = $it")
+                viewModel.getSchedule(it.unixDate)
             }
         )
     }
@@ -48,6 +50,15 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
     private fun setupObservers() = viewModel.run {
         liveDataCalendar.observe(viewLifecycleOwner){
             adapterCalendar.setData(it)
+        }
+        liveDataSchedule.observe(viewLifecycleOwner){
+            when(it){
+                is Result.Error -> {}
+                Result.Loading -> {}
+                is Result.Success -> {
+                    adapterSchedule.setData(it.data)
+                }
+            }
         }
     }
 
