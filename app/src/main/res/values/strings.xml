@@ -80,6 +80,8 @@
     <string name="schedule_create__half_break_time">Время перерыва</string>
     <string name="schedule_create__break_between_game">Перерыв между матчами</string>
     <string name="schedule_create__break_between_game_time">Время перерыва</string>
+    <string name="schedule_button_delete">Удалить</string>
+    <string name="schedule_button_assign">Добавить</string>
 
 
 

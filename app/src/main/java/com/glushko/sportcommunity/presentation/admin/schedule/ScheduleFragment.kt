@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentScheduleBinding
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.CalendarAdapter
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.ScheduleAdapter
+import com.glushko.sportcommunity.presentation.admin.schedule.dialogs.view.MatchViewBottomSheetDialogArgs
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +25,14 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
         ScheduleAdapter(
             onclickTime = {stadium, timeSchedule ->
                 Timber.d("Новое время = $stadium $timeSchedule")
+                if (timeSchedule?.match != null){
+                    findNavController().navigate(
+                        ScheduleFragmentDirections.actionScheduleFragmentToMatchViewBottomSheetDialog(
+                            match = timeSchedule,
+                            stadium = stadium
+                        )
+                    )
+                }
             }
         )
     }

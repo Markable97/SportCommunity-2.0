@@ -33,11 +33,26 @@
         <action
             android:id="@+id/action_scheduleFragment_to_createScheduleFragment"
             app:destination="@id/createScheduleFragment" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_matchViewBottomSheetDialog"
+            app:destination="@id/matchViewBottomSheetDialog" />
     </fragment>
     <fragment
         android:id="@+id/createScheduleFragment"
         android:name="com.glushko.sportcommunity.presentation.admin.schedule.create.CreateScheduleFragment"
         android:label="CreateScheduleFragment"
         tools:layout="@layout/fragment_schedule_create"/>
+    <dialog
+        android:id="@+id/matchViewBottomSheetDialog"
+        android:name="com.glushko.sportcommunity.presentation.admin.schedule.dialogs.view.MatchViewBottomSheetDialog"
+        android:label="MatchViewBottomSheetDialog"
+        tools:layout="@layout/dialog_schedule_match_view">
+        <argument
+            android:name="match"
+            app:argType="com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI" />
+        <argument
+            android:name="stadium"
+            app:argType="com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI" />
+    </dialog>
 
 </navigation>

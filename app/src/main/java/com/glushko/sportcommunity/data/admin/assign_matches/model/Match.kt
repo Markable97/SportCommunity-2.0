@@ -1,7 +1,8 @@
 package com.glushko.sportcommunity.data.admin.assign_matches.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-
+import kotlinx.parcelize.Parcelize
 
 
 data class Match(
@@ -23,6 +24,7 @@ data class Match(
     var teamGuestName: String
 )
 
+@Parcelize
 data class MatchUI(
     var matchId: Long,
     var tournamentId: Int,
@@ -33,7 +35,7 @@ data class MatchUI(
     var teamGuestId: Int,
     var teamGuestName: String,
     var isSelect: Boolean = false
-)
+): Parcelable
 
 fun Match.toModel() = MatchUI(
     matchId,
