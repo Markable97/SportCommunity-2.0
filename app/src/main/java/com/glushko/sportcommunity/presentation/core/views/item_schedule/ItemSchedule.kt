@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI
 import com.glushko.sportcommunity.databinding.ViewScheduleItemBinding
 import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
+import com.glushko.sportcommunity.util.extensions.setTextColorRes
 import com.google.android.flexbox.*
 
 
@@ -74,8 +76,9 @@ class ItemSchedule @JvmOverloads constructor(
                 if (isOpen) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
             )
         )
+        textStadiumName.setTextColorRes(if (isOpen) R.color.white else R.color.black)
         divider.isVisible = !isOpen
-        root.setBackgroundColor(if (isOpen) R.color.bg_tournament_table_team_selected else R.color.white)
+        root.background  = ContextCompat.getDrawable(context, if (isOpen) R.color.schedule_bg_item_stadium else R.color.white)
     }
 
     fun setTimes(list: List<TimeScheduleUI>){

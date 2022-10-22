@@ -22,7 +22,7 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
     private val adapterSchedule by lazy {
         ScheduleAdapter(
             onclickTime = {stadium, timeSchedule ->
-
+                Timber.d("Новое время = $stadium $timeSchedule")
             }
         )
     }

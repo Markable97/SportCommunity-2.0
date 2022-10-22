@@ -16,6 +16,6 @@ class ItemScheduleAdapter: BaseAdapter<TimeScheduleUI, ItemScheduleTimeBinding>(
 
     override fun bindViewHolder(holder: ViewBindingHolder, data: TimeScheduleUI) = holder.binding.run {
         textTime.text = data.time
-        cardTime.setCardBackgroundColor(if (data.match != null) R.color.schedule_bg_item_stadium else R.color.schedule_bg_item_with_match)
+        cardTime.setBackgroundResource (if (data.match != null) R.color.schedule_bg_item_with_match  else R.color.schedule_bg_item_stadium)
     }
 }
