@@ -19,8 +19,19 @@ interface ScheduleRepository {
         betweenGameBreakTime: Int = 0,
         leagueId: Int = 1
     ): Result<String>
+
     fun getCalendar(): List<CalendarDayUI>
     suspend fun getSchedule(unixDate: Long, leagueId: Int = 1): Result<List<ScheduleUI>>
     suspend fun getAssignMatches(leagueId: Int = 1): Result<List<MatchUI>>
-    suspend fun addMatchInSchedule(stadiumId: Int, gameDate: String, matchId: Long, leagueId: Int = 1): Result<String>
+    suspend fun addMatchInSchedule(
+        stadiumId: Int,
+        gameDate: String,
+        matchId: Long,
+        leagueId: Int = 1
+    ): Result<String>
+    suspend fun deleteMatchInSchedule(
+        stadiumId: Int,
+        gameDate: String,
+        leagueId: Int = 1
+    ): Result<String>
 }

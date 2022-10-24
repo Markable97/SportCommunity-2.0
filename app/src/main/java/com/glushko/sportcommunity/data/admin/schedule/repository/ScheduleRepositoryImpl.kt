@@ -153,4 +153,29 @@ class ScheduleRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteMatchInSchedule(
+        stadiumId: Int,
+        gameDate: String,
+        leagueId: Int
+    ): Result<String> {
+        val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java){
+            api.addMatchInSchedule(
+                RequestSchedule(
+                    leagueId = leagueId,
+                    stadiumId = stadiumId,
+                    gameDate = gameDate,
+                    matchId = -1,
+                    isDeleting = true
+                )
+            )
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(
+                response.data.message
+            )
+        }
+    }
+
 }

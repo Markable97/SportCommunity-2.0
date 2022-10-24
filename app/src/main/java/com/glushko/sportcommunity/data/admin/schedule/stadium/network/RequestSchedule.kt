@@ -10,5 +10,7 @@ data class RequestSchedule(
     @SerializedName("game_date")
     val gameDate: String,
     @SerializedName("match_id")
-    val matchId: Long
+    val matchId: Long?,
+    @SerializedName("is_deleting")
+    val isDeleting: Boolean = false
 )
