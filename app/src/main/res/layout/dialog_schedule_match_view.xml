@@ -20,7 +20,7 @@
             android:layout_marginStart="16dp"
             android:textColor="@color/black"
             android:layout_marginTop="2dp"
-            android:layout_gravity="center_vertical||start"
+            android:layout_gravity="center_vertical|start"
             app:layout_constraintTop_toBottomOf="@id/textGameDate"
             app:layout_constraintStart_toStartOf="@id/textGameDate"
             app:layout_constraintBottom_toBottomOf="parent"

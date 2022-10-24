@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_scheduleFragment_to_matchViewBottomSheetDialog"
             app:destination="@id/matchViewBottomSheetDialog" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_matchesSelectBottomSheetDialog"
+            app:destination="@id/matchesSelectBottomSheetDialog" />
     </fragment>
     <fragment
         android:id="@+id/createScheduleFragment"
@@ -53,6 +56,18 @@
         <argument
             android:name="stadium"
             app:argType="com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI" />
+    </dialog>
+    <dialog
+        android:id="@+id/matchesSelectBottomSheetDialog"
+        android:name="com.glushko.sportcommunity.presentation.admin.schedule.dialogs.select.MatchesSelectBottomSheetDialog"
+        android:label="MatchesSelectBottomSheetDialog"
+        tools:layout="@layout/dialog_schedule_matches_select">
+        <argument
+            android:name="stadium"
+            app:argType="com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI" />
+        <argument
+            android:name="time"
+            app:argType="com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI" />
     </dialog>
 
 </navigation>

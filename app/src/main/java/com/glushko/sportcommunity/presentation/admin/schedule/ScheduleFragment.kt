@@ -25,11 +25,17 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
         ScheduleAdapter(
             onclickTime = {stadium, timeSchedule ->
                 Timber.d("Новое время = $stadium $timeSchedule")
-                if (timeSchedule?.match != null){
+                if (timeSchedule.match != null){
                     findNavController().navigate(
                         ScheduleFragmentDirections.actionScheduleFragmentToMatchViewBottomSheetDialog(
                             match = timeSchedule,
                             stadium = stadium
+                        )
+                    )
+                } else {
+                    findNavController().navigate(
+                        ScheduleFragmentDirections.actionScheduleFragmentToMatchesSelectBottomSheetDialog(
+                            stadium, timeSchedule
                         )
                     )
                 }
