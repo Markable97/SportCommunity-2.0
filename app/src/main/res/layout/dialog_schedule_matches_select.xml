@@ -39,11 +39,13 @@
         tools:text="21 октября 2022 11:30"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMatches"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
         tools:listitem="@layout/item_assign_match"
         android:layout_marginTop="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/textGameDate"
         app:layout_constraintBottom_toTopOf="@id/buttonSelect"/>
 

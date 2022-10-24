@@ -68,6 +68,9 @@
         <argument
             android:name="time"
             app:argType="com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI" />
+        <argument
+            android:name="assignedMatches"
+            app:argType="com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI[]" />
     </dialog>
 
 </navigation>

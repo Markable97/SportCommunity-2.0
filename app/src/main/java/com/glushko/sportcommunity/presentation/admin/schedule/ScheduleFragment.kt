@@ -13,6 +13,7 @@ import com.glushko.sportcommunity.presentation.admin.schedule.adapters.ScheduleA
 import com.glushko.sportcommunity.presentation.admin.schedule.dialogs.view.MatchViewBottomSheetDialogArgs
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.data
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -35,7 +36,7 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
                 } else {
                     findNavController().navigate(
                         ScheduleFragmentDirections.actionScheduleFragmentToMatchesSelectBottomSheetDialog(
-                            stadium, timeSchedule
+                            stadium, timeSchedule, viewModel.liveDataAssignMatches.value?.data?.toTypedArray()?: emptyArray()
                         )
                     )
                 }

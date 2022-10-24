@@ -2,6 +2,9 @@ package com.glushko.sportcommunity.data.admin.schedule.repository
 
 
 import android.icu.util.Calendar
+import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
+import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatches
+import com.glushko.sportcommunity.data.admin.assign_matches.network.toModel
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
@@ -110,6 +113,17 @@ class ScheduleRepositoryImpl @Inject constructor(
             is Result.Success -> Result.Success(
                 response.data.toModel()
             )
+        }
+    }
+
+    override suspend fun getAssignMatches(leagueId: Int): Result<List<MatchUI>> {
+        val response = networkUtils.getResponseResult<ResponseMatches>(ResponseMatches::class.java) {
+            api.getAssignMatches(leagueId)
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(response.data.toModel())
         }
     }
 

@@ -98,6 +98,7 @@ class AssignMatchesCreate :
     }
 
     private fun initViews() = binding.run {
+        recyclerMatches.adapter = matchesAdapter
         layoutChooserDivision.textTitle.text = getString(R.string.assign_matches__division)
         layoutChooserTour.textTitle.text = getString(R.string.assign_matches__tour)
         recyclerMatches.adapter = matchesAdapter
