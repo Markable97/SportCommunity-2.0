@@ -8,7 +8,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.glushko.sportcommunity.databinding.DialogScheduleMatchesSelectBinding
 import com.glushko.sportcommunity.presentation.base.BaseBottomSheetDialogFragment
+import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MatchesSelectBottomSheetDialog: BaseBottomSheetDialogFragment<DialogScheduleMatchesSelectBinding>() {
@@ -37,6 +40,15 @@ class MatchesSelectBottomSheetDialog: BaseBottomSheetDialogFragment<DialogSchedu
         setMaxHeight(0.8)
         initViews()
         setupObservers()
+        setupListeners()
+    }
+
+    private fun setupListeners() = binding.run {
+        buttonSelect.setSafeOnClickListener {
+            viewModel.addMatchInSchedule(
+                args.stadium, args.time
+            )
+        }
     }
 
     private fun setupObservers() = viewModel.run {
@@ -45,6 +57,15 @@ class MatchesSelectBottomSheetDialog: BaseBottomSheetDialogFragment<DialogSchedu
         }
         liveDataCheckButtonAdd.observe(viewLifecycleOwner){
             binding.buttonSelect.isEnabled = it
+        }
+        eventSuccessAddedMatch.observe(viewLifecycleOwner){
+            when(it){
+                is Result.Error -> {}
+                Result.Loading -> {}
+                is Result.Success -> {
+                    Timber.d(it.data)
+                }
+            }
         }
     }
 

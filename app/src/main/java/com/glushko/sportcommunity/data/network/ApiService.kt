@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.data.network
 
 import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatches
+import com.glushko.sportcommunity.data.admin.schedule.stadium.network.RequestSchedule
 import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.match_detail.network.ResponsePlayersInMatch
@@ -34,6 +35,7 @@ interface ApiService {
         const val GET_STADIUMS = "GetStadiums"
         const val ADD_SCHEDULE = "AddSchedule"
         const val GET_SCHEDULE = "GetSchedule"
+        const val ADD_MATCH_IN_SCHEDULE = "AddMatchesInSchedule"
 
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -123,5 +125,11 @@ interface ApiService {
     suspend fun getSchedule(
         @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int,
         @Query("date") date: Long
+    ) : Response<JsonObject>
+
+
+    @POST(ADD_MATCH_IN_SCHEDULE)
+    suspend fun addMatchInSchedule(
+        @Body match: RequestSchedule
     ) : Response<JsonObject>
 }

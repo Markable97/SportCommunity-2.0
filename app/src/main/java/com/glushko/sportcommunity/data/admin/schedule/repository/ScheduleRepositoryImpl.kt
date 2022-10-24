@@ -9,6 +9,7 @@ import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayU
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.toModel
+import com.glushko.sportcommunity.data.admin.schedule.stadium.network.RequestSchedule
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseSchedule
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseStadiums
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.toModel
@@ -124,6 +125,31 @@ class ScheduleRepositoryImpl @Inject constructor(
             is Result.Error -> Result.Error(response.exception)
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(response.data.toModel())
+        }
+    }
+
+    override suspend fun addMatchInSchedule(
+        stadiumId: Int,
+        gameDate: String,
+        matchId: Long,
+        leagueId: Int
+    ) : Result<String>{
+        val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java){
+            api.addMatchInSchedule(
+                RequestSchedule(
+                    leagueId = leagueId,
+                    stadiumId = stadiumId,
+                    gameDate = gameDate,
+                    matchId = matchId
+                )
+            )
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(
+                response.data.message
+            )
         }
     }
 
