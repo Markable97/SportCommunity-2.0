@@ -56,6 +56,9 @@
         <argument
             android:name="stadium"
             app:argType="com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </dialog>
     <dialog
         android:id="@+id/matchesSelectBottomSheetDialog"
@@ -71,6 +74,9 @@
         <argument
             android:name="assignedMatches"
             app:argType="com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI[]" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </dialog>
 
 </navigation>

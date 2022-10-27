@@ -11,7 +11,6 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentScheduleBinding
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.CalendarAdapter
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.ScheduleAdapter
-import com.glushko.sportcommunity.presentation.admin.schedule.dialogs.view.MatchViewBottomSheetDialog
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data
@@ -21,17 +20,25 @@ import timber.log.Timber
 @AndroidEntryPoint
 class ScheduleFragment : BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragment_schedule) {
 
+    companion object {
+        const val REQUEST_CODE = "REQUEST_CODE"
+        const val BUNDLE_POSITION = "BUNDLE_POSITION"
+        const val BUNDLE_DELETE = "BUNDLE_DELETE"
+        const val BUNDLE_MATCH = "BUNDLE_MATCH"
+    }
+
     private val viewModel: ScheduleViewModel by viewModels()
 
     private val adapterSchedule by lazy {
         ScheduleAdapter(
-            onclickTime = { stadium, timeSchedule ->
+            onclickTime = { stadium, timeSchedule, position ->
                 Timber.d("Новое время = $stadium $timeSchedule")
                 if (timeSchedule.match != null) {
                     findNavController().navigate(
                         ScheduleFragmentDirections.actionScheduleFragmentToMatchViewBottomSheetDialog(
                             match = timeSchedule,
-                            stadium = stadium
+                            stadium = stadium,
+                            position = position
                         )
                     )
                 } else {
@@ -40,7 +47,8 @@ class ScheduleFragment : BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragm
                             stadium,
                             timeSchedule,
                             viewModel.liveDataAssignMatches.value?.data?.toTypedArray()
-                                ?: emptyArray()
+                                ?: emptyArray(),
+                            position
                         )
                     )
                 }
@@ -82,14 +90,15 @@ class ScheduleFragment : BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragm
                     }
                 }
             }
-            eventDeleteMatchInSchedule.observe(viewLifecycleOwner){
+            eventAddMatchInSchedule.observe(viewLifecycleOwner){
                 adapterSchedule.notifyItemChanged(it)
             }
         }
-        setFragmentResultListener(MatchViewBottomSheetDialog.REQUEST_CODE) { _, bundle ->
-            viewModel.deleteMatchInSchedule(
-                bundle.getParcelable(MatchViewBottomSheetDialog.BUNDLE_STADIUM),
-                bundle.getParcelable(MatchViewBottomSheetDialog.BUNDLE_TIME),
+        setFragmentResultListener(REQUEST_CODE) { _, bundle ->
+            adapterSchedule.notifyItemChanged(bundle.getInt(BUNDLE_POSITION, -1))
+            viewModel.actionWithAssignedMatches(
+                isDelete = bundle.getBoolean(BUNDLE_DELETE),
+                math = bundle.getParcelable(BUNDLE_MATCH)
             )
         }
     }

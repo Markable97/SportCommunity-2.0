@@ -29,6 +29,8 @@ class MatchesSelectViewModel @Inject constructor(
 
     private var selectedMatches: MatchUI? = null
 
+    fun getSelectedMatches() = selectedMatches
+
     fun checkButtonAdd(match: MatchUI?) {
         selectedMatches = match
         _liveDataCheckButtonAdd.value = match != null

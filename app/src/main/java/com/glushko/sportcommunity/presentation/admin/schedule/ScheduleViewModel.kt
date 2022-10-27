@@ -27,11 +27,11 @@ class ScheduleViewModel @Inject constructor(
     private val _liveDataSchedule = MutableLiveData<Result<List<ScheduleUI>>>()
     val liveDataSchedule: LiveData<Result<List<ScheduleUI>>> = _liveDataSchedule
 
-    private val _liveDataAssignMatches = MutableLiveData<Result<List<MatchUI>>>()
-    val liveDataAssignMatches: LiveData<Result<List<MatchUI>>> = _liveDataAssignMatches
+    private val _liveDataAssignMatches = MutableLiveData<Result<MutableList<MatchUI>>>()
+    val liveDataAssignMatches: LiveData<Result<MutableList<MatchUI>>> = _liveDataAssignMatches
 
-    private val _eventDeleteMatchInSchedule = MutableLiveData<Int>()
-    val eventDeleteMatchInSchedule: LiveData<Int> = _eventDeleteMatchInSchedule
+    private val _eventAddMatchInSchedule = MutableLiveData<Int>()
+    val eventAddMatchInSchedule: LiveData<Int> = _eventAddMatchInSchedule
 
     init {
         getAssignedMatches()
@@ -51,17 +51,13 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun deleteMatchInSchedule(stadium: StadiumUI?, time: TimeScheduleUI?) {
-        _liveDataSchedule.value?.data?.let { listSchedule ->
-            val index = listSchedule.indexOfFirst { schedule ->
-                schedule == listSchedule.firstOrNull(){ it.stadium == stadium}
-            }
-            if (index != -1 ){
-                val timeSchedule = listSchedule[index].times.find { it == time }
-                if (timeSchedule != null) {
-                    timeSchedule.match = null
-                    _eventDeleteMatchInSchedule.postValue(index)
-                }
+    fun actionWithAssignedMatches(isDelete: Boolean, math: MatchUI?) {
+        if (math == null) return
+        _liveDataAssignMatches.value?.data?.let { assignedMatches ->
+            if (isDelete){
+                assignedMatches.add(math)
+            } else {
+                assignedMatches.remove(math)
             }
         }
     }

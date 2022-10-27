@@ -10,7 +10,7 @@ import com.glushko.sportcommunity.databinding.ItemScheduleBinding
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
 
 class ScheduleAdapter(
-    private val onclickTime: ( (StadiumUI, TimeScheduleUI) -> Unit )
+    private val onclickTime: ( (StadiumUI, TimeScheduleUI, Int) -> Unit )
 ): BaseAdapter<ScheduleUI, ItemScheduleBinding>() {
 
     override fun getBinding(
@@ -28,7 +28,7 @@ class ScheduleAdapter(
             notifyItemChanged(holder.adapterPosition)
         }
         setOnTimeClickListener {
-            onclickTime.invoke(data.stadium, it)
+            onclickTime.invoke(data.stadium, it, holder.adapterPosition)
         }
     }
 }

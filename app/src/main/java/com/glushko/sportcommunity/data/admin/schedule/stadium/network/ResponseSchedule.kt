@@ -25,7 +25,7 @@ fun ResponseSchedule.toModel(): List<ScheduleUI>{
     }.map {
         ScheduleUI(
             it.key,
-            it.value
+            it.value.toMutableList()
         )
     }
     Timber.d("$scheduleList")

@@ -117,14 +117,14 @@ class ScheduleRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAssignMatches(leagueId: Int): Result<List<MatchUI>> {
+    override suspend fun getAssignMatches(leagueId: Int): Result<MutableList<MatchUI>> {
         val response = networkUtils.getResponseResult<ResponseMatches>(ResponseMatches::class.java) {
             api.getAssignMatches(leagueId)
         }
         return when(response){
             is Result.Error -> Result.Error(response.exception)
             Result.Loading -> Result.Loading
-            is Result.Success -> Result.Success(response.data.toModel())
+            is Result.Success -> Result.Success(response.data.toModel().toMutableList())
         }
     }
 

@@ -12,6 +12,6 @@ data class Schedule(
 
 data class ScheduleUI(
     val stadium: StadiumUI,
-    val times: List<TimeScheduleUI>,
+    val times: MutableList<TimeScheduleUI>,
     var isOpen: Boolean = false
 )
