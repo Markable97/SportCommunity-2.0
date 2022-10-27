@@ -27,10 +27,12 @@
             tools:text="Спартак 2"/>
 
         <ImageView
+            android:id="@+id/imageClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close"
             android:padding="10dp"
+            android:layout_marginEnd="16dp"
             android:contentDescription="@null"
             android:layout_gravity="end"/>
 

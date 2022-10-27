@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 data class TimeScheduleUI(
     val time: String,
     val date: String,
-    val match: MatchUI?
+    var match: MatchUI?
 ): Parcelable

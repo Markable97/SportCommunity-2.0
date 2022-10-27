@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.glushko.sportcommunity.databinding.DialogScheduleMatchViewBinding
@@ -16,6 +19,12 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class MatchViewBottomSheetDialog: BaseBottomSheetDialogFragment<DialogScheduleMatchViewBinding>() {
+
+    companion object {
+        const val REQUEST_CODE = "MatchViewBottomSheetDialog request code"
+        const val BUNDLE_STADIUM = "BUNDLE_STADIUM"
+        const val BUNDLE_TIME = "BUNDLE_MATCH"
+    }
 
     private val args: MatchViewBottomSheetDialogArgs by navArgs()
 
@@ -39,15 +48,23 @@ class MatchViewBottomSheetDialog: BaseBottomSheetDialogFragment<DialogScheduleMa
                 is Result.Error -> {}
                 Result.Loading -> {}
                 is Result.Success -> {
-                    Timber.d(it.data)
+                    parentFragmentManager.setFragmentResult(REQUEST_CODE, bundleOf(
+                        BUNDLE_TIME to args.match, BUNDLE_STADIUM to args.stadium
+                    ))
+                    dismiss()
                 }
             }
         }
     }
 
     private fun setupListeners() {
-        binding.buttonDelete.setSafeOnClickListener {
-            viewModel.deleteMatch(args.stadium, args.match)
+        binding.run {
+            buttonDelete.setSafeOnClickListener {
+                viewModel.deleteMatch(args.stadium, args.match)
+            }
+            imageClose.setSafeOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

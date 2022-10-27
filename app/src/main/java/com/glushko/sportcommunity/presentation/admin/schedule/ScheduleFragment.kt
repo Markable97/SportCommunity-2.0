@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentScheduleBinding
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.CalendarAdapter
 import com.glushko.sportcommunity.presentation.admin.schedule.adapters.ScheduleAdapter
-import com.glushko.sportcommunity.presentation.admin.schedule.dialogs.view.MatchViewBottomSheetDialogArgs
+import com.glushko.sportcommunity.presentation.admin.schedule.dialogs.view.MatchViewBottomSheetDialog
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data
@@ -18,15 +19,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragment_schedule) {
+class ScheduleFragment : BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragment_schedule) {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
     private val adapterSchedule by lazy {
         ScheduleAdapter(
-            onclickTime = {stadium, timeSchedule ->
+            onclickTime = { stadium, timeSchedule ->
                 Timber.d("Новое время = $stadium $timeSchedule")
-                if (timeSchedule.match != null){
+                if (timeSchedule.match != null) {
                     findNavController().navigate(
                         ScheduleFragmentDirections.actionScheduleFragmentToMatchViewBottomSheetDialog(
                             match = timeSchedule,
@@ -36,7 +37,10 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
                 } else {
                     findNavController().navigate(
                         ScheduleFragmentDirections.actionScheduleFragmentToMatchesSelectBottomSheetDialog(
-                            stadium, timeSchedule, viewModel.liveDataAssignMatches.value?.data?.toTypedArray()?: emptyArray()
+                            stadium,
+                            timeSchedule,
+                            viewModel.liveDataAssignMatches.value?.data?.toTypedArray()
+                                ?: emptyArray()
                         )
                     )
                 }
@@ -64,18 +68,29 @@ class ScheduleFragment: BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragme
         setupObservers()
     }
 
-    private fun setupObservers() = viewModel.run {
-        liveDataCalendar.observe(viewLifecycleOwner){
-            adapterCalendar.setData(it)
-        }
-        liveDataSchedule.observe(viewLifecycleOwner){
-            when(it){
-                is Result.Error -> {}
-                Result.Loading -> {}
-                is Result.Success -> {
-                    adapterSchedule.setData(it.data)
+    private fun setupObservers() {
+        with(viewModel) {
+            liveDataCalendar.observe(viewLifecycleOwner) {
+                adapterCalendar.setData(it)
+            }
+            liveDataSchedule.observe(viewLifecycleOwner) {
+                when (it) {
+                    is Result.Error -> {}
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        adapterSchedule.setData(it.data)
+                    }
                 }
             }
+            eventDeleteMatchInSchedule.observe(viewLifecycleOwner){
+                adapterSchedule.notifyItemChanged(it)
+            }
+        }
+        setFragmentResultListener(MatchViewBottomSheetDialog.REQUEST_CODE) { _, bundle ->
+            viewModel.deleteMatchInSchedule(
+                bundle.getParcelable(MatchViewBottomSheetDialog.BUNDLE_STADIUM),
+                bundle.getParcelable(MatchViewBottomSheetDialog.BUNDLE_TIME),
+            )
         }
     }
 
