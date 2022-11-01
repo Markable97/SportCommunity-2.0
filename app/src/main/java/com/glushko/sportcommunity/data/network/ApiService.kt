@@ -36,6 +36,7 @@ interface ApiService {
         const val ADD_SCHEDULE = "AddSchedule"
         const val GET_SCHEDULE = "GetSchedule"
         const val ADD_MATCH_IN_SCHEDULE = "AddMatchesInSchedule"
+        const val GET_ACTIONS = "GetActions"
 
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -132,4 +133,7 @@ interface ApiService {
     suspend fun addMatchInSchedule(
         @Body match: RequestSchedule
     ) : Response<JsonObject>
+
+    @GET(GET_ACTIONS)
+    suspend fun getActions(): Response<JsonObject>
 }
