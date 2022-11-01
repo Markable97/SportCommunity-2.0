@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
+    private val destinationWithoutLabel = listOf(R.id.createScheduleFragment)
+
     private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment,
         R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment, R.id.statisticsFragment,
         R.id.squadFragment, R.id.squadFragment, R.id.scheduleFragment, R.id.assignMatchesFragment,
@@ -88,6 +90,9 @@ class MainActivity : AppCompatActivity() {
             Timber.d("Пришло в addOnDestinationChangedListener = ${destination.id} parent = ${destination.parent?.startDestinationId}")
             if(destination.id in destinationWithBack){
                 showBackButton(true)
+                if (destination.id !in destinationWithoutLabel){
+                    binding.toolbar.title = destination.label
+                }
             }else{
                 showBackButton(false)
             }
@@ -142,6 +147,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //call from Activity
     fun setToolbarTitle(title: String){
         binding.toolbar.title = title
     }
@@ -186,9 +192,9 @@ class MainActivity : AppCompatActivity() {
             if (fm.backStackEntryCount > 0) {
                 fm.popBackStack()
             } else {
+                setToolbarTitle(backupTitle)
                 super.onBackPressed()
             }
-            setToolbarTitle(backupTitle)
             backupItem?.let {
                 binding.navigationView.setCheckedItem(it)
             }

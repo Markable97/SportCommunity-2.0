@@ -19,18 +19,22 @@
             app:destination="@id/assignMatchesFragment" />
         <action
             android:id="@+id/action_adminFragment_to_editMatchListFragment"
-            app:destination="@id/nested_navigation_edit_matches" />
+            app:destination="@id/nested_navigation_edit_matches"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/assignMatchesFragment"
         android:name="com.glushko.sportcommunity.presentation.admin.assign_mathes.AssignMatchesFragment"
-        android:label="AssignMatchesFragment"
+        android:label="@string/admin_menu__assign_matches"
         tools:layout="@layout/fragment_assign_matches"
         />
     <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.glushko.sportcommunity.presentation.admin.schedule.ScheduleFragment"
-        android:label="ScheduleFragment"
+        android:label="@string/admin_menu__schedule"
         tools:layout="@layout/fragment_schedule"
         >
         <action
@@ -86,16 +90,20 @@
         <fragment
             android:id="@+id/editMatchListFragment"
             android:name="com.glushko.sportcommunity.presentation.admin.edit_match.list.EditMatchListFragment"
-            android:label="EditMatchListFragment"
+            android:label="@string/admin_menu__matches_edit"
             tools:layout="@layout/fragment_matches_edit" >
             <action
                 android:id="@+id/action_editMatchListFragment_to_editMatchFragment"
-                app:destination="@id/editMatchFragment" />
+                app:destination="@id/editMatchFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         </fragment>
         <fragment
             android:id="@+id/editMatchFragment"
             android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.EditMatchFragment"
-            android:label="EditMatchFragment"
+            android:label="@string/edit_match"
             tools:layout="@layout/fragment_match_edit" />
     </navigation>
 
