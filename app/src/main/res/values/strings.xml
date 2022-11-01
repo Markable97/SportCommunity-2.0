@@ -62,6 +62,9 @@
 
     <string name="admin_menu__assign_matches">Назначенные матчи</string>
     <string name="admin_menu__schedule">Расписание</string>
+    <string name="admin_menu__matches_edit">Редактирование матчей</string>
+
+    <string name="edit_match">Матч</string>
 
     <string name="assign_matches__tab_matches">Назначенные</string>
     <string name="assign_matches__tab_create">Создать</string>
@@ -69,6 +72,7 @@
     <string name="assign_matches__button_delete">Удалить</string>
     <string name="assign_matches__division">Дивизион</string>
     <string name="assign_matches__tour">Тур</string>
+    <string name="assign_matches__two_dots_vs"> : </string>
 
     <string name="schedule_create__button">Создать</string>
     <string name="schedule_create__date">Дата</string>

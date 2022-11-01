@@ -101,4 +101,14 @@
         <item name="android:textAppearance">@style/text16_sp_regular</item>
         <item name="android:textColor">@color/schedule_create_text_hint</item>
     </style>
+
+    <style name="EditTextGoals">
+        <item name="android:textAppearance">@style/text30_sp_bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingHorizontal">5dp</item>
+        <item name="android:inputType">numberSigned</item>
+        <item name="android:importantForAutofill">no</item>
+    </style>
 </resources>

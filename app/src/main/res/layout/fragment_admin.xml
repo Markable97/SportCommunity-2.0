@@ -10,5 +10,8 @@
     <include
         android:id="@+id/layoutSchedule"
         layout="@layout/item_menu_navigate"/>
+    <include
+        android:id="@+id/layoutEditNatches"
+        layout="@layout/item_menu_navigate"/>
 
 </LinearLayout>

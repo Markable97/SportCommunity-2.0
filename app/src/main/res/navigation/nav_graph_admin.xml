@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_adminFragment_to_assignMatchesFragment"
             app:destination="@id/assignMatchesFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_editMatchListFragment"
+            app:destination="@id/nested_navigation_edit_matches" />
     </fragment>
     <fragment
         android:id="@+id/assignMatchesFragment"
@@ -78,5 +81,22 @@
             android:name="position"
             app:argType="integer" />
     </dialog>
+    <navigation android:id="@+id/nested_navigation_edit_matches"
+        app:startDestination="@id/editMatchListFragment">
+        <fragment
+            android:id="@+id/editMatchListFragment"
+            android:name="com.glushko.sportcommunity.presentation.admin.edit_match.list.EditMatchListFragment"
+            android:label="EditMatchListFragment"
+            tools:layout="@layout/fragment_matches_edit" >
+            <action
+                android:id="@+id/action_editMatchListFragment_to_editMatchFragment"
+                app:destination="@id/editMatchFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/editMatchFragment"
+            android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.EditMatchFragment"
+            android:label="EditMatchFragment"
+            tools:layout="@layout/fragment_match_edit" />
+    </navigation>
 
 </navigation>
