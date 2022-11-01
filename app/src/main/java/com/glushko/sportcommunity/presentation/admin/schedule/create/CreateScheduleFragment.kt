@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentScheduleCreateBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
@@ -55,6 +56,7 @@ class CreateScheduleFragment: BaseXmlFragment<FragmentScheduleCreateBinding>(R.l
                 Result.Loading -> {}
                 is Result.Success -> {
                     toast(requireContext(), it.data)
+                    findNavController().popBackStack()
                 }
             }
         }
