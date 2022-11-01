@@ -14,6 +14,7 @@ import com.glushko.sportcommunity.presentation.admin.schedule.adapters.ScheduleA
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data
+import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -74,6 +75,13 @@ class ScheduleFragment : BaseXmlFragment<FragmentScheduleBinding>(R.layout.fragm
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         setupObservers()
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        binding.floatingButtonCreateSchedule.setSafeOnClickListener {
+            findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToCreateScheduleFragment())
+        }
     }
 
     private fun setupObservers() {
