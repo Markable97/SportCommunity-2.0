@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import coil.load
 import com.glushko.sportcommunity.R
@@ -101,6 +102,7 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
         }
         eventEnableScore.observe(viewLifecycleOwner){isEnable ->
             enableScore(!isEnable)
+            binding.floatingButtonCreateAction.isVisible = isEnable
         }
 
     }
