@@ -7,8 +7,13 @@ import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
 import com.glushko.sportcommunity.databinding.ItemActionEditBinding
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 
-class ActionsAdapter : BaseAdapter<PlayerWithActionUI, ItemActionEditBinding>() {
+class ActionsAdapter(
+    private val onClickButtonDelete: (Int) -> Unit
+) : BaseAdapter<PlayerWithActionUI, ItemActionEditBinding>() {
+
+
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -32,6 +37,10 @@ class ActionsAdapter : BaseAdapter<PlayerWithActionUI, ItemActionEditBinding>() 
             buttonSave.isVisible = !data.isSaving
             buttonDelete.isVisible = !data.isSaving
             buttonEdit.isVisible = data.isSaving
+
+            buttonDelete.setSafeOnClickListener {
+                onClickButtonDelete.invoke(holder.adapterPosition)
+            }
         }
     }
 }

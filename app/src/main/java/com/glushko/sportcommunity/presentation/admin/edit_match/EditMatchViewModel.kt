@@ -41,6 +41,9 @@ class EditMatchViewModel @Inject constructor(
     private val _eventAddAction = EventLiveData<Int>()
     val eventAddAction: LiveData<Int> = _eventAddAction
 
+    private val _eventDeleteAction = EventLiveData<Int>()
+    val eventDeleteAction: LiveData<Int> = _eventDeleteAction
+
     private val _eventChangeUpdateButtonText = EventLiveData<Int>()
     val eventChangeUpdateButtonText: LiveData<Int> = _eventChangeUpdateButtonText
 
@@ -86,6 +89,11 @@ class EditMatchViewModel @Inject constructor(
     private fun buttonUpdateSetText(isSaved: Boolean){
         val text = if (isSaved) R.string.edit_match__button_edit_result else R.string.edit_match__button_save_result
         _eventChangeUpdateButtonText.postValue(text)
+    }
+
+    fun deleteAction(position: Int) {
+        playersWithActions.removeAt(position)
+        _eventDeleteAction.postValue(position)
     }
 
 }

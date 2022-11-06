@@ -25,7 +25,11 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
     private val viewModel: EditMatchViewModel by hiltNavGraphViewModels(R.id.nested_navigation_edit_matches)
 
     private val actionAdapter by lazy {
-        ActionsAdapter()
+        ActionsAdapter(
+            onClickButtonDelete = { position ->
+                viewModel.deleteAction(position)
+            }
+        )
     }
 
     override fun initBinding(
@@ -93,9 +97,12 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
         liveDataPlayersWithActions.observe(viewLifecycleOwner){
             actionAdapter.setData(it)
         }
-        eventAddAction.observe(viewLifecycleOwner){
-            actionAdapter.notifyDataSetChanged()
-            binding.recyclerActions.scrollToPosition(it - 1)
+        eventAddAction.observe(viewLifecycleOwner){ position ->
+            actionAdapter.notifyItemInserted(position)
+            binding.recyclerActions.scrollToPosition(position - 1)
+        }
+        eventDeleteAction.observe(viewLifecycleOwner) { position ->
+            actionAdapter.notifyItemRemoved(position)
         }
         eventChangeUpdateButtonText.observe(viewLifecycleOwner){ text ->
             binding.buttonUpdate.text = getString(text)
