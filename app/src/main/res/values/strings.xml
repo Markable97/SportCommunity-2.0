@@ -65,6 +65,15 @@
     <string name="admin_menu__matches_edit">Редактирование матчей</string>
 
     <string name="edit_match">Матч</string>
+    <string name="edit_match__button_save_result">Сохрнаить результат</string>
+    <string name="edit_match__button_edit_result">Редактировать результат</string>
+    <string name="edit_match__button_save_action">Сохрнаить</string>
+    <string name="edit_match__button_delete_action">Удалить</string>
+    <string name="edit_match__button_edit_action">редактировать</string>
+    <string name="edit_match__edit_player">Игрок</string>
+    <string name="edit_match__edit_assistant">Ассистент</string>
+    <string name="edit_match__edit_time">Время</string>
+    <string name="edit_match__edit_action">Действие</string>
 
     <string name="assign_matches__tab_matches">Назначенные</string>
     <string name="assign_matches__tab_create">Создать</string>

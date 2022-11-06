@@ -10,13 +10,19 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.databinding.FragmentMatchEditBinding
 import com.glushko.sportcommunity.presentation.admin.edit_match.EditMatchViewModel
+import com.glushko.sportcommunity.presentation.admin.edit_match.edit.adapters.ActionsAdapter
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 import com.glushko.sportcommunity.util.extensions.visible
 
 class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.fragment_match_edit) {
 
     private val viewModel: EditMatchViewModel by hiltNavGraphViewModels(R.id.nested_navigation_edit_matches)
+
+    private val actionAdapter by lazy {
+        ActionsAdapter()
+    }
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -25,7 +31,19 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecycler()
         setupObservers()
+        setupListener()
+    }
+
+    private fun setupListener() = binding.run {
+        floatingButtonCreateAction.setSafeOnClickListener {
+            viewModel.addAction()
+        }
+    }
+
+    private fun initRecycler() {
+        binding.recyclerActions.adapter = actionAdapter
     }
 
     private fun setupObservers() = viewModel.run {
@@ -33,6 +51,13 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
             if (it != null) {
                 initView(it)
             }
+        }
+        liveDataPlayersWithActions.observe(viewLifecycleOwner){
+            actionAdapter.setData(it)
+        }
+        eventAddAction.observe(viewLifecycleOwner){
+            actionAdapter.notifyDataSetChanged()
+            binding.recyclerActions.scrollToPosition(it - 1)
         }
     }
 

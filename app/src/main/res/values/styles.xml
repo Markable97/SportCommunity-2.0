@@ -111,4 +111,13 @@
         <item name="android:inputType">numberSigned</item>
         <item name="android:importantForAutofill">no</item>
     </style>
+
+   <style name="EditTextAction">
+       <item name="android:clickable">true</item>
+       <item name="android:cursorVisible">false</item>
+       <item name="android:focusable">true</item>
+       <item name="android:focusableInTouchMode">false</item>
+   </style>
+
+
 </resources>
