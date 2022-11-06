@@ -6,6 +6,9 @@
 
     <string name="choose">Выбрать</string>
 
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
     <!-- Tittle item bottom navigate -->
     <string name="bottom_tittle__calendar">Календарь</string>
     <string name="bottom_tittle__results">Результаты</string>
@@ -74,6 +77,9 @@
     <string name="edit_match__edit_assistant">Ассистент</string>
     <string name="edit_match__edit_time">Время</string>
     <string name="edit_match__edit_action">Действие</string>
+    <string name="edit_match__empty_score">Заполните счет</string>
+    <string name="edit_match__warning_title">Предупреждение</string>
+    <string name="edit_match__warning_message">При редактировании будут сброшены все голы. Продолжить?</string>
 
     <string name="assign_matches__tab_matches">Назначенные</string>
     <string name="assign_matches__tab_create">Создать</string>

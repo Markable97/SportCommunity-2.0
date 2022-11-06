@@ -36,7 +36,8 @@ data class MatchUI(
     var teamGuestName: String,
     var isSelect: Boolean = false,
     var teamHomeGoals: Int? = null,
-    var teamGuestGoals: Int? = null
+    var teamGuestGoals: Int? = null,
+    var isSaved: Boolean = false
 ): Parcelable
 
 fun Match.toModel() = MatchUI(

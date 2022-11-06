@@ -13,8 +13,11 @@ import com.glushko.sportcommunity.presentation.admin.edit_match.EditMatchViewMod
 import com.glushko.sportcommunity.presentation.admin.edit_match.edit.adapters.ActionsAdapter
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.extensions.enable
 import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
+import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.visible
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.fragment_match_edit) {
 
@@ -40,6 +43,40 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
         floatingButtonCreateAction.setSafeOnClickListener {
             viewModel.addAction()
         }
+        buttonUpdate.setSafeOnClickListener {
+            with(layoutHeader){
+                val goalsHome = editGoalsHome.text.toString()
+                val goalsGuest = editGoalsGuest.text.toString()
+                if (goalsHome.isNotBlank()
+                    && goalsGuest.isNotBlank() ) {
+                    displayWarning(goalsHome, goalsGuest)
+                } else {
+                    snackbar(binding.root, getString(R.string.edit_match__empty_score))
+                }
+            }
+        }
+    }
+
+    private fun displayWarning(goalsHome: String, goalsGuest: String){
+        if (viewModel.liveDataSelectedMatch.value?.isSaved == true) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.edit_match__warning_title))
+                .setMessage(getString(R.string.edit_match__warning_message))
+                .setPositiveButton(getString(R.string.yes)){ _, _ ->
+                    viewModel.createOrClearResult(
+                        goalsHome,
+                        goalsGuest
+                    )
+                }
+                .setNegativeButton(getString(R.string.no)){ _, _ ->
+                }
+                .show()
+        } else {
+            viewModel.createOrClearResult(
+                goalsHome,
+                goalsGuest
+            )
+        }
     }
 
     private fun initRecycler() {
@@ -59,6 +96,18 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
             actionAdapter.notifyDataSetChanged()
             binding.recyclerActions.scrollToPosition(it - 1)
         }
+        eventChangeUpdateButtonText.observe(viewLifecycleOwner){ text ->
+            binding.buttonUpdate.text = getString(text)
+        }
+        eventEnableScore.observe(viewLifecycleOwner){isEnable ->
+            enableScore(!isEnable)
+        }
+
+    }
+
+    private fun enableScore(isEnable: Boolean) = binding.layoutHeader.run {
+        editGoalsHome.isEnabled = isEnable
+        editGoalsGuest.isEnabled = isEnable
     }
 
     private fun initView(data: MatchUI) = binding.layoutHeader.run {
@@ -75,7 +124,5 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
             editGoalsGuest.setText(data.teamGuestGoals.toString())
         }
         groupScore.visible()
-        editGoalsGuest.isEnabled = true
-        editGoalsHome.isClickable = true
     }
 }
