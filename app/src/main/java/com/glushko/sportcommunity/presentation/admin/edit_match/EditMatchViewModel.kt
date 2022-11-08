@@ -1,6 +1,5 @@
 package com.glushko.sportcommunity.presentation.admin.edit_match
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,6 @@ import com.glushko.sportcommunity.data.choose.model.ChooseModel
 import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRepository
 import com.glushko.sportcommunity.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +24,9 @@ class EditMatchViewModel @Inject constructor(
 
     private var actions = listOf<ChooseModel>()
     private var playersWithActions = mutableListOf<PlayerWithActionUI>()
+
+    private var playersHome = mutableListOf<PLayerUI>()
+    private var playersGuest = mutableListOf<PLayerUI>()
 
     private val _liveDataPlayersWithActions = MutableLiveData<MutableList<PlayerWithActionUI>>(
         playersWithActions
@@ -41,11 +42,11 @@ class EditMatchViewModel @Inject constructor(
     private val _liveDataActions = MutableLiveData<Result<List<ActionUI>>>()
     val liveDataActions: LiveData<Result<List<ActionUI>>> = _liveDataActions
 
-    private val _liveDataPLayersTeamHome = MutableLiveData<List<PLayerUI>>()
-    val liveDataPLayersTeamHome: LiveData<List<PLayerUI>> = _liveDataPLayersTeamHome
+    private val _liveDataPLayersTeamHome = MutableLiveData<List<ChooseModel>>()
+    val liveDataPLayersTeamHome: LiveData<List<ChooseModel>> = _liveDataPLayersTeamHome
 
-    private val _liveDataPLayersTeamGuest = MutableLiveData<List<PLayerUI>>()
-    val liveDataPLayersTeamGuest: LiveData<List<PLayerUI>> = _liveDataPLayersTeamGuest
+    private val _liveDataPLayersTeamGuest = MutableLiveData<List<ChooseModel>>()
+    val liveDataPLayersTeamGuest: LiveData<List<ChooseModel>> = _liveDataPLayersTeamGuest
 
     private val _eventAddAction = EventLiveData<Int>()
     val eventAddAction: LiveData<Int> = _eventAddAction
@@ -65,6 +66,8 @@ class EditMatchViewModel @Inject constructor(
     private val _eventSaveResult = EventLiveData<Result<String>>()
     val eventSaveResult: LiveData<Result<String>> = _eventSaveResult
 
+    private val _eventSelectPlayer = EventLiveData<PLayerUI>()
+    val eventSelectPlayer: LiveData<PLayerUI> = _eventSelectPlayer
 
     init {
         viewModelScope.launch {
@@ -90,7 +93,30 @@ class EditMatchViewModel @Inject constructor(
 
     private fun getPlayersForMatch(teamHome: Int, teamGuest: Int){
         viewModelScope.launch {
-            //TODO filter player by teams
+            val response = editMatchRepository.getPlayersForMatch(teamHome, teamGuest)
+            if (response is Result.Success) {
+                playersHome.clear()
+                playersGuest.clear()
+                response.data.forEach { player ->
+                    if (player.teamId == teamHome) {
+                        playersHome.add(player)
+                    } else {
+                        playersGuest.add(player)
+                    }
+                }
+                _liveDataPLayersTeamHome.postValue(
+                    playersHome.mapIndexed { index, pLayerUI ->
+                        pLayerUI.toChooseModel(index)
+                    }
+                )
+                _liveDataPLayersTeamGuest.postValue(
+                    playersGuest.mapIndexed { index, pLayerUI ->
+                    pLayerUI.toChooseModel(index)
+                })
+            } else {
+                _liveDataPLayersTeamGuest.postValue(emptyList())
+                _liveDataPLayersTeamHome.postValue(emptyList())
+            }
         }
     }
 
@@ -133,11 +159,38 @@ class EditMatchViewModel @Inject constructor(
     fun setActionToPlayer(data: ChooseModel, position: Int) {
         playersWithActions[position].action = _liveDataActions.value?.data?.getOrNull(data.position ?: -1)
         _eventUpdateAction.postValue(position)
+        actions.forEach {
+            it.isChoose = false
+        }
     }
 
     fun setTimeToPLayer(minute: String, second: String, position: Int) {
         playersWithActions[position].time = "$minute:$second"
         _eventUpdateAction.postValue(position)
+    }
+
+    fun selectPlayer(data: ChooseModel, isHome: Boolean) {
+        val player = if (isHome) {
+            playersHome.getOrNull(data.position?:-1)
+        } else {
+            playersGuest.getOrNull(data.position?:-1)
+        }
+        _eventSelectPlayer.postValue(player)
+    }
+
+    fun setPlayerWithAction( player: PLayerUI, position: Int, isAssistant: Boolean) {
+        if (isAssistant) {
+            playersWithActions[position].playerAssist = player
+        } else {
+            playersWithActions[position].player = player
+        }
+        _eventUpdateAction.postValue(position)
+        _liveDataPLayersTeamHome.value?.forEach {
+            it.isChoose = false
+        }
+        _liveDataPLayersTeamGuest.value?.forEach {
+            it.isChoose = false
+        }
     }
 
 }

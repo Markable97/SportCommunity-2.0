@@ -4,7 +4,9 @@ import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatches
 import com.glushko.sportcommunity.data.admin.assign_matches.network.toModel
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI
+import com.glushko.sportcommunity.data.admin.edit_match.model.PLayerUI
 import com.glushko.sportcommunity.data.admin.edit_match.network.ResponseActions
+import com.glushko.sportcommunity.data.admin.edit_match.network.ResponsePlayersForMatch
 import com.glushko.sportcommunity.data.admin.edit_match.network.toModel
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRepository
@@ -38,6 +40,17 @@ class EditMatchRepositoryImpl @Inject constructor(
             is Result.Error -> Result.Error(response.exception)
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(response.data.toModel())
+        }
+    }
+
+    override suspend fun getPlayersForMatch(teamHome: Int, teamGuest: Int): Result<List<PLayerUI>> {
+        val response = networkUtils.getResponseResult<ResponsePlayersForMatch>(ResponsePlayersForMatch::class.java) {
+            apiService.getPlayersForMatch(teamHome, teamGuest)
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(response.data.players.map { it.toModel() })
         }
     }
 }

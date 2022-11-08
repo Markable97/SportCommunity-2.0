@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.DialogPlayerSelectBinding
 import com.glushko.sportcommunity.presentation.admin.edit_match.EditMatchViewModel
 import com.glushko.sportcommunity.presentation.admin.edit_match.edit.adapters.PlayersOfTeamsTabAdapters
 import com.glushko.sportcommunity.presentation.base.BaseBottomSheetDialogFragment
+import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 import com.google.android.material.tabs.TabLayoutMediator
 
 class PlayerSelectDialog: BaseBottomSheetDialogFragment<DialogPlayerSelectBinding>() {
@@ -28,12 +30,27 @@ class PlayerSelectDialog: BaseBottomSheetDialogFragment<DialogPlayerSelectBindin
         setMaxHeight(0.9)
         setupViewPager()
         initTitle()
+        setupObservers()
+        binding.imageClose.setSafeOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun initTitle() = binding.run {
         textTitle.text = getString(
             if (args.isAssistant) R.string.edit_match__edit_player_assistant_title else R.string.edit_match__edit_player_title
         )
+    }
+
+    private fun setupObservers() = viewModel.run {
+        eventSelectPlayer.observe(viewLifecycleOwner){ selectPlayer ->
+            viewModel.setPlayerWithAction(
+                player = selectPlayer,
+                isAssistant = args.isAssistant,
+                position = args.position
+            )
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupViewPager() = binding.run {

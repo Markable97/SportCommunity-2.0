@@ -37,6 +37,7 @@ interface ApiService {
         const val GET_SCHEDULE = "GetSchedule"
         const val ADD_MATCH_IN_SCHEDULE = "AddMatchesInSchedule"
         const val GET_ACTIONS = "GetActions"
+        const val GET_PLAYERS_FOT_MATCH = "GetPlayersForMatch"
 
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -136,4 +137,10 @@ interface ApiService {
 
     @GET(GET_ACTIONS)
     suspend fun getActions(): Response<JsonObject>
+
+    @GET(GET_PLAYERS_FOT_MATCH)
+    suspend fun getPlayersForMatch(
+        @Query("team_home") teamHome: Int,
+        @Query("team_guest") teamGuest: Int
+    ): Response<JsonObject>
 }
