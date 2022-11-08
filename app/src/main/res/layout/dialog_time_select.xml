@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/text20_sp_medium"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        android:text="@string/edit_match__edit_time"/>
+
+    <ImageView
+        android:id="@+id/imageClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@null"
+        android:padding="5dp"
+        android:foreground="?selectableItemBackground"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="18dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_match__edit_time_minutes"
+        android:textAppearance="@style/text14_sp_medium"
+        app:layout_constraintBottom_toTopOf="@id/inputLayoutMinutes"
+        app:layout_constraintStart_toStartOf="@id/inputLayoutMinutes"
+        app:layout_constraintEnd_toEndOf="@id/inputLayoutMinutes"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutMinutes"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/textTwoDots"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        app:layout_constraintBottom_toTopOf="@id/buttonSelect">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editMinutes"
+            style="@style/EditTextTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="LabelFor"
+            tools:text="15" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textTwoDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/text30_sp_bold"
+        android:text="@string/edit_match__edit_time_two_dots"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toTopOf="@id/inputLayoutMinutes"
+        app:layout_constraintBottom_toBottomOf="@id/inputLayoutMinutes"
+        app:layout_constraintStart_toEndOf="@id/inputLayoutMinutes"
+        app:layout_constraintEnd_toStartOf="@id/inputLayoutSeconds"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutSeconds"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/textTwoDots"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/inputLayoutMinutes"
+        app:layout_constraintBottom_toBottomOf="@id/inputLayoutMinutes">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editSeconds"
+            style="@style/EditTextTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="LabelFor"
+            tools:text="33" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_match__edit_time_seconds"
+        android:textAppearance="@style/text14_sp_medium"
+        app:layout_constraintBottom_toTopOf="@id/inputLayoutSeconds"
+        app:layout_constraintStart_toStartOf="@id/inputLayoutSeconds"
+        app:layout_constraintEnd_toEndOf="@id/inputLayoutSeconds"/>
+
+    <Button
+        android:id="@+id/buttonSelect"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="27dp"
+        android:text="@string/choose"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

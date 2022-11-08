@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
@@ -43,6 +44,9 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
                     }
 
                 }
+            },
+            onClickTime = { position, time ->
+                findNavController().navigate(EditMatchFragmentDirections.actionEditMatchToTimeSelectDialog(position, time))
             }
         )
     }

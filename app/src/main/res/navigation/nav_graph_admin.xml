@@ -104,7 +104,26 @@
             android:id="@+id/editMatchFragment"
             android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.EditMatchFragment"
             android:label="@string/edit_match"
-            tools:layout="@layout/fragment_match_edit" />
+            tools:layout="@layout/fragment_match_edit" >
+            <action
+                android:id="@+id/action_editMatch_to_timeSelectDialog"
+                app:destination="@id/timeSelectDialog"
+            />
+        </fragment>
+        <dialog
+            android:id="@+id/timeSelectDialog"
+            android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.TimeSelectDialog"
+            android:label="TimeSelectDialog"
+            tools:layout="@layout/dialog_time_select">
+            <argument
+                android:name="position"
+                app:argType="integer"/>
+            <argument
+                android:name="time"
+                app:argType="string"
+                />
+
+        </dialog>
     </navigation>
 
 </navigation>

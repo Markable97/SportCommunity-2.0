@@ -112,6 +112,15 @@
         <item name="android:importantForAutofill">no</item>
     </style>
 
+    <style name="EditTextTime">
+        <item name="android:textAppearance">@style/text16_sp_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:maxLength">2</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">numberSigned</item>
+        <item name="android:importantForAutofill">no</item>
+    </style>
+
    <style name="EditTextAction">
        <item name="android:clickable">true</item>
        <item name="android:cursorVisible">false</item>

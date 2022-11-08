@@ -77,6 +77,9 @@
     <string name="edit_match__edit_assistant">Ассистент</string>
     <string name="edit_match__edit_time">Время</string>
     <string name="edit_match__edit_action">Действие</string>
+    <string name="edit_match__edit_time_minutes">Минута</string>
+    <string name="edit_match__edit_time_seconds">Секунда</string>
+    <string name="edit_match__edit_time_two_dots"> : </string>
     <string name="edit_match__empty_score">Заполните счет</string>
     <string name="edit_match__warning_title">Предупреждение</string>
     <string name="edit_match__warning_message">При редактировании будут сброшены все голы. Продолжить?</string>

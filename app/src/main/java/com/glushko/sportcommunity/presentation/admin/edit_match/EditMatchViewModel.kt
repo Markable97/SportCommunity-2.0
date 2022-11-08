@@ -117,4 +117,9 @@ class EditMatchViewModel @Inject constructor(
         _eventUpdateAction.postValue(position)
     }
 
+    fun setTimeToPLayer(minute: String, second: String, position: Int) {
+        playersWithActions[position].time = "$minute:$second"
+        _eventUpdateAction.postValue(position)
+    }
+
 }
