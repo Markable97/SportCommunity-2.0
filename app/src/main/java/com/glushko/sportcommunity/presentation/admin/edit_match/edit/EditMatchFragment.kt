@@ -87,6 +87,7 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
                 .setTitle(getString(R.string.edit_match__warning_title))
                 .setMessage(getString(R.string.edit_match__warning_message))
                 .setPositiveButton(getString(R.string.yes)){ _, _ ->
+                    viewModel.clearGoals()
                     viewModel.createOrClearResult(
                         goalsHome,
                         goalsGuest

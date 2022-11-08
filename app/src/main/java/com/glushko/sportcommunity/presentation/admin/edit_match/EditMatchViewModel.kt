@@ -12,10 +12,7 @@ import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.toChooseModel
 import com.glushko.sportcommunity.data.choose.model.ChooseModel
 import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRepository
-import com.glushko.sportcommunity.util.EventLiveData
-import com.glushko.sportcommunity.util.Result
-import com.glushko.sportcommunity.util.data
-import com.glushko.sportcommunity.util.succeeded
+import com.glushko.sportcommunity.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,7 +24,7 @@ class EditMatchViewModel @Inject constructor(
 ) : ViewModel(){
 
     private var actions = listOf<ChooseModel>()
-    private val playersWithActions = mutableListOf<PlayerWithActionUI>()
+    private var playersWithActions = mutableListOf<PlayerWithActionUI>()
 
     private val _liveDataPlayersWithActions = MutableLiveData<MutableList<PlayerWithActionUI>>(
         playersWithActions
@@ -100,6 +97,13 @@ class EditMatchViewModel @Inject constructor(
             buttonUpdateSetText(valueMatch.isSaved)
             _eventEnableScore.postValue(valueMatch.isSaved)
         }
+    }
+
+    fun clearGoals(){
+        playersWithActions = playersWithActions.filter {
+            it.action?.actionId !in Constants.TYPE_ACTION_GOALS
+        }.toMutableList()
+        _liveDataPlayersWithActions.value = playersWithActions
     }
 
     private fun buttonUpdateSetText(isSaved: Boolean){
