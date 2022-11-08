@@ -109,6 +109,10 @@
                 android:id="@+id/action_editMatch_to_timeSelectDialog"
                 app:destination="@id/timeSelectDialog"
             />
+            <action
+                android:id="@+id/action_editMatch_to_playerSelectDialog"
+                app:destination="@id/playerSelectDialog"
+                />
         </fragment>
         <dialog
             android:id="@+id/timeSelectDialog"
@@ -121,6 +125,21 @@
             <argument
                 android:name="time"
                 app:argType="string"
+                />
+
+        </dialog>
+        <dialog
+            android:id="@+id/playerSelectDialog"
+            android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.player_select.PlayerSelectDialog"
+            android:label="PlayerSelectDialog"
+            tools:layout="@layout/dialog_player_select">
+            <argument
+                android:name="position"
+                app:argType="integer"/>
+            <argument
+                android:name="isAssistant"
+                app:argType="boolean"
+                android:defaultValue="false"
                 />
 
         </dialog>

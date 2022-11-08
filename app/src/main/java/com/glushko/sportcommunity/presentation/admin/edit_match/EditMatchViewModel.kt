@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI
+import com.glushko.sportcommunity.data.admin.edit_match.model.PLayerUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.toChooseModel
 import com.glushko.sportcommunity.data.choose.model.ChooseModel
@@ -39,6 +40,12 @@ class EditMatchViewModel @Inject constructor(
 
     private val _liveDataActions = MutableLiveData<Result<List<ActionUI>>>()
     val liveDataActions: LiveData<Result<List<ActionUI>>> = _liveDataActions
+
+    private val _liveDataPLayersTeamHome = MutableLiveData<List<PLayerUI>>()
+    val liveDataPLayersTeamHome: LiveData<List<PLayerUI>> = _liveDataPLayersTeamHome
+
+    private val _liveDataPLayersTeamGuest = MutableLiveData<List<PLayerUI>>()
+    val liveDataPLayersTeamGuest: LiveData<List<PLayerUI>> = _liveDataPLayersTeamGuest
 
     private val _eventAddAction = EventLiveData<Int>()
     val eventAddAction: LiveData<Int> = _eventAddAction
@@ -78,6 +85,13 @@ class EditMatchViewModel @Inject constructor(
         _liveDataSelectedMatch.value = match
         buttonUpdateSetText(match.isSaved)
         _eventEnableScore.postValue(match.isSaved)
+        getPlayersForMatch(match.teamHomeId, match.teamGuestId)
+    }
+
+    private fun getPlayersForMatch(teamHome: Int, teamGuest: Int){
+        viewModelScope.launch {
+            //TODO filter player by teams
+        }
     }
 
     fun addAction() {

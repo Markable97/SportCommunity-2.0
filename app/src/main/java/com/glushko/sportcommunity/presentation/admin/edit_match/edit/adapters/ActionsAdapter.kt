@@ -13,7 +13,9 @@ import timber.log.Timber
 class ActionsAdapter(
     private val onClickButtonDelete: (Int) -> Unit,
     private val onClickAction: (Int) -> Unit,
-    private val onClickTime: (Int, String) -> Unit
+    private val onClickTime: (Int, String) -> Unit,
+    private val onClickPlayer: (Int) -> Unit,
+    private val onClickPlayerAssistant: (Int) -> Unit,
 ) : BaseAdapter<PlayerWithActionUI, ItemActionEditBinding>() {
 
 
@@ -50,6 +52,12 @@ class ActionsAdapter(
             }
             editTime.setSafeOnClickListener {
                 onClickTime.invoke(holder.adapterPosition, editTime.text.toString())
+            }
+            editPlayer.setSafeOnClickListener {
+                onClickPlayer.invoke(holder.adapterPosition)
+            }
+            editAssistant.setSafeOnClickListener {
+                onClickPlayerAssistant.invoke(holder.adapterPosition)
             }
         }
     }

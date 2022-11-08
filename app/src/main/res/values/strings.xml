@@ -74,6 +74,8 @@
     <string name="edit_match__button_delete_action">Удалить</string>
     <string name="edit_match__button_edit_action">редактировать</string>
     <string name="edit_match__edit_player">Игрок</string>
+    <string name="edit_match__edit_player_title">Выбор игрока</string>
+    <string name="edit_match__edit_player_assistant_title">Выбор ассистента</string>
     <string name="edit_match__edit_assistant">Ассистент</string>
     <string name="edit_match__edit_time">Время</string>
     <string name="edit_match__edit_action">Действие</string>

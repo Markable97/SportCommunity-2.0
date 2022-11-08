@@ -47,6 +47,12 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
             },
             onClickTime = { position, time ->
                 findNavController().navigate(EditMatchFragmentDirections.actionEditMatchToTimeSelectDialog(position, time))
+            },
+            onClickPlayer = {position ->
+                findNavController().navigate(EditMatchFragmentDirections.actionEditMatchToPlayerSelectDialog(position))
+            },
+            onClickPlayerAssistant = {position ->
+                findNavController().navigate(EditMatchFragmentDirections.actionEditMatchToPlayerSelectDialog(position, true))
             }
         )
     }
