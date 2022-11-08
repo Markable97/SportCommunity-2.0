@@ -13,12 +13,14 @@ import com.glushko.sportcommunity.databinding.FragmentMatchEditBinding
 import com.glushko.sportcommunity.presentation.admin.edit_match.EditMatchViewModel
 import com.glushko.sportcommunity.presentation.admin.edit_match.edit.adapters.ActionsAdapter
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.ChooseDialog
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.extensions.enable
 import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.visible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import timber.log.Timber
 
 class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.fragment_match_edit) {
 
@@ -28,6 +30,19 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
         ActionsAdapter(
             onClickButtonDelete = { position ->
                 viewModel.deleteAction(position)
+            },
+            onClickAction = { position ->
+                openChooseDialog(
+                    ChooseDialog.prepareBundle(
+                        title = getString(R.string.edit_match__edit_action),
+                        data = viewModel.getActions()
+                    )
+                ){ dataReturn ->
+                    if (dataReturn != null) {
+                        viewModel.setActionToPlayer(dataReturn, position)
+                    }
+
+                }
             }
         )
     }
@@ -103,6 +118,9 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
         }
         eventDeleteAction.observe(viewLifecycleOwner) { position ->
             actionAdapter.notifyItemRemoved(position)
+        }
+        eventUpdateAction.observe(viewLifecycleOwner) { position ->
+            actionAdapter.notifyItemChanged(position)
         }
         eventChangeUpdateButtonText.observe(viewLifecycleOwner){ text ->
             binding.buttonUpdate.text = getString(text)

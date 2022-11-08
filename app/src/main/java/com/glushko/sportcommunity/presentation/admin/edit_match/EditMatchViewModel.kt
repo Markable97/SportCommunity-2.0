@@ -9,9 +9,13 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
+import com.glushko.sportcommunity.data.admin.edit_match.model.toChooseModel
+import com.glushko.sportcommunity.data.choose.model.ChooseModel
 import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRepository
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.data
+import com.glushko.sportcommunity.util.succeeded
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -22,6 +26,7 @@ class EditMatchViewModel @Inject constructor(
     private val editMatchRepository: EditMatchRepository
 ) : ViewModel(){
 
+    private var actions = listOf<ChooseModel>()
     private val playersWithActions = mutableListOf<PlayerWithActionUI>()
 
     private val _liveDataPlayersWithActions = MutableLiveData<MutableList<PlayerWithActionUI>>(
@@ -44,6 +49,9 @@ class EditMatchViewModel @Inject constructor(
     private val _eventDeleteAction = EventLiveData<Int>()
     val eventDeleteAction: LiveData<Int> = _eventDeleteAction
 
+    private val _eventUpdateAction = EventLiveData<Int>()
+    val eventUpdateAction: LiveData<Int> = _eventUpdateAction
+
     private val _eventChangeUpdateButtonText = EventLiveData<Int>()
     val eventChangeUpdateButtonText: LiveData<Int> = _eventChangeUpdateButtonText
 
@@ -56,10 +64,18 @@ class EditMatchViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _liveDataActions.postValue(editMatchRepository.getActions())
+            val responseActions = editMatchRepository.getActions()
+            if (responseActions is Result.Success){
+                actions = responseActions.data.mapIndexed { index, actionUI ->
+                    actionUI.toChooseModel(index)
+                }
+            }
+            _liveDataActions.postValue(responseActions)
             _liveDataAssignMatches.postValue(editMatchRepository.getAssignMatches())
         }
     }
+
+    fun getActions(): List<ChooseModel> = actions
 
     fun setMatch(match: MatchUI) {
         _liveDataSelectedMatch.value = match
@@ -94,6 +110,11 @@ class EditMatchViewModel @Inject constructor(
     fun deleteAction(position: Int) {
         playersWithActions.removeAt(position)
         _eventDeleteAction.postValue(position)
+    }
+
+    fun setActionToPlayer(data: ChooseModel, position: Int) {
+        playersWithActions[position].action = _liveDataActions.value?.data?.getOrNull(data.position ?: -1)
+        _eventUpdateAction.postValue(position)
     }
 
 }

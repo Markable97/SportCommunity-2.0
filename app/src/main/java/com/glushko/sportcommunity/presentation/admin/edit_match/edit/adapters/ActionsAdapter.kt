@@ -8,9 +8,11 @@ import com.glushko.sportcommunity.databinding.ItemActionEditBinding
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
+import timber.log.Timber
 
 class ActionsAdapter(
-    private val onClickButtonDelete: (Int) -> Unit
+    private val onClickButtonDelete: (Int) -> Unit,
+    private val onClickAction: (Int) -> Unit
 ) : BaseAdapter<PlayerWithActionUI, ItemActionEditBinding>() {
 
 
@@ -40,6 +42,10 @@ class ActionsAdapter(
 
             buttonDelete.setSafeOnClickListener {
                 onClickButtonDelete.invoke(holder.adapterPosition)
+            }
+
+            editAction.setOnClickListener {
+                onClickAction.invoke(holder.adapterPosition)
             }
         }
     }

@@ -11,6 +11,7 @@ object Constants {
     const val TYPE_VALUE_DIVISION = 0
     const val TYPE_VALUE_TOUR = 1
     const val TYPE_VALUE_STADIUM = 2
+    const val TYPE_VALUE_ACTION = 3
 
     //Region type Actions
     const val TYPE_ACTION_GOAL = 1 //id from server DB
