@@ -1,6 +1,5 @@
 package com.glushko.sportcommunity.data.admin.schedule.stadium.network
 
-import com.glushko.sportcommunity.data.admin.assign_matches.model.toModel
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.Schedule
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI

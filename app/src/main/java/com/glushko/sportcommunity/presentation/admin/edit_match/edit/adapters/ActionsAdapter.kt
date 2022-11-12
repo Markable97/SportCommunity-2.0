@@ -12,6 +12,8 @@ import timber.log.Timber
 
 class ActionsAdapter(
     private val onClickButtonDelete: (Int) -> Unit,
+    private val onClickButtonSave: (Int) -> Unit,
+    private val onClickButtonEdit: (Int) -> Unit,
     private val onClickAction: (Int) -> Unit,
     private val onClickTime: (Int, String) -> Unit,
     private val onClickPlayer: (Int) -> Unit,
@@ -30,8 +32,6 @@ class ActionsAdapter(
 
     override fun bindViewHolder(holder: ViewBindingHolder, data: PlayerWithActionUI) {
         with(holder.binding){
-            val isEnable = data.isSaving
-
             inputLayoutAssistant.isVisible = data.action?.actionId == Constants.TYPE_ACTION_GOAL
 
             editPlayer.setText(data.player?.playerName ?: "")
@@ -46,7 +46,12 @@ class ActionsAdapter(
             buttonDelete.setSafeOnClickListener {
                 onClickButtonDelete.invoke(holder.adapterPosition)
             }
-
+            buttonSave.setSafeOnClickListener {
+                onClickButtonSave.invoke(holder.adapterPosition)
+            }
+            buttonEdit.setSafeOnClickListener {
+                onClickButtonEdit.invoke(holder.adapterPosition)
+            }
             editAction.setSafeOnClickListener {
                 onClickAction.invoke(holder.adapterPosition)
             }

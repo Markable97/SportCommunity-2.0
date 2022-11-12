@@ -132,10 +132,20 @@ class EditMatchViewModel @Inject constructor(
             valueMatch.apply {
                 teamHomeGoals = goalsHome.toInt()
                 teamGuestGoals = goalsGuest.toInt()
-                isSaved = !valueMatch.isSaved
             }
-            buttonUpdateSetText(valueMatch.isSaved)
-            _eventEnableScore.postValue(valueMatch.isSaved)
+            if (!valueMatch.isSaved){
+                val response = editMatchRepository.addScore(valueMatch)
+                if (response is Result.Success) {
+                    valueMatch.isSaved = true
+                    buttonUpdateSetText(true)
+                    _eventEnableScore.postValue(valueMatch.isSaved)
+                }
+                _eventSaveResult.postValue(response)
+            } else {
+                valueMatch.isSaved = false
+                buttonUpdateSetText(false)
+                _eventEnableScore.postValue(valueMatch.isSaved)
+            }
         }
     }
 
@@ -154,6 +164,38 @@ class EditMatchViewModel @Inject constructor(
     fun deleteAction(position: Int) {
         playersWithActions.removeAt(position)
         _eventDeleteAction.postValue(position)
+    }
+
+    fun saveAction(position: Int) {
+        val selectedMatch = _liveDataSelectedMatch.value ?: return
+        viewModelScope.launch {
+            val response = editMatchRepository.addPlayerAction(
+                matchId = selectedMatch.matchId,
+                isAdd = true,
+                playerWithAction = playersWithActions[position]
+            )
+            if (response.succeeded){
+                playersWithActions[position].isSaving = true
+                _eventUpdateAction.postValue(position)
+            }
+            _eventSaveResult.postValue(response)
+        }
+    }
+
+    fun editPlayer(position: Int) {
+        val selectedMatch = _liveDataSelectedMatch.value ?: return
+        viewModelScope.launch {
+            val response = editMatchRepository.addPlayerAction(
+                matchId = selectedMatch.matchId,
+                isAdd = false,
+                playerWithAction = playersWithActions[position]
+            )
+            if (response.succeeded) {
+                playersWithActions[position].isSaving = false
+                _eventUpdateAction.postValue(position)
+            }
+            _eventSaveResult.postValue(response)
+        }
     }
 
     fun setActionToPlayer(data: ChooseModel, position: Int) {

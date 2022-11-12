@@ -5,10 +5,12 @@ import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatc
 import com.glushko.sportcommunity.data.admin.assign_matches.network.toModel
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.PLayerUI
+import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.network.ResponseActions
 import com.glushko.sportcommunity.data.admin.edit_match.network.ResponsePlayersForMatch
 import com.glushko.sportcommunity.data.admin.edit_match.network.toModel
 import com.glushko.sportcommunity.data.network.ApiService
+import com.glushko.sportcommunity.data.network.BaseResponse
 import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
@@ -51,6 +53,34 @@ class EditMatchRepositoryImpl @Inject constructor(
             is Result.Error -> Result.Error(response.exception)
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(response.data.players.map { it.toModel() })
+        }
+    }
+
+    override suspend fun addScore(match: MatchUI): Result<String> {
+        val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java){
+            apiService.addScore(match.toRequestModel())
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(response.data.message)
+        }
+    }
+
+    override suspend fun addPlayerAction(
+        matchId: Long,
+        isAdd: Boolean,
+        playerWithAction: PlayerWithActionUI
+    ): Result<String> {
+        val request = playerWithAction.toRequestModel(matchId, isAdd)
+            ?: return Result.Error(Exception("Empty"))
+        val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java) {
+            apiService.addPlayerAction(request)
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(response.data.message)
         }
     }
 }

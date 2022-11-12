@@ -16,10 +16,8 @@ import com.glushko.sportcommunity.presentation.admin.edit_match.edit.adapters.Ac
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.ChooseDialog
 import com.glushko.sportcommunity.util.Constants
-import com.glushko.sportcommunity.util.extensions.enable
-import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
-import com.glushko.sportcommunity.util.extensions.snackbar
-import com.glushko.sportcommunity.util.extensions.visible
+import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.extensions.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
 
@@ -31,6 +29,12 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
         ActionsAdapter(
             onClickButtonDelete = { position ->
                 viewModel.deleteAction(position)
+            },
+            onClickButtonSave = { position ->
+                viewModel.saveAction(position)
+            },
+            onClickButtonEdit = { position ->
+                viewModel.editPlayer(position)
             },
             onClickAction = { position ->
                 openChooseDialog(
@@ -140,7 +144,17 @@ class EditMatchFragment: BaseXmlFragment<FragmentMatchEditBinding>(R.layout.frag
             enableScore(!isEnable)
             binding.floatingButtonCreateAction.isVisible = isEnable
         }
-
+        eventSaveResult.observe(viewLifecycleOwner){
+            when(it){
+                is Result.Error -> {
+                    toastLong(requireContext(), it.exception.message?:"error")
+                }
+                Result.Loading -> {}
+                is Result.Success -> {
+                    toastLong(requireContext(), it.data)
+                }
+            }
+        }
     }
 
     private fun enableScore(isEnable: Boolean) = binding.layoutHeader.run {
