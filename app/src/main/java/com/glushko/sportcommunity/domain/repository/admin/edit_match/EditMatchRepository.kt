@@ -12,4 +12,5 @@ interface EditMatchRepository {
     suspend fun getPlayersForMatch(teamHome: Int, teamGuest: Int): Result<List<PLayerUI>>
     suspend fun addScore(match: MatchUI): Result<String>
     suspend fun addPlayerAction(matchId: Long, isAdd: Boolean, playerWithAction: PlayerWithActionUI): Result<String>
+    suspend fun deletePlayersWithGoals(matchId: Long, playersWithGoals: List<PlayerWithActionUI>): Result<String>
 }

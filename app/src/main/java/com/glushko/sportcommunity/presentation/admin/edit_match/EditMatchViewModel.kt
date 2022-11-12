@@ -150,10 +150,26 @@ class EditMatchViewModel @Inject constructor(
     }
 
     fun clearGoals(){
-        playersWithActions = playersWithActions.filter {
-            it.action?.actionId !in Constants.TYPE_ACTION_GOALS
-        }.toMutableList()
-        _liveDataPlayersWithActions.value = playersWithActions
+        val match = _liveDataSelectedMatch.value ?: return
+        viewModelScope.launch {
+            val playersWithGoals = playersWithActions.filter {
+                it.action?.actionId in Constants.TYPE_ACTION_GOALS
+            }
+            val response = editMatchRepository.deletePlayersWithGoals(
+                matchId = match.matchId,
+                playersWithGoals = playersWithGoals
+            )
+            if (response.succeeded) {
+                playersWithActions.removeAll(playersWithGoals)
+                _liveDataPlayersWithActions.postValue(playersWithActions)
+                createOrClearResult(
+                    match.teamHomeGoals.toString() ,
+                    match.teamGuestGoals.toString()
+                )
+            }
+            _eventSaveResult.postValue(response)
+        }
+
     }
 
     private fun buttonUpdateSetText(isSaved: Boolean){

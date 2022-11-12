@@ -16,3 +16,7 @@ data class RequestPlayerWithAction(
     @SerializedName("time")
     val time: String
 )
+
+data class RequestPlayersWithActionsGoals(
+    val players: List<RequestPlayerWithAction>
+)

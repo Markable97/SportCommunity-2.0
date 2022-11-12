@@ -6,6 +6,7 @@ import com.glushko.sportcommunity.data.admin.assign_matches.network.toModel
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.PLayerUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
+import com.glushko.sportcommunity.data.admin.edit_match.network.RequestPlayersWithActionsGoals
 import com.glushko.sportcommunity.data.admin.edit_match.network.ResponseActions
 import com.glushko.sportcommunity.data.admin.edit_match.network.ResponsePlayersForMatch
 import com.glushko.sportcommunity.data.admin.edit_match.network.toModel
@@ -76,6 +77,25 @@ class EditMatchRepositoryImpl @Inject constructor(
             ?: return Result.Error(Exception("Empty"))
         val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java) {
             apiService.addPlayerAction(request)
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(response.data.message)
+        }
+    }
+
+    override suspend fun deletePlayersWithGoals(matchId: Long, playersWithGoals: List<PlayerWithActionUI>): Result<String> {
+        val requestDop = playersWithGoals.mapNotNull {
+            it.toRequestModel(
+                matchId = matchId,
+                isAdd = false
+            )
+        }
+        val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java){
+            apiService.deletePlayersWithActionsGoals(RequestPlayersWithActionsGoals(
+                players = requestDop )
+            )
         }
         return when(response){
             is Result.Error -> Result.Error(response.exception)

@@ -3,6 +3,7 @@ package com.glushko.sportcommunity.data.network
 import com.glushko.sportcommunity.data.admin.assign_matches.network.RequestMatchScore
 import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatches
 import com.glushko.sportcommunity.data.admin.edit_match.network.RequestPlayerWithAction
+import com.glushko.sportcommunity.data.admin.edit_match.network.RequestPlayersWithActionsGoals
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.RequestSchedule
 import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
@@ -42,6 +43,7 @@ interface ApiService {
         const val GET_PLAYERS_FOT_MATCH = "GetPlayersForMatch"
         const val ADD_MATCH_SCORE = "AddMatchScore"
         const val ADD_PLAYER_ACTION = "AddPlayerAction"
+        const val DELETE_PLAYERS_WITH_ACTION_GOALS = "DeletePlayersWithActionGoals"
 
         //Param
         const val PARAM_FOOTBALL_LEAGUE_ID = "league_id"
@@ -156,5 +158,10 @@ interface ApiService {
     @POST(ADD_PLAYER_ACTION)
     suspend fun addPlayerAction(
         @Body playerWithAction: RequestPlayerWithAction
+    ) : Response<JsonObject>
+
+    @POST(DELETE_PLAYERS_WITH_ACTION_GOALS)
+    suspend fun deletePlayersWithActionsGoals(
+        @Body playersWithGoals: RequestPlayersWithActionsGoals
     ) : Response<JsonObject>
 }
