@@ -8,15 +8,24 @@ data class PLayerUI(
     val playerId: Int,
     val playerName: String,
     val teamId: Int,
-    val teamName: String
+    val teamName: String,
+    var inMatch: Boolean = false
 ) {
     fun toRequestModel(matchId: Long) = RequestPlayerInMatch(
         teamId, teamName, playerId, playerName, matchId
     )
-}
 
-fun PLayerUI.toChooseModel(index: Int) = ChooseModel(
-    valueDisplay = playerName,
-    valueType = Constants.TYPE_VALUE_PLAYER,
-    position = index
-)
+    fun toChooseModel(index: Int) = ChooseModel(
+        valueDisplay = playerName,
+        valueType = Constants.TYPE_VALUE_PLAYER,
+        position = index
+    )
+
+    fun toMultiChooseModel(index: Int) = ChooseModel(
+        valueDisplay = playerName,
+        valueType = Constants.TYPE_VALUE_PLAYER,
+        position = index,
+        isChoose = inMatch
+    )
+
+}

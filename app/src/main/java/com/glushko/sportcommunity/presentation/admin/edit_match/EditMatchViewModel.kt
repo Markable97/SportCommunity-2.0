@@ -106,12 +106,12 @@ class EditMatchViewModel @Inject constructor(
                 }
                 _liveDataPLayersTeamHome.postValue(
                     playersHome.mapIndexed { index, pLayerUI ->
-                        pLayerUI.toChooseModel(index)
+                        pLayerUI.toMultiChooseModel(index)
                     }
                 )
                 _liveDataPLayersTeamGuest.postValue(
                     playersGuest.mapIndexed { index, pLayerUI ->
-                    pLayerUI.toChooseModel(index)
+                    pLayerUI.toMultiChooseModel(index)
                 })
             } else {
                 _liveDataPLayersTeamGuest.postValue(emptyList())
@@ -248,6 +248,51 @@ class EditMatchViewModel @Inject constructor(
         }
         _liveDataPLayersTeamGuest.value?.forEach {
             it.isChoose = false
+        }
+    }
+
+    fun addPlayerForProtocol(data: ChooseModel, isHome: Boolean){
+        data.position?.let { position ->
+            if (isHome){
+                playersHome[position].inMatch = data.isChoose
+            } else {
+                playersGuest[position].inMatch = data.isChoose
+            }
+        }
+    }
+
+    fun checkPlayersEmptyForProtocol() : Boolean{
+        val isNotEmptyHome = playersHome.any { it.inMatch }
+        val isNotEmptyGuest = playersGuest.any { it.inMatch }
+        return isNotEmptyHome && isNotEmptyGuest
+    }
+
+    fun addPlayerInMatch() {
+        val matchId = _liveDataSelectedMatch.value?.matchId ?: return
+        viewModelScope.launch {
+            _eventSaveResult.postValue(Result.Loading)
+            playersHome = playersHome.filter { it.inMatch }.toMutableList()
+            playersGuest = playersGuest.filter { it.inMatch }.toMutableList()
+            val response = editMatchRepository.addPlayerInMatch(
+                matchId = matchId,
+                players = mutableListOf<PLayerUI>().apply {
+                    addAll(playersHome)
+                    addAll(playersGuest)
+                }
+            )
+            _eventSaveResult.postValue(response)
+            if (response.succeeded){
+                _liveDataPLayersTeamHome.postValue(
+                    playersHome.mapIndexed { index, pLayerUI ->
+                        pLayerUI.toChooseModel(index)
+                    }
+                )
+                _liveDataPLayersTeamGuest.postValue(
+                    playersGuest.mapIndexed { index, pLayerUI ->
+                        pLayerUI.toChooseModel(index)
+                    }
+                )
+            }
         }
     }
 

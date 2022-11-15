@@ -93,13 +93,25 @@
             android:label="@string/admin_menu__matches_edit"
             tools:layout="@layout/fragment_matches_edit" >
             <action
-                android:id="@+id/action_editMatchListFragment_to_editMatchFragment"
-                app:destination="@id/editMatchFragment"
+                android:id="@+id/action_editMatchListFragment_to_protocolFragment"
+                app:destination="@id/protocolFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         </fragment>
+
+        <fragment
+            android:id="@+id/protocolFragment"
+            android:name="com.glushko.sportcommunity.presentation.admin.edit_match.protocol.ProtocolFragment"
+            android:label="ProtocolFragment"
+            tools:layout="@layout/fragment_protocol"
+            >
+            <action
+                android:id="@+id/action_protocolFragment_to_editMatchFragment"
+                app:destination="@id/editMatchFragment" />
+        </fragment>
+
         <fragment
             android:id="@+id/editMatchFragment"
             android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.EditMatchFragment"
