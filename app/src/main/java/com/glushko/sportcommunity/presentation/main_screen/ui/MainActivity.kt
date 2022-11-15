@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment,
         R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment, R.id.statisticsFragment,
         R.id.squadFragment, R.id.squadFragment, R.id.scheduleFragment, R.id.assignMatchesFragment,
-        R.id.createScheduleFragment, R.id.editMatchListFragment, R.id.editMatchFragment
+        R.id.createScheduleFragment, R.id.editMatchListFragment, R.id.editMatchFragment, R.id.protocolFragment
     )
     private val destinationWithBottomBar = listOf(
         R.id.eventsFragment, R.id.calendarFragment, R.id.resultsFragment, R.id.tournamentFragment, R.id.adminFragment

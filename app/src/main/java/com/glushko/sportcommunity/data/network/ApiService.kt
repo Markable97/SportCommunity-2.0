@@ -149,7 +149,8 @@ interface ApiService {
     @GET(GET_PLAYERS_FOT_MATCH)
     suspend fun getPlayersForMatch(
         @Query("team_home") teamHome: Int,
-        @Query("team_guest") teamGuest: Int
+        @Query("team_guest") teamGuest: Int,
+        @Query(PARAM_MATCH_ID) matchId: Long
     ): Response<JsonObject>
 
     @POST(ADD_PLAYERS_FOT_MATCH)

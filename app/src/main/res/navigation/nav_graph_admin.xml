@@ -104,7 +104,7 @@
         <fragment
             android:id="@+id/protocolFragment"
             android:name="com.glushko.sportcommunity.presentation.admin.edit_match.protocol.ProtocolFragment"
-            android:label="ProtocolFragment"
+            android:label="@string/edit_match__protocol"
             tools:layout="@layout/fragment_protocol"
             >
             <action

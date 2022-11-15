@@ -18,15 +18,19 @@ data class Player(
     @SerializedName("player_id")
     val playerId: Int,
     @SerializedName("player_name")
-    val playerName: String
-)
+    val playerName: String,
+    @SerializedName("in_match")
+    val inMatch: Boolean
+) {
+    fun toModel() = PLayerUI(
+        playerId = playerId,
+        playerName = playerName,
+        teamId = teamId,
+        teamName = teamName,
+        inMatch = inMatch
 
-fun Player.toModel() = PLayerUI(
-    playerId = playerId,
-    playerName = playerName,
-    teamId = teamId,
-    teamName = teamName
-)
+    )
+}
 
 
 

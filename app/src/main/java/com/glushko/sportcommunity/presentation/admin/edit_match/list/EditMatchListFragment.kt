@@ -25,7 +25,6 @@ class EditMatchListFragment: BaseXmlFragment<FragmentMatchesEditBinding>(R.layou
         AssignedMatchesEditAdapters().apply {
             listenerWithPosition = { item, _ ->
                 viewModel.setMatch(item)
-                (requireActivity() as? MainActivity)?.setToolbarTitle(getString(R.string.edit_match__protocol))
                 findNavController().navigate(
                     EditMatchListFragmentDirections.actionEditMatchListFragmentToProtocolFragment()
                 )

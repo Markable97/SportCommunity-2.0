@@ -88,12 +88,12 @@ class EditMatchViewModel @Inject constructor(
         _liveDataSelectedMatch.value = match
         buttonUpdateSetText(match.isSaved)
         _eventEnableScore.postValue(match.isSaved)
-        getPlayersForMatch(match.teamHomeId, match.teamGuestId)
+        getPlayersForMatch(match.teamHomeId, match.teamGuestId, match.matchId)
     }
 
-    private fun getPlayersForMatch(teamHome: Int, teamGuest: Int){
+    private fun getPlayersForMatch(teamHome: Int, teamGuest: Int, matchId: Long){
         viewModelScope.launch {
-            val response = editMatchRepository.getPlayersForMatch(teamHome, teamGuest)
+            val response = editMatchRepository.getPlayersForMatch(teamHome, teamGuest, matchId)
             if (response is Result.Success) {
                 playersHome.clear()
                 playersGuest.clear()

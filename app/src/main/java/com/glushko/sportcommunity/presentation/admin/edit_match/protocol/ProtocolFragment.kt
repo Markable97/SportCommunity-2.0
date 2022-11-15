@@ -11,6 +11,7 @@ import com.glushko.sportcommunity.databinding.FragmentProtocolBinding
 import com.glushko.sportcommunity.presentation.admin.edit_match.EditMatchViewModel
 import com.glushko.sportcommunity.presentation.admin.edit_match.protocol.adapters.PlayersOfTeamsTabAdapters
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 import com.glushko.sportcommunity.util.extensions.toastLong
@@ -38,6 +39,7 @@ class ProtocolFragment : BaseXmlFragment<FragmentProtocolBinding>(R.layout.fragm
                 is Result.Error -> {}
                 Result.Loading -> {}
                 is Result.Success -> {
+                    (requireActivity() as? MainActivity)?.setToolbarTitle( getString(R.string.edit_match))
                     findNavController().navigate(
                         ProtocolFragmentDirections.actionProtocolFragmentToEditMatchFragment()
                     )
