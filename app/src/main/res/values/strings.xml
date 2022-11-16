@@ -69,6 +69,8 @@
 
     <string name="edit_match">Матч</string>
     <string name="edit_match__protocol">Протокол</string>
+    <string name="edit_match__protocol_button">Далее</string>
+    <string name="edit_match__protocol_warning">В случае удаления игрока с действием, действие пропадет</string>
     <string name="edit_match__protocol_empty_team">В одной из команд не выбрано ни одного игрока</string>
     <string name="edit_match__button_save_result">Сохрнаить результат</string>
     <string name="edit_match__button_edit_result">Редактировать результат</string>

@@ -15,6 +15,7 @@ import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRe
 import com.glushko.sportcommunity.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +25,11 @@ class EditMatchViewModel @Inject constructor(
 
     private var actions = listOf<ChooseModel>()
     private var playersWithActions = mutableListOf<PlayerWithActionUI>()
+
+    private var playerHomeInMatchBase = setOf<PLayerUI>()
+    private var playerHomeOutMatchBase = setOf<PLayerUI>()
+    private var playerGuestInMatchBase = setOf<PLayerUI>()
+    private var playerGuestOutMatchBase = setOf<PLayerUI>()
 
     private var playersHome = mutableListOf<PLayerUI>()
     private var playersGuest = mutableListOf<PLayerUI>()
@@ -104,6 +110,12 @@ class EditMatchViewModel @Inject constructor(
                         playersGuest.add(player)
                     }
                 }
+
+                playerHomeInMatchBase = playersHome.filter { it.inMatch }.toSet()
+                playerHomeOutMatchBase = playersHome.filter { !it.inMatch }.toSet()
+                playerGuestInMatchBase = playersGuest.filter { it.inMatch }.toSet()
+                playerGuestOutMatchBase = playersGuest.filter { !it.inMatch }.toSet()
+
                 _liveDataPLayersTeamHome.postValue(
                     playersHome.mapIndexed { index, pLayerUI ->
                         pLayerUI.toMultiChooseModel(index)
@@ -267,28 +279,64 @@ class EditMatchViewModel @Inject constructor(
         return isNotEmptyHome && isNotEmptyGuest
     }
 
+    private fun getPlayerHomeForInsert(): List<PLayerUI>{
+        val newPLayerHomeInsert = playersHome.filter { it.inMatch }.toMutableList()
+        newPLayerHomeInsert.minusAssign(playerHomeInMatchBase)
+        return  newPLayerHomeInsert
+    }
+
+    private fun getPayerHomeForeDelete(): List<PLayerUI>{
+        val newPlayerDelete = playersHome.filter { !it.inMatch }.toMutableList()
+        newPlayerDelete.minusAssign(playerHomeOutMatchBase)
+        Timber.d("newPlayerDelete home = $newPlayerDelete")
+        return newPlayerDelete
+    }
+    private fun getPlayerGuestForInsert(): List<PLayerUI>{
+        val newPLayerHomeInsert = playersGuest.filter { it.inMatch }.toMutableList()
+        newPLayerHomeInsert.minusAssign(playerGuestInMatchBase)
+        return  newPLayerHomeInsert
+    }
+
+    private fun getPayerGuestForeDelete(): List<PLayerUI>{
+        val newPlayerDelete = playersGuest.filter { !it.inMatch }.toMutableList()
+        newPlayerDelete.minusAssign(playerGuestOutMatchBase)
+        Timber.d("newPlayerDelete guest = $newPlayerDelete")
+        return newPlayerDelete
+    }
+
     fun addPlayerInMatch() {
         val matchId = _liveDataSelectedMatch.value?.matchId ?: return
         viewModelScope.launch {
             _eventSaveResult.postValue(Result.Loading)
-            playersHome = playersHome.filter { it.inMatch }.toMutableList()
-            playersGuest = playersGuest.filter { it.inMatch }.toMutableList()
-            val response = editMatchRepository.addPlayerInMatch(
+            val playersHomeForInsert = getPlayerHomeForInsert()
+            val playersHomeForDelete = getPayerHomeForeDelete()
+            val playersGuestForInsert = getPlayerGuestForInsert()
+            val playersGuestForDelete = getPayerGuestForeDelete()
+            val playersForInsert = mutableListOf<PLayerUI>().apply {
+                addAll(playersHomeForInsert)
+                addAll(playersGuestForInsert)
+            }
+            val playersForDelete = mutableListOf<PLayerUI>().apply {
+                addAll(playersHomeForDelete)
+                addAll(playersGuestForDelete)
+            }
+            val responseInsert = editMatchRepository.addPlayersInMatch(
                 matchId = matchId,
-                players = mutableListOf<PLayerUI>().apply {
-                    addAll(playersHome)
-                    addAll(playersGuest)
-                }
+                players = playersForInsert
             )
-            _eventSaveResult.postValue(response)
-            if (response.succeeded){
+            val responseDelete = editMatchRepository.deletePlayersInMatch(
+                matchId = matchId,
+                players = playersForDelete
+            )
+            if (responseInsert.succeeded && responseDelete.succeeded){
+                _eventSaveResult.postValue(responseInsert)
                 _liveDataPLayersTeamHome.postValue(
-                    playersHome.mapIndexed { index, pLayerUI ->
+                    playersHome.filter { it.inMatch }.mapIndexed { index, pLayerUI ->
                         pLayerUI.toChooseModel(index)
                     }
                 )
                 _liveDataPLayersTeamGuest.postValue(
-                    playersGuest.mapIndexed { index, pLayerUI ->
+                    playersGuest.filter { it.inMatch }.mapIndexed { index, pLayerUI ->
                         pLayerUI.toChooseModel(index)
                     }
                 )

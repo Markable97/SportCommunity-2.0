@@ -54,18 +54,44 @@ class EditMatchRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addPlayerInMatch(matchId: Long, players: List<PLayerUI>): Result<String> {
-        val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java){
-            apiService.addPLayerInMatch(
-                RequestPlayerInMatchMain(
-                    players.map { it.toRequestModel(matchId) }
+    override suspend fun addPlayersInMatch(matchId: Long, players: List<PLayerUI>): Result<String> {
+        if (players.isNotEmpty()){
+            val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java){
+                apiService.addPLayersInMatch(
+                    RequestPlayerInMatchMain(
+                        players.map { it.toRequestModel(matchId) }
+                    )
                 )
-            )
+            }
+            return when(response){
+                is Result.Error -> Result.Error(response.exception)
+                Result.Loading -> Result.Loading
+                is Result.Success -> Result.Success(response.data.message)
+            }
+        } else {
+            return Result.Success("success")
         }
-        return when(response){
-            is Result.Error -> Result.Error(response.exception)
-            Result.Loading -> Result.Loading
-            is Result.Success -> Result.Success(response.data.message)
+    }
+
+    override suspend fun deletePlayersInMatch(
+        matchId: Long,
+        players: List<PLayerUI>
+    ): Result<String> {
+        if (players.isNotEmpty()){
+            val response = networkUtils.getResponseResult<BaseResponse>(BaseResponse::class.java){
+                apiService.deletePLayersInMatch(
+                    RequestPlayerInMatchMain(
+                        players.map { it.toRequestModel(matchId) }
+                    )
+                )
+            }
+            return when(response){
+                is Result.Error -> Result.Error(response.exception)
+                Result.Loading -> Result.Loading
+                is Result.Success -> Result.Success(response.data.message)
+            }
+        } else {
+            return Result.Success("success")
         }
     }
 

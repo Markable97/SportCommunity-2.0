@@ -31,6 +31,7 @@ class ProtocolFragment : BaseXmlFragment<FragmentProtocolBinding>(R.layout.fragm
         setupViewPager()
         setupListeners()
         setupObservers()
+        toastLong(requireContext(), R.string.edit_match__protocol_warning)
     }
 
     private fun setupObservers() {
