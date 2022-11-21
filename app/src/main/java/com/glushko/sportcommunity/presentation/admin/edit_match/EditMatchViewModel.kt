@@ -103,7 +103,9 @@ class EditMatchViewModel @Inject constructor(
             if (response is Result.Success) {
                 playersHome.clear()
                 playersGuest.clear()
-                response.data.forEach { player ->
+                playersWithActions = response.data.second.toMutableList()
+                _liveDataPlayersWithActions.postValue(playersWithActions)
+                response.data.first.forEach { player ->
                     if (player.teamId == teamHome) {
                         playersHome.add(player)
                     } else {

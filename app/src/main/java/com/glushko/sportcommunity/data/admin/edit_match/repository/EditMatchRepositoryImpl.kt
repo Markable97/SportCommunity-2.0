@@ -43,14 +43,17 @@ class EditMatchRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPlayersForMatch(teamHome: Int, teamGuest: Int, matchId: Long): Result<List<PLayerUI>> {
+    override suspend fun getPlayersForMatch(teamHome: Int, teamGuest: Int, matchId: Long): Result<Pair<List<PLayerUI>, List<PlayerWithActionUI>>> {
         val response = networkUtils.getResponseResult<ResponsePlayersForMatch>(ResponsePlayersForMatch::class.java) {
             apiService.getPlayersForMatch(teamHome, teamGuest, matchId)
         }
         return when(response){
             is Result.Error -> Result.Error(response.exception)
             Result.Loading -> Result.Loading
-            is Result.Success -> Result.Success(response.data.players.map { it.toModel() })
+            is Result.Success -> Result.Success(
+                response.data.players.map { it.toModel() }
+                        to response.data.playersWithAction.map { it.toModel() }
+            )
         }
     }
 
