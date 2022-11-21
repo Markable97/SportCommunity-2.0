@@ -34,7 +34,7 @@ class EditMatchRepositoryImpl @Inject constructor(
 
     override suspend fun getAssignMatches(leagueId: Int): Result<List<MatchUI>> {
         val response = networkUtils.getResponseResult<ResponseMatches>(ResponseMatches::class.java) {
-            apiService.getAssignMatches(leagueId)
+            apiService.getAssignMatches(leagueId, "")
         }
         return when(response){
             is Result.Error -> Result.Error(response.exception)

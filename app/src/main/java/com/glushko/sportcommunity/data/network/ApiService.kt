@@ -94,7 +94,10 @@ interface ApiService {
     suspend fun getStatisticsTournament(@Query(PARAM_FOOTBALL_DIVISION_ID) divisionId: Int): Response<ResponseFootballStatistics>
 
     @GET(GET_ASSIGN_MATCHES)
-    suspend fun getAssignMatches(@Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int): Response<JsonObject>
+    suspend fun getAssignMatches(
+        @Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int,
+        @Query("played") played: String? = null
+    ): Response<JsonObject>
 
     @GET(GET_DIVISIONS)
     suspend fun getDivisions(@Query(PARAM_FOOTBALL_LEAGUE_ID) leagueId: Int): Response<JsonObject>
