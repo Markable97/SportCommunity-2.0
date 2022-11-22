@@ -82,10 +82,14 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
     }
 
     private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
-        renderRow(data[0], 1, itemRowFirst)
-        renderRow(data[1], 2, itemRowSecond)
-        renderRow(data[2], 3, itemRowThird)
-        renderRow(data[3], 4, itemRowFourth)
+        data.forEachIndexed { index, tournamentTableDisplayData ->
+            when(index){
+                0 -> renderRow(tournamentTableDisplayData, 1, itemRowFirst)
+                1 -> renderRow(tournamentTableDisplayData, 2, itemRowSecond)
+                2 -> renderRow(tournamentTableDisplayData, 3, itemRowThird)
+                3 -> renderRow(tournamentTableDisplayData, 4, itemRowFourth)
+            }
+        }
     }
 
     private fun renderRow(row: TournamentTableDisplayData, position: Int, bindingRow: ItemTournamentTableRowBinding){
