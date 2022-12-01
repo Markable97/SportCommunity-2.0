@@ -19,6 +19,7 @@ import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournam
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.toast
 import com.google.android.material.tabs.TabLayoutMediator
@@ -85,16 +86,12 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         }
         liveDataSquadInfo.observe(viewLifecycleOwner){
             when(it){
-                is Resource.Empty -> {}
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    if (it.data?.success == 1){
-                        viewModel.getStatistics()
-                    } else {
-                        toast(requireContext(), it.data?.message ?: getString(R.string.error_network_default))
-
-                    }
+                is Result.Error -> {
+                    toast(requireContext(), it.exception.message ?: getString(R.string.error_network_default))
+                }
+                Result.Loading -> {}
+                is Result.Success -> {
+                    viewModel.getStatistics()
                 }
             }
         }

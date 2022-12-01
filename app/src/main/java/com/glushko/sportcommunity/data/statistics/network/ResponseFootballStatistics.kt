@@ -85,7 +85,11 @@ data class PlayerWithStatisticsRes(
     @SerializedName("points")
     val points: Int,
     @SerializedName("amplua")
-    val amplua: String
+    val amplua: String,
+    @SerializedName("action_id")
+    val actionId: Int,
+    @SerializedName("action_name")
+    val actionName: String
 )
 
 fun PlayerWithStatisticsRes.toModel() = PlayerStatisticDisplayData(

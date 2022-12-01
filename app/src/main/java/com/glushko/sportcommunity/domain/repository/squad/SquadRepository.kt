@@ -9,7 +9,7 @@ import com.glushko.sportcommunity.util.Resource
 
 interface SquadRepository {
 
-    suspend fun getSquadInfo(teamId: Int): Resource<ResponseFootballSquad>
+    suspend fun getSquadInfo(teamId: Int): com.glushko.sportcommunity.util.Result<ResponseFootballSquad>
     fun getSquad(): List<SquadPlayerUI>
     suspend fun getSquadStatistics(): List<PlayerStatisticAdapter>
     suspend fun getSquadStatisticsAll(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>>

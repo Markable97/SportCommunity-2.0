@@ -85,7 +85,7 @@ interface ApiService {
     suspend fun getMainScreen(@FieldMap param: Map<String, String>): Response<ResponseMainScreen>
 
     @GET(GET_FOOTBALL_SQUAD)
-    suspend fun getFootballSquad(@Query(PARAM_TEAM_ID) teamId: Int): Response<ResponseFootballSquad>
+    suspend fun getFootballSquad(@Query(PARAM_TEAM_ID) teamId: Int): Response<JsonObject>
 
     @GET(GET_STATISTICS_TEAM)
     suspend fun getStatisticsTeam(@Query(PARAM_TEAM_ID) teamId: Int): Response<ResponseFootballStatistics>

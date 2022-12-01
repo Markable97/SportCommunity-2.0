@@ -16,6 +16,7 @@ import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.glushko.sportcommunity.util.Result
 
 @HiltViewModel
 class TeamViewModel @Inject constructor(
@@ -26,15 +27,15 @@ class TeamViewModel @Inject constructor(
     private val _liveDataTable: MutableLiveData<Resource<List<TournamentTableDisplayData>>> = MutableLiveData()
     val liveDataTable: LiveData<Resource<List<TournamentTableDisplayData>>> = _liveDataTable
 
-    private val _liveDataSquadInfo: MutableLiveData<Resource<ResponseFootballSquad>> = MutableLiveData()
-    val liveDataSquadInfo: LiveData<Resource<ResponseFootballSquad>> = _liveDataSquadInfo
+    private val _liveDataSquadInfo: MutableLiveData<Result<ResponseFootballSquad>> = MutableLiveData()
+    val liveDataSquadInfo: LiveData<Result<ResponseFootballSquad>> = _liveDataSquadInfo
 
     private val _liveDataStatistics: MutableLiveData<Resource<List<PlayerStatisticAdapter>>> = MutableLiveData()
     val liveDataStatistics: LiveData<Resource<List<PlayerStatisticAdapter>>> = _liveDataStatistics
 
     fun init(teamId: Int){
         viewModelScope.launch {
-            _liveDataSquadInfo.postValue(Resource.Loading())
+            _liveDataSquadInfo.postValue(Result.Loading)
             _liveDataSquadInfo.postValue(squadRepository.getSquadInfo(teamId))
             _liveDataTable.postValue(tournamentRepository.getTournamentTableTeam(teamId))
         }

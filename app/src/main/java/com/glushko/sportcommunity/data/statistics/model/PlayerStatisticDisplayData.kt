@@ -23,6 +23,9 @@ enum class TypeStatistics () {
     GOALS, ASSISTS, YELLOW_CARDS, RED_CARDS
 }
 
+
+
+
 val TypeStatistics.title
     @StringRes
     get() = when(this){

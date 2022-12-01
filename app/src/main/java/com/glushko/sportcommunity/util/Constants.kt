@@ -23,4 +23,7 @@ object Constants {
         TYPE_ACTION_OWN_GOAL,
         TYPE_ACTION_PENALTY
     )
+    const val TYPE_ACTION_YELLOW_CARD = 4
+    const val TYPE_ACTION_RED_CARD = 5
+    const val TYPE_ACTION_ASSIST = 0
 }
