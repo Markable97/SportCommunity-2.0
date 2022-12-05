@@ -8,23 +8,29 @@ import kotlinx.parcelize.Parcelize
 
 data class Match(
     @SerializedName("match_id")
-    var matchId: Long,
+    val matchId: Long,
     @SerializedName("league_name")
     val leagueName: String?,
     @SerializedName("tournament_id")
-    var tournamentId: Int,
+    val tournamentId: Int,
     @SerializedName("tournament_name")
-    var tournamentName: String,
+    val tournamentName: String,
     @SerializedName("tour")
-    var tour: String,
+    val tour: String,
     @SerializedName("team_home_id")
-    var teamHomeId: Int,
+    val teamHomeId: Int,
     @SerializedName("team_home_name")
-    var teamHomeName: String,
+    val teamHomeName: String,
     @SerializedName("team_guest_id")
-    var teamGuestId: Int,
+    val teamGuestId: Int,
     @SerializedName("team_guest_name")
-    var teamGuestName: String
+    val teamGuestName: String,
+    @SerializedName("team_home_goals")
+    val teamHomeGoals: Int?,
+    @SerializedName("team_guest_goals")
+    val teamGuestGoals: Int?,
+
+
 ) {
     fun toModel() = MatchUI(
         matchId,

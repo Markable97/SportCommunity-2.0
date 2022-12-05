@@ -23,6 +23,20 @@ data class Schedule(
         stadium = stadium.stadiumName,
         played = 0
     )
+
+    fun toModelResults() = MatchFootballDisplayData(
+        matchId = match?.matchId ?: 0,
+        leagueName = match?.leagueName ?: "",
+        divisionName = match?.tournamentName ?: "",
+        tour = match?.tour ?: "",
+        teamHomeName = match?.teamHomeName ?: "",
+        teamHomeGoal = match?.teamHomeGoals?:0,
+        teamGuestName = match?.teamGuestName ?: "",
+        teamGuestGoal = match?.teamGuestGoals ?: 0,
+        matchDate = gameDate,
+        stadium = stadium.stadiumName,
+        played = 1
+    )
 }
 
 data class ScheduleUI(

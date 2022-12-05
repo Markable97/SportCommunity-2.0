@@ -15,7 +15,7 @@ class ResponseMainScreen(
     success: Int,
     message: String,
     val calendar: List<Schedule> = listOf(),
-    val results: List<MatchFootball> = listOf(),
+    val results: List<Schedule> = listOf(),
     @SerializedName("tournament_table")
     val tournamentTable: List<TournamentTableFootball> = listOf(),
     val statistics: PlayersWithStatisticsRes
@@ -32,7 +32,7 @@ class ResponseMainScreen(
 
 
 fun ResponseMainScreen.toCalendar() = calendar.map { it.toModelCalendar() }
-fun ResponseMainScreen.toResults() = results.map { it.toModel() }
+fun ResponseMainScreen.toResults() = results.map { it.toModelResults() }
 fun ResponseMainScreen.toTournamentTable() = tournamentTable.mapIndexed { position, data ->
     data.toModel(position + 1)
 }
