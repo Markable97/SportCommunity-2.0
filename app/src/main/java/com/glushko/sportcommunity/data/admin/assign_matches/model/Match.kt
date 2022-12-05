@@ -9,6 +9,8 @@ import kotlinx.parcelize.Parcelize
 data class Match(
     @SerializedName("match_id")
     var matchId: Long,
+    @SerializedName("league_name")
+    val leagueName: String?,
     @SerializedName("tournament_id")
     var tournamentId: Int,
     @SerializedName("tournament_name")

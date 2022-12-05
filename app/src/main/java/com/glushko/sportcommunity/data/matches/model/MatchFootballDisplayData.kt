@@ -8,7 +8,7 @@ data class MatchFootballDisplayData(
     val matchId: Long,
     val leagueName: String,
     val divisionName: String,
-    val tour: Int,
+    val tour: String,
     val teamHomeName : String,
     val teamHomeGoal: Int,
     val teamGuestName: String,

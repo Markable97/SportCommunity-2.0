@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.data.main_screen.model
 
+import com.glushko.sportcommunity.data.admin.schedule.stadium.model.Schedule
 import com.glushko.sportcommunity.data.matches.model.MatchFootball
 import com.glushko.sportcommunity.data.matches.model.toModel
 import com.glushko.sportcommunity.data.matches.model.toModelCalendar
@@ -13,7 +14,7 @@ import com.google.gson.annotations.SerializedName
 class ResponseMainScreen(
     success: Int,
     message: String,
-    val calendar: List<MatchFootball> = listOf(),
+    val calendar: List<Schedule> = listOf(),
     val results: List<MatchFootball> = listOf(),
     @SerializedName("tournament_table")
     val tournamentTable: List<TournamentTableFootball> = listOf(),

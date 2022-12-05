@@ -200,7 +200,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
     }
 
     @Composable
-    fun TourAndScore(tour: Int, goalHome: Int, goalGuest: Int, modifier: Modifier){
+    fun TourAndScore(tour: String, goalHome: Int, goalGuest: Int, modifier: Modifier){
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
