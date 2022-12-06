@@ -23,6 +23,7 @@ data class PlayerInMatchSegment(
 
 data class PlayerAction(
     val idAction: Int,
+    val teamId: Int,
     val playerName: String,
     val assist: String? = null,
     val typeAction: MatchAction,

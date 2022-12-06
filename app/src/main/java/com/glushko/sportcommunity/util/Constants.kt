@@ -17,13 +17,15 @@ object Constants {
     //Region type Actions
     const val TYPE_ACTION_GOAL = 1 //id from server DB
     const val TYPE_ACTION_PENALTY = 2 //id from server DB
+    const val TYPE_ACTION_PENALTY_OUT = 3
+    const val TYPE_ACTION_YELLOW_CARD = 4
+    const val TYPE_ACTION_RED_CARD = 5
     const val TYPE_ACTION_OWN_GOAL = 6 //id from server DB
     val TYPE_ACTION_GOALS = listOf(
         TYPE_ACTION_GOAL,
         TYPE_ACTION_OWN_GOAL,
         TYPE_ACTION_PENALTY
     )
-    const val TYPE_ACTION_YELLOW_CARD = 4
-    const val TYPE_ACTION_RED_CARD = 5
+
     const val TYPE_ACTION_ASSIST = 0
 }

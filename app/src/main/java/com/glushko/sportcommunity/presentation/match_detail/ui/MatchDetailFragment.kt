@@ -4,41 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.match_detail.model.PlayerDisplayData
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.databinding.FragmentMatchDetailBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
-import com.glushko.sportcommunity.presentation.core.DoSomething
-import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.match_detail.adapters.MatchDetailAdapter
 import com.glushko.sportcommunity.presentation.match_detail.vm.DetailMatchViewModel
 import com.glushko.sportcommunity.util.Constants
-import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -59,7 +48,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("Матч инфо = $match")
-        viewModel.getPlayersInMatch(match.matchId)
+        viewModel.getPlayersInMatch(match.matchId, match.teamHomeId)
         setupRecycler()
         setupObservers()
         renderCompose()
@@ -79,11 +68,10 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
         liveDataPlayersInMatch.observe(viewLifecycleOwner){
             Timber.d("Live data $it")
             when(it){
-                is Resource.Empty -> {}
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    adapterMatchDetail.submitList(it.data!!)
+                is com.glushko.sportcommunity.util.Result.Error -> {}
+                is com.glushko.sportcommunity.util.Result.Loading -> {}
+                is com.glushko.sportcommunity.util.Result.Success -> {
+                    adapterMatchDetail.submitList(it.data)
                 }
             }
         }
@@ -110,7 +98,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
 //        CreateScreen(response = response)
     }
 
-    @Composable
+    /*@Composable
     private fun CreateScreen(response: Resource<List<PlayerDisplayData>>){
         Column {
             UpperCardMatch(match)
@@ -118,7 +106,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                 is Resource.Empty -> {}
                 is Resource.Error -> {
                     DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
-                    viewModel.getPlayersInMatch(match.matchId)
+                    viewModel.getPlayersInMatch(match.matchId, match.teamHomeId)
                 }
                 }
                 is Resource.Loading -> {
@@ -130,7 +118,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
             }
 
         }
-    }
+    }*/
 
     @Composable
     fun UpperCardMatch(match: MatchFootballDisplayData){
@@ -228,7 +216,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
         }
     }
 
-    @Composable
+    /*@Composable
     fun ActionsTeams(match: MatchFootballDisplayData, playersInMatch: List<PlayerDisplayData>){
         Row(modifier = Modifier
             .fillMaxHeight()
@@ -247,9 +235,9 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                 ListActionsPlayers(players = playersInMatch.filter{it.teamName == match.teamGuestName}, modifier)
             }
         }
-    }
+    }*/
 
-    @Composable
+    /*@Composable
     fun ListActionsPlayers(players: List<PlayerDisplayData>, modifier: Modifier) {
         var assists = ""
         LazyColumn(modifier = modifier) {
@@ -265,10 +253,10 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
             item { Text(text = "Ассистенты: $assists") }
         }
 
-    }
+    }*/
 
     data class Result(val image: Painter, val description: String)
-    @Composable
+   /* @Composable
     fun ItemInfo(typeAction: String, playerName: String){
         Row {
             val modifierText = Modifier.weight(2f)
@@ -286,5 +274,5 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
             }
             Image(painter = image, contentDescription = description, modifier = modifierImage)
         }
-    }
+    }*/
 }

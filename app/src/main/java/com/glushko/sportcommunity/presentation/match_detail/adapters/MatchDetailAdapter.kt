@@ -84,6 +84,8 @@ class MatchDetailAdapter : ListAdapter<PlayerInMatchSegment, MatchDetailAdapter.
         override fun bind(item: PlayerInMatchSegment): Unit = binding.run {
             textTimeAction.text = "${item.player?.timeAction}`"
             textPlayer.text = item.player?.playerName
+            textAssistant.isVisible = item.player?.assist != null
+            textAssistant.text = item.player?.assist
             val drawableAction = when(item.player?.typeAction){
                 MatchAction.GOAL -> R.drawable.goal
                 MatchAction.PENALTY -> R.drawable.penalty
