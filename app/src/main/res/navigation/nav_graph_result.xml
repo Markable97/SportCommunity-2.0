@@ -18,7 +18,8 @@
     <fragment
         android:id="@+id/detailMatchFragment"
         android:name="com.glushko.sportcommunity.presentation.match_detail.ui.MatchDetailFragment"
-        android:label="DetailMatchFragment">
+        android:label="@string/match_detail"
+        tools:layout="@layout/fragment_match_detail">
 
         <argument
             android:name="match"

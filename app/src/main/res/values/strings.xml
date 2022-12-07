@@ -67,6 +67,8 @@
     <string name="admin_menu__schedule">Расписание</string>
     <string name="admin_menu__matches_edit">Редактирование матчей</string>
 
+    <string name="match_detail">Реузльтат матча</string>
+
     <string name="edit_match">Матч</string>
     <string name="edit_match__protocol">Протокол</string>
     <string name="edit_match__protocol_button">Далее</string>

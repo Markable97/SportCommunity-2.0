@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private val destinationWithoutLabel = listOf(R.id.createScheduleFragment)
 
     private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment,
-        R.id.aboutFragment, R.id.settingFragment, R.id.tournamentTableFragment, R.id.statisticsFragment,
+        R.id.tournamentTableFragment, R.id.statisticsFragment,
         R.id.squadFragment, R.id.squadFragment, R.id.scheduleFragment, R.id.assignMatchesFragment,
         R.id.createScheduleFragment, R.id.editMatchListFragment, R.id.editMatchFragment, R.id.protocolFragment
     )
@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity() {
     private val destinationDrawerMenu = listOf(R.id.aboutFragment, R.id.settingFragment)
     private var backupTitle: String = ""
     private var backupItem: Int? = null
-
-    private var isClearBackStack = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            Timber.d("Пришло в addOnDestinationChangedListener = ${destination.id} parent = ${destination.parent?.startDestinationId}")
+            Timber.tag("MarkDev").d("Пришло в addOnDestinationChangedListener = ${destination.id} parent = ${destination.parent?.startDestinationId}")
             if(destination.id in destinationWithBack){
                 showBackButton(true)
                 if (destination.id !in destinationWithoutLabel){
@@ -98,33 +96,24 @@ class MainActivity : AppCompatActivity() {
             }
 
             binding.bottomNav.isVisible = destination.id in destinationWithBottomBar
-
-            if(isClearBackStack){
-                isClearBackStack = !isClearBackStack
-                destination.parent?.startDestinationId?.let {startDestination ->
-                    if(startDestination != destination.id){
-                        val navOptions = NavOptions.Builder()
-                            .setPopUpTo(R.id.eventsFragment, false)
-                            .build()
-
-                        navController.navigate(startDestination, null, navOptions)
-                    }
-                }
-            }
         }
 
         binding.navigationView.setNavigationItemSelectedListener {
-            Timber.d("Клик по боковой менюшки id=${it.itemId}  title=${it.title} ")
+            Timber.tag("MarkDev").d("Клик по боковой менюшки id=${it.itemId}  title=${it.title} ")
             if (it.itemId in destinationDrawerMenu){
                 navController.navigate(it.itemId)
             } else {
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(navController.graph.startDestinationId, true)
+                    .build()
+
+                navController.navigate(navController.graph.startDestinationId, null, navOptions)
                 viewModel.chooseDivision(it.itemId)
                 backupTitle = it.title.toString()
                 backupItem = it.itemId
             }
             setToolbarTitle(it.title.toString())
             binding.drawerLayout.close()
-            isClearBackStack = true
             true
         }
     }
@@ -218,6 +207,7 @@ class MainActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         initSpinnerLeagues(it.data!!)
                     }
+                    is Resource.Empty -> {}
                 }
             }
         }
@@ -260,7 +250,6 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.invalidate()
         val firstItem = binding.navigationView.menu.getItem(0)
         firstItem.isChecked = true
-        isClearBackStack = true
         viewModel.chooseDivision(firstItem.itemId)
         backupTitle = firstItem.title.toString()
         backupItem = firstItem.itemId
