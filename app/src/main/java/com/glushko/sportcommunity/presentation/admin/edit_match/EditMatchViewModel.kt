@@ -1,9 +1,6 @@
 package com.glushko.sportcommunity.presentation.admin.edit_match
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI
@@ -20,6 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditMatchViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val editMatchRepository: EditMatchRepository
 ) : ViewModel(){
 
@@ -75,6 +73,8 @@ class EditMatchViewModel @Inject constructor(
     private val _eventSelectPlayer = EventLiveData<PLayerUI>()
     val eventSelectPlayer: LiveData<PLayerUI> = _eventSelectPlayer
 
+    val match = savedStateHandle.get<MatchUI>("match") //Указывается в nav_graph
+
     init {
         viewModelScope.launch {
             val responseActions = editMatchRepository.getActions()
@@ -84,22 +84,25 @@ class EditMatchViewModel @Inject constructor(
                 }
             }
             _liveDataActions.postValue(responseActions)
-            _liveDataAssignMatches.postValue(editMatchRepository.getAssignMatches())
+            val response = editMatchRepository.getAssignMatches(
+                matchId = match?.matchId
+            )
+            _liveDataAssignMatches.postValue(response)
         }
     }
 
     fun getActions(): List<ChooseModel> = actions
 
-    fun setMatch(match: MatchUI) {
+    fun setMatch(match: MatchUI, fromMatchDetail: Boolean = false) {
         _liveDataSelectedMatch.value = match
         buttonUpdateSetText(match.isSaved)
         _eventEnableScore.postValue(match.isSaved)
-        getPlayersForMatch(match.teamHomeId, match.teamGuestId, match.matchId)
+        getPlayersForMatch(match.teamHomeId, match.teamGuestId, match.matchId, fromMatchDetail)
     }
 
-    private fun getPlayersForMatch(teamHome: Int, teamGuest: Int, matchId: Long){
+    private fun getPlayersForMatch(teamHome: Int, teamGuest: Int, matchId: Long, fromMatchDetail: Boolean = false){
         viewModelScope.launch {
-            val response = editMatchRepository.getPlayersForMatch(teamHome, teamGuest, matchId)
+            val response = editMatchRepository.getPlayersForMatch(teamHome, teamGuest, matchId, fromMatchDetail)
             if (response is Result.Success) {
                 playersHome.clear()
                 playersGuest.clear()

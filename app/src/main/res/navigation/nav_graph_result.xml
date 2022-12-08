@@ -24,5 +24,17 @@
         <argument
             android:name="match"
             app:argType="com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData" />
+        <action
+            android:id="@+id/action_detailMatchFragment_to_nested_navigation_edit_matches"
+            app:destination="@id/nested_navigation_edit_matches">
+            <argument
+                android:name="match"
+                app:argType="com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI"/>
+        </action>
     </fragment>
+
+    <include
+        android:id="@+id/nested_navigation_edit_matches"
+        app:graph="@navigation/nested_navigation_edit_matches"
+        />
 </navigation>

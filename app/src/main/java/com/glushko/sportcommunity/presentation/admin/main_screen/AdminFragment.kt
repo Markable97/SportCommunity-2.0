@@ -34,7 +34,7 @@ class AdminFragment: BaseXmlFragment<FragmentAdminBinding>(R.layout.fragment_adm
             navigateMenu(AdminFragmentDirections.actionAdminFragmentToScheduleFragment(), R.string.admin_menu__schedule)
         }
         layoutEditNatches.root.setSafeOnClickListener {
-            navigateMenu(AdminFragmentDirections.actionAdminFragmentToEditMatchListFragment(), R.string.admin_menu__matches_edit)
+            navigateMenu(AdminFragmentDirections.actionAdminFragmentToNestedNavigationEditMatches(), R.string.admin_menu__matches_edit)
         }
     }
 

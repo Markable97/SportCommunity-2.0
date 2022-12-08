@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
@@ -83,7 +85,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
 //        savedInstanceState: Bundle?
 //    ): View {
 //        Timber.d("Матч инфо = $match")
-//        viewModel.getPlayersInMatch(match.matchId)
+//        viewModel.getPlayersInMatch(match.match)
 //        return ComposeView(requireContext()).apply {
 //            setContent {
 //                DetailMatchMainScreen()
@@ -106,7 +108,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                 is Resource.Empty -> {}
                 is Resource.Error -> {
                     DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
-                    viewModel.getPlayersInMatch(match.matchId, match.teamHomeId)
+                    viewModel.getPlayersInMatch(match.match, match.teamHomeId)
                 }
                 }
                 is Resource.Loading -> {
@@ -130,6 +132,9 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(all = 5.dp)
+                .clickable {
+                    findNavController().navigate(MatchDetailFragmentDirections.actionDetailMatchFragmentToNestedNavigationEditMatches(match.toModelEditMatch()))
+                }
         ) {
             Column(modifier = Modifier
                 .fillMaxWidth()

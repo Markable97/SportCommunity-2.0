@@ -75,7 +75,8 @@ class PlayerWithAction(
         }
     }
 
-    fun toModel() = PlayerWithActionUI(
+    fun toModel(fromMatchDetail: Boolean) = PlayerWithActionUI(
+        isSaving = fromMatchDetail,
         time = time,
         player = PLayerUI(
             playerId = playerId,

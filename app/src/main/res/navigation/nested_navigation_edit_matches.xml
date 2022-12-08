@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_navigation_edit_matches"
+    app:startDestination="@id/editMatchListFragment">
+
+    <fragment
+        android:id="@+id/editMatchListFragment"
+        android:name="com.glushko.sportcommunity.presentation.admin.edit_match.list.EditMatchListFragment"
+        android:label="@string/admin_menu__matches_edit"
+        tools:layout="@layout/fragment_matches_edit" >
+        <action
+            android:id="@+id/action_editMatchListFragment_to_protocolFragment"
+            app:destination="@id/protocolFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="match"
+            app:argType="com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/protocolFragment"
+        android:name="com.glushko.sportcommunity.presentation.admin.edit_match.protocol.ProtocolFragment"
+        android:label="@string/edit_match__protocol"
+        tools:layout="@layout/fragment_protocol"
+        >
+        <action
+            android:id="@+id/action_protocolFragment_to_editMatchFragment"
+            app:destination="@id/editMatchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editMatchFragment"
+        android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.EditMatchFragment"
+        android:label="@string/edit_match"
+        tools:layout="@layout/fragment_match_edit" >
+        <action
+            android:id="@+id/action_editMatch_to_timeSelectDialog"
+            app:destination="@id/timeSelectDialog"
+            />
+        <action
+            android:id="@+id/action_editMatch_to_playerSelectDialog"
+            app:destination="@id/playerSelectDialog"
+            />
+    </fragment>
+    <dialog
+        android:id="@+id/timeSelectDialog"
+        android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.TimeSelectDialog"
+        android:label="TimeSelectDialog"
+        tools:layout="@layout/dialog_time_select">
+        <argument
+            android:name="position"
+            app:argType="integer"/>
+        <argument
+            android:name="time"
+            app:argType="string"
+            />
+
+    </dialog>
+    <dialog
+        android:id="@+id/playerSelectDialog"
+        android:name="com.glushko.sportcommunity.presentation.admin.edit_match.edit.player_select.PlayerSelectDialog"
+        android:label="PlayerSelectDialog"
+        tools:layout="@layout/dialog_player_select">
+        <argument
+            android:name="position"
+            app:argType="integer"/>
+        <argument
+            android:name="isAssistant"
+            app:argType="boolean"
+            android:defaultValue="false"
+            />
+
+    </dialog>
+
+</navigation>

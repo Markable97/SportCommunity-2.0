@@ -32,9 +32,9 @@ class EditMatchRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAssignMatches(leagueId: Int): Result<List<MatchUI>> {
+    override suspend fun getAssignMatches(matchId: Long?, leagueId: Int): Result<List<MatchUI>> {
         val response = networkUtils.getResponseResult<ResponseMatches>(ResponseMatches::class.java) {
-            apiService.getAssignMatches(leagueId, "")
+            apiService.getAssignMatches(leagueId, matchId,"")
         }
         return when(response){
             is Result.Error -> Result.Error(response.exception)
@@ -43,7 +43,7 @@ class EditMatchRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPlayersForMatch(teamHome: Int, teamGuest: Int, matchId: Long): Result<Pair<List<PLayerUI>, List<PlayerWithActionUI>>> {
+    override suspend fun getPlayersForMatch(teamHome: Int, teamGuest: Int, matchId: Long, fromMatchDetail: Boolean): Result<Pair<List<PLayerUI>, List<PlayerWithActionUI>>> {
         val response = networkUtils.getResponseResult<ResponsePlayersForMatch>(ResponsePlayersForMatch::class.java) {
             apiService.getPlayersForMatch(teamHome, teamGuest, matchId)
         }
@@ -52,7 +52,7 @@ class EditMatchRepositoryImpl @Inject constructor(
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(
                 response.data.players.map { it.toModel() }
-                        to response.data.playersWithAction.map { it.toModel() }
+                        to response.data.playersWithAction.map { it.toModel(fromMatchDetail) }
             )
         }
     }
