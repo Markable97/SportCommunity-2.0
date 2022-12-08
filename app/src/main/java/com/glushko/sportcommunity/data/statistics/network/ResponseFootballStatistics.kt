@@ -103,6 +103,6 @@ fun PlayerWithStatisticsRes.toModel() = PlayerStatisticDisplayData(
 fun PlayerWithStatisticsRes.toModelSquad() = SquadPlayerUI(
     playerId = playerId,
     playerName = playerName,
-    amplua = "",
+    amplua = amplua,
     avatarUrl = ""
 )
