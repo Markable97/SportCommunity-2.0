@@ -50,7 +50,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val destinationWithoutLabel = listOf(R.id.createScheduleFragment)
+    private val destinationWithoutLabel = listOf(R.id.createScheduleFragment, R.id.statisticsFragment,
+        R.id.tournamentTableFragment
+    )
 
     private val destinationWithBack = listOf(R.id.detailMatchFragment, R.id.teamFragment,
         R.id.tournamentTableFragment, R.id.statisticsFragment,
