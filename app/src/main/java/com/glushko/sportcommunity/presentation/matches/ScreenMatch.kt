@@ -116,10 +116,11 @@ fun Team(teamName: String){
             .fillMaxWidth()
     ) {
         AsyncImage(
+            modifier = Modifier.size(48.dp),
             model = "${Constants.BASE_URL_IMAGE}$teamName.png",
             error = painterResource(R.drawable.ic_healing_black_36dp),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillBounds
         )
         Text(text = teamName, modifier = Modifier
             .fillMaxWidth()
