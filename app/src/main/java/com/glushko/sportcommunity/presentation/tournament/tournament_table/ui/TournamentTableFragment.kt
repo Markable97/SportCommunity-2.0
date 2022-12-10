@@ -154,8 +154,8 @@ class TournamentTableFragment : BaseFragment() {
             placeholder = painterResource(R.drawable.ic_healing_black_36dp),
             error = painterResource(R.drawable.ic_healing_black_36dp),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = modifier,
+            contentScale = ContentScale.Fit,
+            modifier = modifier.size(48.dp),
         )
     }
 
