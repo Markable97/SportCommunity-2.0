@@ -89,7 +89,9 @@ data class PlayerWithStatisticsRes(
     @SerializedName("action_id")
     val actionId: Int,
     @SerializedName("action_name")
-    val actionName: String
+    val actionName: String,
+    @SerializedName("image_url")
+    val imageUrl: String?
 )
 
 fun PlayerWithStatisticsRes.toModel() = PlayerStatisticDisplayData(
@@ -97,12 +99,12 @@ fun PlayerWithStatisticsRes.toModel() = PlayerStatisticDisplayData(
     playerName = playerName,
     playerTeam = teamName,
     points = points,
-    amplua = amplua
-    //TODO прокинуть url на фотку игрока
+    amplua = amplua,
+    urlAvatar = imageUrl
 )
 fun PlayerWithStatisticsRes.toModelSquad() = SquadPlayerUI(
     playerId = playerId,
     playerName = playerName,
     amplua = amplua,
-    avatarUrl = ""
+    avatarUrl = imageUrl?:""
 )
