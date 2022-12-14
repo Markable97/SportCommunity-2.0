@@ -12,6 +12,7 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.match_detail.model.MatchAction
 import com.glushko.sportcommunity.data.match_detail.model.MatchSegment
 import com.glushko.sportcommunity.data.match_detail.model.PlayerInMatchSegment
+import com.glushko.sportcommunity.data.match_detail.model.getDrawable
 import com.glushko.sportcommunity.databinding.ItemMatchActionGuestBinding
 import com.glushko.sportcommunity.databinding.ItemMatchActionHomeBinding
 import com.glushko.sportcommunity.databinding.ItemMatchSegmentBinding
@@ -86,16 +87,7 @@ class MatchDetailAdapter : ListAdapter<PlayerInMatchSegment, MatchDetailAdapter.
             textPlayer.text = item.player?.playerName
             textAssistant.isVisible = item.player?.assist != null
             textAssistant.text = item.player?.assist
-            val drawableAction = when(item.player?.typeAction){
-                MatchAction.GOAL -> R.drawable.goal
-                MatchAction.PENALTY -> R.drawable.penalty
-                MatchAction.PENALTY_OUT -> R.drawable.penalty_out
-                MatchAction.OWN_GOAL -> R.drawable.own_goal
-                MatchAction.YELLOW -> R.drawable.yellow_card
-                MatchAction.TWO_YELLOW -> R.drawable.red_yellow_card
-                MatchAction.RED -> R.drawable.red_card
-                null -> null
-            }
+            val drawableAction = item.player?.typeAction?.getDrawable()
             drawableAction?.let {
                 imageTypeAction.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -116,16 +108,7 @@ class MatchDetailAdapter : ListAdapter<PlayerInMatchSegment, MatchDetailAdapter.
             textPlayer.text = item.player?.playerName
             textAssistant.isVisible = item.player?.assist != null
             textAssistant.text = item.player?.assist
-            val drawableAction = when(item.player?.typeAction){
-                MatchAction.GOAL -> R.drawable.goal
-                MatchAction.PENALTY -> R.drawable.penalty
-                MatchAction.PENALTY_OUT -> R.drawable.penalty_out
-                MatchAction.OWN_GOAL -> R.drawable.own_goal
-                MatchAction.YELLOW -> R.drawable.yellow_card
-                MatchAction.TWO_YELLOW -> R.drawable.red_yellow_card
-                MatchAction.RED -> R.drawable.red_card
-                null -> null
-            }
+            val drawableAction = item.player?.typeAction?.getDrawable()
             drawableAction?.let {
                 imageTypeAction.setImageDrawable(
                     ContextCompat.getDrawable(

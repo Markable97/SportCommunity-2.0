@@ -1,5 +1,8 @@
 package com.glushko.sportcommunity.data.match_detail.model
 
+import androidx.annotation.DrawableRes
+import com.glushko.sportcommunity.R
+
 data class PlayerDisplayData(
     val playerName: String,
     val teamName: String,
@@ -37,4 +40,14 @@ enum class MatchSegment{
 enum class MatchAction{
     GOAL, PENALTY, PENALTY_OUT, OWN_GOAL, YELLOW, TWO_YELLOW, RED
 }
+@DrawableRes
+fun MatchAction.getDrawable() = when(this){
+        MatchAction.GOAL -> R.drawable.goal
+        MatchAction.PENALTY -> R.drawable.penalty
+        MatchAction.PENALTY_OUT -> R.drawable.penalty_out
+        MatchAction.OWN_GOAL -> R.drawable.own_goal
+        MatchAction.YELLOW -> R.drawable.yellow_card
+        MatchAction.TWO_YELLOW -> R.drawable.red_yellow_card
+        MatchAction.RED -> R.drawable.red_card
+    }
 

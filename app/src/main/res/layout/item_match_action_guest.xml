@@ -40,9 +40,10 @@
         app:layout_constraintEnd_toStartOf="@id/imageTypeAction"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/imageTypeAction"
         app:layout_constraintBottom_toBottomOf="@id/imageTypeAction"
         app:layout_constraintStart_toEndOf="@id/imageTypeAction"
@@ -51,6 +52,8 @@
             android:id="@+id/textPlayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="@style/text16_sp_regular"
             android:textColor="@color/black"
             android:layout_gravity="center"
@@ -61,6 +64,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/text14_sp_regular"
             android:textColor="@color/black"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_gravity="center"
             android:visibility="gone"
             tools:visibility="visible"
