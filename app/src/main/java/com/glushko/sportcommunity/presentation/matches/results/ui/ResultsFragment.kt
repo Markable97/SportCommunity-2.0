@@ -95,13 +95,18 @@ fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier){
         )
         Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
             Text(text = "$goalHome", modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .height(48.dp)
+                .wrapContentHeight(),
                 textAlign = TextAlign.Center
             )
             Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
             Text(text = "$goalGuest", modifier = Modifier
-                .fillMaxWidth(),
-                textAlign = TextAlign.Center
+                .fillMaxWidth()
+                .height(48.dp)
+                .wrapContentHeight(),
+                textAlign = TextAlign.Center,
+
             )
         }
     }
