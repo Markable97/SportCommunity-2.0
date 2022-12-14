@@ -37,7 +37,7 @@ class MatchDetailRepositoryImpl @Inject constructor(
                 val actionsInFirstTime = mutableListOf<PlayerAction>()
                 val actionsInSecondTime = mutableListOf<PlayerAction>()
                 actions.forEach { action ->
-                    if (action.timeAction < 30) {
+                    if (action.timeAction <= 20) { //TODO передавать с сервера
                         actionsInFirstTime.add(action)
                     } else {
                         actionsInSecondTime.add(action)
@@ -50,7 +50,7 @@ class MatchDetailRepositoryImpl @Inject constructor(
                     )
                 )
                 segments.addAll(
-                    actionsInFirstTime.map { action ->
+                    actionsInFirstTime.sortedBy { it.timeAction  }.map { action ->
                         PlayerInMatchSegment(
                             segment = if (teamHomeId == action.teamId) MatchSegment.ACTION_HOME else MatchSegment.ACTION_GUEST,
                             player = action

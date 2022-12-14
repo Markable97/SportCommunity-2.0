@@ -107,7 +107,7 @@ class PlayerWithAction(
                 playerName = playerName,
                 assist = if (playerAssistId == -1) null else playerAssistName,
                 typeAction = actionFromId(actionId),
-                timeAction = time.split(":").firstOrNull()?.toInt() ?: 0
+                timeAction = time.replace("'","").split(":").firstOrNull()?.toInt() ?: 0
             )
     }
 }

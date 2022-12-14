@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.databinding.ItemStatisticsRowBinding
 import com.glushko.sportcommunity.util.Constants
@@ -30,6 +32,9 @@ class StatisticsAllAdapter(private val fromOpen: Int): ListAdapter<PlayerStatist
             textPlayerName.text = item.playerName
             textDopInfo.text = if (fromOpen == Constants.OPEN_FROM_TEAM) item.amplua else item.playerTeam
             textPoints.text = item.points.toString()
+            imagePlayerAvatar.load(item.urlAvatar){
+                transformations(CircleCropTransformation())
+            }
         }
     }
 
