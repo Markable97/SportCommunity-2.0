@@ -14,7 +14,9 @@ class ResponsePlayersForMatch(
     message: String,
     val players: List<Player> = emptyList(),
     @SerializedName("players_with_action", alternate = ["players_in_match"])
-    val playersWithAction: List<PlayerWithAction> = emptyList()
+    val playersWithAction: List<PlayerWithAction> = emptyList(),
+    @SerializedName("time_half")
+    val timeHalf: Int?
 
 ): BaseResponse(success, message)
 

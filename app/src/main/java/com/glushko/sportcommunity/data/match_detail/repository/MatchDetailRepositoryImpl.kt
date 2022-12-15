@@ -7,6 +7,7 @@ import com.glushko.sportcommunity.data.match_detail.model.PlayerInMatchSegment
 import com.glushko.sportcommunity.data.match_detail.network.ResponsePlayersInMatch
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.domain.repository.match_detail.MatchDetailRepository
+import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent
@@ -37,7 +38,7 @@ class MatchDetailRepositoryImpl @Inject constructor(
                 val actionsInFirstTime = mutableListOf<PlayerAction>()
                 val actionsInSecondTime = mutableListOf<PlayerAction>()
                 actions.forEach { action ->
-                    if (action.timeAction <= 20) { //TODO передавать с сервера
+                    if (action.timeAction <= (response.data.timeHalf ?: Constants.TIME_HALF_DEFAULT)) {
                         actionsInFirstTime.add(action)
                     } else {
                         actionsInSecondTime.add(action)
