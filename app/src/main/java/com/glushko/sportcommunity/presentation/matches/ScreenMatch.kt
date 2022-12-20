@@ -93,7 +93,7 @@ fun ResultFooter(stadium: String) {
 @Composable
 fun TextTour(tour: String, modifier: Modifier){
     Box(contentAlignment = Alignment.Center, modifier =  modifier.fillMaxHeight()) {
-        Text(text = "$tour тур", textAlign = TextAlign.Center)
+        Text(text = tour, textAlign = TextAlign.Center)
     }
 
 }
