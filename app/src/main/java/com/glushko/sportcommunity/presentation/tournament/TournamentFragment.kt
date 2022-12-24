@@ -96,11 +96,12 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
         bindingRow.apply {
             root.setOnClickListener{
                 findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTeamFragment(
-                    row.teamName, row.teamId
+                    row.teamName, row.teamId, row.teamImage
                 ))
             }
             textPosition.text = position.toString()
-            imageTeam.load("${Constants.BASE_URL_IMAGE}${row.teamName}.png")
+            val image = row.teamImage ?: "${Constants.BASE_URL_IMAGE}${row.teamName}.png"
+            imageTeam.load(image)
             textTeamName.text = row.teamName
             textGames.text = row.games.toString()
             textWins.text = row.wins.toString()

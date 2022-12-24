@@ -13,9 +13,11 @@ data class MatchFootballDisplayData(
     val tour: String,
     val teamHomeId: Int,
     val teamHomeName : String,
+    val teamHomeImage : String? = null,
     val teamHomeGoal: Int,
     val teamGuestId: Int,
     val teamGuestName: String,
+    val teamGuestImage: String? = null,
     val teamGuestGoal: Int,
     val played: Int,
     val matchDate: String? = null,
@@ -28,9 +30,11 @@ data class MatchFootballDisplayData(
         tour = tour,
         teamHomeId = teamHomeId,
         teamHomeName = teamHomeName,
+        teamHomeImage = teamHomeImage,
         teamHomeGoals = teamHomeGoal,
         teamGuestId = teamGuestId,
         teamGuestName = teamGuestName,
+        teamGuestImage = teamGuestImage,
         teamGuestGoals = teamGuestGoal,
         isSaved = true
     )

@@ -1,9 +1,6 @@
 package com.glushko.sportcommunity.data.main_screen.model
 
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.Schedule
-import com.glushko.sportcommunity.data.matches.model.MatchFootball
-import com.glushko.sportcommunity.data.matches.model.toModel
-import com.glushko.sportcommunity.data.matches.model.toModelCalendar
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.network.BaseResponse
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes

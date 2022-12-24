@@ -10,6 +10,7 @@ data class TournamentTableFootball(
     @SerializedName("division_name")val divisionName: String,
     @SerializedName("id_team")val teamId: Long,
     @SerializedName("team_name")val teamName: String,
+    @SerializedName("team_image")val teamImage: String?,
     val games: Int,
     val wins: Int,
     val draws: Int,
@@ -21,6 +22,7 @@ data class TournamentTableFootball(
 fun TournamentTableFootball.toModel(positionTable: Int) = TournamentTableDisplayData(
     teamId = teamId.toInt(),
     teamName = teamName,
+    teamImage = teamImage,
     games = games,
     wins = wins,
     draws = draws,

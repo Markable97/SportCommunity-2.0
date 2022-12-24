@@ -53,7 +53,7 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
                     Modifier
                         .weight(0.65f)
                 }
-                Teams(teamHome = match.teamHomeName, teamGuest = match.teamGuestName, modifierTeams)
+                Teams(match, modifierTeams)
                 val modifierScore= if(match.played == 1){
                     Modifier
                         .weight(0.1f)
@@ -99,25 +99,25 @@ fun TextTour(tour: String, modifier: Modifier){
 }
 
 @Composable
-fun Teams(teamHome: String, teamGuest: String, modifier: Modifier){
+fun Teams(match: MatchFootballDisplayData, modifier: Modifier){
     Column(modifier = modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
-        Team(teamName = teamHome)
+        Team(teamName = match.teamHomeName, teamImage = match.teamHomeImage?:"${Constants.BASE_URL_IMAGE}${match.teamHomeName}.png")
         Divider(color = Color.Gray, modifier = Modifier
             .fillMaxWidth()
             .height(1.dp))
-        Team(teamName = teamGuest)
+        Team(teamName = match.teamGuestName, teamImage = match.teamGuestImage?:"${Constants.BASE_URL_IMAGE}${match.teamGuestName}.png")
     }
 }
 
 @Composable
-fun Team(teamName: String){
+fun Team(teamName: String, teamImage: String){
     Row(verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
     ) {
         AsyncImage(
             modifier = Modifier.size(48.dp),
-            model = "${Constants.BASE_URL_IMAGE}$teamName.png",
+            model = teamImage,
             error = painterResource(R.drawable.ic_healing_black_36dp),
             contentDescription = null,
             contentScale = ContentScale.FillBounds

@@ -127,7 +127,8 @@ class TournamentTableFragment : BaseFragment() {
                     findNavController().navigate(
                         TournamentTableFragmentDirections.actionTournamentTableFragmentToTeamFragment(
                             teamName = team.teamName,
-                            teamId = team.teamId
+                            teamId = team.teamId,
+                            teamImage = team.teamImage
                         )
                     )
                 }
@@ -136,7 +137,7 @@ class TournamentTableFragment : BaseFragment() {
 
         ){
             TableCell(modifier = modifierOther, value = num.toString())
-            TableCellIMage(modifier = modifierOther, value = team.teamName)
+            TableCellIMage(modifier = modifierOther, value = team.teamImage ?: "${BASE_URL_IMAGE}${team.teamName}.png")
             TableCell(modifier = modifier, value = team.teamName)
             TableCell(modifier = modifierOther, value = team.games.toString())
             TableCell(modifier = modifierOther, value = team.wins.toString())
@@ -150,7 +151,7 @@ class TournamentTableFragment : BaseFragment() {
     @Composable
     fun TableCellIMage(modifier: Modifier, value: String){
         AsyncImage(
-            model = "$BASE_URL_IMAGE$value.png",
+            model = value,
             placeholder = painterResource(R.drawable.ic_healing_black_36dp),
             error = painterResource(R.drawable.ic_healing_black_36dp),
             contentDescription = null,

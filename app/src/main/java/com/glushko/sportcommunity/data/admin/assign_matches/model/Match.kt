@@ -21,10 +21,14 @@ data class Match(
     val teamHomeId: Int,
     @SerializedName("team_home_name")
     val teamHomeName: String,
+    @SerializedName("team_home_image")
+    val teamHomeImage: String?,
     @SerializedName("team_guest_id")
     val teamGuestId: Int,
     @SerializedName("team_guest_name")
     val teamGuestName: String,
+    @SerializedName("team_guest_image")
+    val teamGuestImage: String?,
     @SerializedName("team_home_goals")
     val teamHomeGoals: Int?,
     @SerializedName("team_guest_goals")
@@ -39,8 +43,10 @@ data class Match(
         tour,
         teamHomeId,
         teamHomeName,
+        teamHomeImage,
         teamGuestId,
-        teamGuestName
+        teamGuestName,
+        teamGuestImage
     )
 }
 
@@ -52,8 +58,10 @@ data class MatchUI(
     var tour: String,
     var teamHomeId: Int,
     var teamHomeName: String,
+    var teamHomeImage: String?,
     var teamGuestId: Int,
     var teamGuestName: String,
+    var teamGuestImage: String?,
     var isSelect: Boolean = false,
     var teamHomeGoals: Int? = null,
     var teamGuestGoals: Int? = null,

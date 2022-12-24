@@ -50,7 +50,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
 
     private fun initView() = binding.run {
         (requireActivity() as? MainActivity)?.setToolbarTitle(args.teamName)
-        imageTeam.load("${Constants.BASE_URL_IMAGE}${args.teamName}.png")
+        imageTeam.load(args.teamImage?:"${Constants.BASE_URL_IMAGE}${args.teamName}.png")
         textTeamName.text = args.teamName
     }
 
@@ -121,7 +121,8 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
                 textTeamName.setTextColor(ContextCompat.getColor(requireContext(), R.color.bg_tournament_table_team_selected))
             }
             textPosition.text = row.position.toString()
-            imageTeam.load("${Constants.BASE_URL_IMAGE}${row.teamName}.png")
+            val image = row.teamImage ?: "${Constants.BASE_URL_IMAGE}${row.teamName}.png"
+            imageTeam.load(image)
             textTeamName.text = row.teamName
             textGames.text = row.games.toString()
             textWins.text = row.wins.toString()

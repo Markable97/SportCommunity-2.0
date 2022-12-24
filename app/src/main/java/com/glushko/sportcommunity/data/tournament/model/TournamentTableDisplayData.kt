@@ -4,6 +4,7 @@ data class TournamentTableDisplayData(
     val position: Int,
     val teamId: Int,
     val teamName: String,
+    val teamImage: String?,
     val games: Int,
     val wins: Int,
     val draws: Int,
