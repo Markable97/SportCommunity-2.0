@@ -26,7 +26,7 @@ import com.glushko.sportcommunity.data.media.model.MediaUI
 @Composable
 fun CreateMediaAlbumScreen(
     mediaList: List<MediaUI>,
-    onClickItem: (Long) -> Unit
+    onClickItem: (Long, String) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -46,15 +46,15 @@ fun CreateMediaAlbumScreen(
 }
 
 @Composable
-fun CardMedia(
+private fun CardMedia(
     media: MediaUI,
-    onClickItem: (Long) -> Unit
+    onClickItem: (Long, String) -> Unit
 ){
     Card(
         shape = RoundedCornerShape(20.dp),
         border = BorderStroke(1.dp, Color.LightGray),
         modifier = Modifier.clickable {
-            onClickItem.invoke(media.matchId)
+            onClickItem.invoke(media.matchId, media.subTitle)
         }
     ) {
         Column(

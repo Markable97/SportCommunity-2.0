@@ -23,6 +23,7 @@ interface ApiService {
         const val GET_FOOTBALL_SQUAD = "GetFootballSquad"
         const val GET_PLAYERS_IN_MATCH = "GetPlayersInMatch"
         const val GET_MAIN_SCREEN = "MainScreen"
+        const val GET_MEDIA_MATCH = "GetMatchMedia"
 //        const val GET_STATISTICS_TEAM = "GetFootballStatisticsTeam"
 //        const val GET_STATISTICS_TOURNAMENT = "GetFootballStatisticsTournament"
         const val GET_ASSIGN_MATCHES = "GetAssignedMatches"
@@ -176,4 +177,7 @@ interface ApiService {
     suspend fun deletePlayersWithActionsGoals(
         @Body playersWithGoals: RequestPlayersWithActionsGoals
     ) : Response<JsonObject>
+
+    @GET(GET_MEDIA_MATCH)
+    suspend fun getMediaMatch(@Query(PARAM_MATCH_ID) matchId: Long) : Response<JsonObject>
 }

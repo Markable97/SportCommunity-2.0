@@ -85,7 +85,15 @@
     <fragment
         android:id="@+id/tournamentMediaFragment"
         android:name="com.glushko.sportcommunity.presentation.tournament.media.TournamentMediaFragment"
-        android:label="TournamentMediaFragment" />
+        android:label="TournamentMediaFragment" >
+        <action
+            android:id="@+id/action_tournamentMediaFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.glushko.sportcommunity.presentation.media.GalleryFragment"
+        android:label="GalleryFragment" />
 
 
 </navigation>

@@ -4,7 +4,9 @@ import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayD
 import com.glushko.sportcommunity.data.main_screen.leagues.network.toModel
 import com.glushko.sportcommunity.data.main_screen.model.*
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.data.media.model.MediaUI
+import com.glushko.sportcommunity.data.media.network.ImagesResMain
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
@@ -14,6 +16,7 @@ import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayDa
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 import it.czerwinski.android.hilt.annotations.BoundTo
@@ -57,5 +60,16 @@ class MainRepositoryImpl @Inject constructor(
             media = response.data.toMedia()
         }
         return response
+    }
+
+    override suspend fun getMatchMedia(matchId: Long): Result<List<ImageUI>> {
+        val response = networkUtils.getResponseResult<ImagesResMain>(ImagesResMain::class.java){
+            api.getMediaMatch(matchId)
+        }
+        return when(response){
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(response.data.images.map { it.toModelUI() })
+        }
     }
 }
