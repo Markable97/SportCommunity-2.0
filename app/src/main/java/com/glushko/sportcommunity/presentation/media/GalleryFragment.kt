@@ -46,7 +46,7 @@ class GalleryFragment: BaseFragment() {
                     message = (imagesResponse as Result.Error).exception.message?:"",
                     textButton = getString(R.string.retry)
                 ) {
-
+                    mainViewModel.getMatchMedia()
                 }
             }
             Result.Loading -> Loader()
@@ -59,6 +59,11 @@ class GalleryFragment: BaseFragment() {
                 )
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroyView()
+        mainViewModel.cancelJobMediaMatch()
     }
 
 }
