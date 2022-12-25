@@ -4,6 +4,7 @@ import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayD
 import com.glushko.sportcommunity.data.main_screen.leagues.network.toModel
 import com.glushko.sportcommunity.data.main_screen.model.*
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
@@ -30,6 +31,7 @@ class MainRepositoryImpl @Inject constructor(
     override var calendar: List<MatchFootballDisplayData> = emptyList()
     override var results: List<MatchFootballDisplayData> = emptyList()
     override var statistics: PlayersWithStatisticsRes = PlayersWithStatisticsRes()
+    override var media: List<MediaUI> = emptyList()
 
 
     override suspend fun getLeagues(): Resource<List<LeaguesDisplayData>> {
@@ -52,6 +54,7 @@ class MainRepositoryImpl @Inject constructor(
             calendar = response.data.toCalendar()
             results = response.data.toResults()
             statistics = response.data.statistics
+            media = response.data.toMedia()
         }
         return response
     }

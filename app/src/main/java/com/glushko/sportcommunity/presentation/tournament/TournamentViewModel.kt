@@ -3,6 +3,7 @@ package com.glushko.sportcommunity.presentation.tournament
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.repository.tournament.TournamentRepository
@@ -21,9 +22,13 @@ class TournamentViewModel @Inject constructor(
     private val _liveDataStatistics: MutableLiveData<List<PlayerStatisticAdapter>> = MutableLiveData()
     val liveDataStatistics: LiveData<List<PlayerStatisticAdapter>> = _liveDataStatistics
 
+    private val _liveDataMedia: MutableLiveData<List<MediaUI>> = MutableLiveData()
+    val liveDataMedia: LiveData<List<MediaUI>> = _liveDataMedia
+
     fun init(){
         _liveDataTable.value = tournamentRepository.getTournamentTable()
         _liveDataStatistics.value = tournamentRepository.getStatistics()
+        _liveDataMedia.value = tournamentRepository.getMedia()
     }
 
 }

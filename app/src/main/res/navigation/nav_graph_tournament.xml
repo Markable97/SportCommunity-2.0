@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_tournamentFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_tournamentFragment_to_tournamentMediaFragment"
+            app:destination="@id/tournamentMediaFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -79,6 +82,10 @@
             android:name="teamId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/tournamentMediaFragment"
+        android:name="com.glushko.sportcommunity.presentation.tournament.media.TournamentMediaFragment"
+        android:label="TournamentMediaFragment" />
 
 
 </navigation>

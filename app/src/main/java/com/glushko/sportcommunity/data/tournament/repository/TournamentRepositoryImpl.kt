@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.data.tournament.repository
 
+import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
@@ -31,6 +32,10 @@ class TournamentRepositoryImpl @Inject constructor(
 
     override fun getStatistics(): List<PlayerStatisticAdapter>{
         return mainRepository.statistics.toModelWidget()
+    }
+
+    override fun getMedia(): List<MediaUI> {
+        return mainRepository.media
     }
 
     override suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>> {

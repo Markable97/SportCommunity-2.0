@@ -79,6 +79,9 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
                 ))
             }
         }
+        buttonMedia.setOnClickListener {
+            findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentMediaFragment())
+        }
     }
 
     private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
