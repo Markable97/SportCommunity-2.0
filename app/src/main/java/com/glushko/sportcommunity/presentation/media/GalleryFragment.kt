@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.presentation.media
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,8 +54,14 @@ class GalleryFragment: BaseFragment() {
             is Result.Success -> {
                 GalleryScreen(
                     imagesList = (imagesResponse as Result.Success<List<ImageUI>>).data,
-                    onClickItem = {
-                        toast(requireContext(), it)
+                    onClickDownload = { url ->
+
+                    },
+                    onClickShare = { url ->
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.type = "text/plain"
+                        intent.putExtra(Intent.EXTRA_TEXT, url)
+                        startActivity(Intent.createChooser(intent, "Share URL"))
                     }
                 )
             }
