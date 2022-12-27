@@ -154,27 +154,27 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                         .padding(bottom = 5.dp)
                     val modifierScore = Modifier
                         .weight(1f)
-                    TeamInMatch(match.teamHomeName, modifierTeam)
+                    TeamInMatch(match.teamHomeName, modifierTeam, match.teamHomeImage)
                     TourAndScore(
                         tour = match.tour,
                         goalHome = match.teamHomeGoal,
                         goalGuest = match.teamGuestGoal,
                         modifier = modifierScore
                     )
-                    TeamInMatch(match.teamGuestName, modifierTeam)
+                    TeamInMatch(match.teamGuestName, modifierTeam, match.teamGuestImage)
                 }
             }
         }
     }
 
     @Composable
-    fun TeamInMatch(teamName: String, modifier: Modifier){
+    fun TeamInMatch(teamName: String, modifier: Modifier, teamImage: String?){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
         ) {
             AsyncImage(
-                model = "${Constants.BASE_URL_IMAGE}$teamName.png",
+                model = teamImage ?: "${Constants.BASE_URL_IMAGE}$teamName.png",
                 error = painterResource(R.drawable.ic_healing_black_36dp),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
