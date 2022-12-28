@@ -18,7 +18,9 @@ import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.toast
+import com.glushko.sportcommunity.util.extensions.toastLong
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class GalleryFragment: BaseFragment() {
@@ -33,6 +35,26 @@ class GalleryFragment: BaseFragment() {
             setContent {
                 Surface(color = MaterialTheme.colors.background) {
                     ScreenGallery()
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mainViewModel.eventShareUri.observe(viewLifecycleOwner){ resultUri ->
+            when(resultUri){
+                is Result.Error -> {
+                    toastLong(requireContext(), resultUri.exception.message ?: "Error share")
+                }
+                Result.Loading -> {
+                }
+                is Result.Success -> {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "image/*"
+                        putExtra(Intent.EXTRA_STREAM, resultUri.data)
+                    }
+                    startActivity(Intent.createChooser(intent, "Share photo"))
                 }
             }
         }
@@ -57,11 +79,8 @@ class GalleryFragment: BaseFragment() {
                     onClickDownload = { url ->
 
                     },
-                    onClickShare = { url ->
-                        val intent = Intent(Intent.ACTION_SEND)
-                        intent.type = "text/plain"
-                        intent.putExtra(Intent.EXTRA_TEXT, url)
-                        startActivity(Intent.createChooser(intent, "Share URL"))
+                    onClickShare = { bitmap ->
+                        mainViewModel.getUriToShare(bitmap, requireActivity().cacheDir.toString(), requireContext())
                     }
                 )
             }

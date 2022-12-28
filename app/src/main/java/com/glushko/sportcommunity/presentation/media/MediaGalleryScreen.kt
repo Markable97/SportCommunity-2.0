@@ -1,5 +1,7 @@
 package com.glushko.sportcommunity.presentation.media
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,7 +33,7 @@ import com.glushko.sportcommunity.data.media.model.ImageUI
 @Composable
 fun GalleryScreen(
     imagesList: List<ImageUI>,
-    onClickShare: (String) -> Unit,
+    onClickShare: (Bitmap) -> Unit,
     onClickDownload: (String) -> Unit,
 ) {
     // store the dialog open or close state
@@ -89,10 +91,11 @@ private fun CardImage(
 @Composable
 private fun FullPhoto(
     openFullImage: MutableState<Pair<Boolean, String>>,
-    onClickShare: (String) -> Unit,
+    onClickShare: (Bitmap) -> Unit,
     onClickDownload: (String) -> Unit,
 ) {
     if (openFullImage.value.first){
+        var bitmapShare: Bitmap? = null
         Dialog(
             onDismissRequest = { openFullImage.value = false to ""},
             properties = DialogProperties(
@@ -128,7 +131,7 @@ private fun FullPhoto(
                                 )
                             }
                             IconButton(onClick = {
-                                onClickShare.invoke(openFullImage.value.second)
+                                onClickShare.invoke(bitmapShare ?: return@IconButton)
                             }) {
                                 Icon(
                                     Icons.Filled.Share,
@@ -156,7 +159,11 @@ private fun FullPhoto(
                             contentDescription = null,
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
-                                .fillMaxSize()
+                                .fillMaxSize(),
+                            onSuccess = { success ->
+                                bitmapShare = (success.result.drawable as BitmapDrawable).bitmap
+                            }
+
                         )
                     }
                 }

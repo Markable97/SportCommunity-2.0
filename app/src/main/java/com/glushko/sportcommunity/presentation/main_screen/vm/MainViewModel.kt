@@ -1,5 +1,9 @@
 package com.glushko.sportcommunity.presentation.main_screen.vm
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import androidx.core.content.FileProvider
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,6 +12,7 @@ import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
+import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,6 +20,9 @@ import javax.inject.Inject
 import com.glushko.sportcommunity.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -32,6 +40,9 @@ class MainViewModel @Inject constructor(
 
     private val _liveDataGallery = MutableLiveData<Result<List<ImageUI>>>()
     val liveDataGallery: LiveData<Result<List<ImageUI>>> = _liveDataGallery
+
+    private val _eventShareUri = EventLiveData<Result<Uri>>()
+    val eventShareUri: LiveData<Result<Uri>> = _eventShareUri
 
     private var jobMediaMatch: Job? = null
 
@@ -83,6 +94,30 @@ class MainViewModel @Inject constructor(
             _liveDataGallery.postValue(
                 mainRepository.getMatchMedia(matchId)
             )
+        }
+    }
+
+    fun getUriToShare(bitmap: Bitmap, filePath: String, context: Context){
+        val imagesFolder = File(filePath, "images")
+        viewModelScope.launch(Dispatchers.IO) {
+            _eventShareUri.postValue(Result.Loading)
+            try {
+                imagesFolder.mkdirs()
+                val fileImage = File(imagesFolder, "${System.currentTimeMillis()}.png")
+                val outputStream =  FileOutputStream(fileImage)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, outputStream)
+                outputStream.flush()
+                outputStream.close()
+                val uriToShare = FileProvider.getUriForFile(
+                    context,
+                    "com.glushko.sportcommunity.fileprovider",
+                    fileImage
+                )
+                _eventShareUri.postValue(Result.Success(uriToShare))
+            } catch (ex: Exception){
+                _eventShareUri.postValue(Result.Error(ex))
+                Timber.e(ex)
+            }
         }
     }
 
