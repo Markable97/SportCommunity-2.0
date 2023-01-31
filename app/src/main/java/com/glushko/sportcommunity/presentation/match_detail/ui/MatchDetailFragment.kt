@@ -133,7 +133,8 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                 .wrapContentHeight()
                 .padding(all = 5.dp)
                 .clickable {
-                    findNavController().navigate(MatchDetailFragmentDirections.actionDetailMatchFragmentToNestedNavigationEditMatches(match.toModelEditMatch()))
+                    //TODO navigate to Edit Match for admin
+                    //findNavController().navigate(MatchDetailFragmentDirections.actionDetailMatchFragmentToNestedNavigationEditMatches(match.toModelEditMatch()))
                 }
         ) {
             Column(modifier = Modifier

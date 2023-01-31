@@ -20,9 +20,9 @@
         android:id="@+id/nav_graph_tournament"
         android:icon="@drawable/ic_trophy"
         android:title="@string/bottom_tittle__tournament" />
-    <item
-        android:id="@+id/nav_graph_admin"
-        android:icon="@drawable/ic_admin_panel"
-        android:title="@string/bottom_tittle__admin"/>
+<!--    <item-->
+<!--        android:id="@+id/nav_graph_admin"-->
+<!--        android:icon="@drawable/ic_admin_panel"-->
+<!--        android:title="@string/bottom_tittle__admin"/>-->
 
 </menu>
