@@ -38,7 +38,7 @@ enum class MatchSegment{
 }
 
 enum class MatchAction{
-    GOAL, PENALTY, PENALTY_OUT, OWN_GOAL, YELLOW, TWO_YELLOW, RED
+    GOAL, PENALTY, PENALTY_OUT, OWN_GOAL, YELLOW, TWO_YELLOW, RED, ASSIST
 }
 @DrawableRes
 fun MatchAction.getDrawable() = when(this){
@@ -49,5 +49,6 @@ fun MatchAction.getDrawable() = when(this){
         MatchAction.YELLOW -> R.drawable.yellow_card
         MatchAction.TWO_YELLOW -> R.drawable.red_yellow_card
         MatchAction.RED -> R.drawable.red_card
-    }
+        MatchAction.ASSIST -> R.drawable.ic_assist
+}
 

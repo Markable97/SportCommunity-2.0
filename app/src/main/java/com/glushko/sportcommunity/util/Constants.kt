@@ -23,6 +23,7 @@ object Constants {
     const val TYPE_ACTION_YELLOW_CARD = 4
     const val TYPE_ACTION_RED_CARD = 5
     const val TYPE_ACTION_OWN_GOAL = 6 //id from server DB
+    const val TYPE_ACTION_ASSISTS = 7
     val TYPE_ACTION_GOALS = listOf(
         TYPE_ACTION_GOAL,
         TYPE_ACTION_OWN_GOAL,

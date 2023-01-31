@@ -73,6 +73,7 @@ class PlayerWithAction(
             Constants.TYPE_ACTION_YELLOW_CARD -> {MatchAction.YELLOW}
             Constants.TYPE_ACTION_RED_CARD -> {MatchAction.RED}
             Constants.TYPE_ACTION_OWN_GOAL -> {MatchAction.OWN_GOAL}
+            Constants.TYPE_ACTION_ASSISTS -> {MatchAction.ASSIST}
             else -> {throw Exception("not action")}
         }
     }
