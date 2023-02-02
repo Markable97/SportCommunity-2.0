@@ -10,7 +10,7 @@ import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.network.BaseResponse
 import com.glushko.sportcommunity.data.tours.ResponseUnassignedTours
 import com.glushko.sportcommunity.data.tours.toModel
-import com.glushko.sportcommunity.domain.repository.admin.assign_matches.AssignMatchesRepository
+import com.glushko.sportcommunity.domain.admin.assign_matches.AssignMatchesRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent

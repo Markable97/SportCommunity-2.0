@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.data.media.model.ImageUI
-import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
+import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Resource

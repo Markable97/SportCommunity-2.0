@@ -9,7 +9,7 @@ import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.network.*
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.network.BaseResponse
-import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRepository
+import com.glushko.sportcommunity.domain.admin.edit_match.EditMatchRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent

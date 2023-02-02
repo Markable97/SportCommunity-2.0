@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.toChooseModel
 import com.glushko.sportcommunity.data.choose.model.ChooseModel
-import com.glushko.sportcommunity.domain.repository.admin.schedule.ScheduleRepository
+import com.glushko.sportcommunity.domain.admin.schedule.ScheduleRepository
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data

@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.domain.repository.tournament
+package com.glushko.sportcommunity.domain.tournament
 
 import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.data.media.model.MediaUI

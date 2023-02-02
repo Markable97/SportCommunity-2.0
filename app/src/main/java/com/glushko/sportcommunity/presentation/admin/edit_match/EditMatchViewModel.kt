@@ -8,7 +8,7 @@ import com.glushko.sportcommunity.data.admin.edit_match.model.PLayerUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.toChooseModel
 import com.glushko.sportcommunity.data.choose.model.ChooseModel
-import com.glushko.sportcommunity.domain.repository.admin.edit_match.EditMatchRepository
+import com.glushko.sportcommunity.domain.admin.edit_match.EditMatchRepository
 import com.glushko.sportcommunity.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

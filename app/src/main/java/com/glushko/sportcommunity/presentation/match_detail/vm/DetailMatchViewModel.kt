@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.glushko.sportcommunity.util.Result
 import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.match_detail.model.PlayerInMatchSegment
-import com.glushko.sportcommunity.domain.repository.match_detail.MatchDetailRepository
+import com.glushko.sportcommunity.domain.match_detail.MatchDetailRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

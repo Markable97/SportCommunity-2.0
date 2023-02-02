@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.domain.repository.admin.schedule
+package com.glushko.sportcommunity.domain.admin.schedule
 
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI

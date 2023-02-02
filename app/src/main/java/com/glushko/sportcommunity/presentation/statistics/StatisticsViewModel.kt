@@ -4,8 +4,8 @@ import android.telecom.ConnectionService
 import androidx.lifecycle.*
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
-import com.glushko.sportcommunity.domain.repository.squad.SquadRepository
-import com.glushko.sportcommunity.domain.repository.tournament.TournamentRepository
+import com.glushko.sportcommunity.domain.squad.SquadRepository
+import com.glushko.sportcommunity.domain.tournament.TournamentRepository
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

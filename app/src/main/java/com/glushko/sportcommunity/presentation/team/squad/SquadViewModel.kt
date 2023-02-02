@@ -3,7 +3,7 @@ package com.glushko.sportcommunity.presentation.team.squad
 import androidx.lifecycle.*
 import com.glushko.sportcommunity.data.squad.model.SquadPlayerUI
 import com.glushko.sportcommunity.data.squad.network.ResponseFootballSquad
-import com.glushko.sportcommunity.domain.repository.squad.SquadRepository
+import com.glushko.sportcommunity.domain.squad.SquadRepository
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -8,7 +8,7 @@ import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.choose.model.ChooseModel
 import com.glushko.sportcommunity.data.divisions.model.DivisionUI
 import com.glushko.sportcommunity.data.divisions.model.toChooseModel
-import com.glushko.sportcommunity.domain.repository.admin.assign_matches.AssignMatchesRepository
+import com.glushko.sportcommunity.domain.admin.assign_matches.AssignMatchesRepository
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Result

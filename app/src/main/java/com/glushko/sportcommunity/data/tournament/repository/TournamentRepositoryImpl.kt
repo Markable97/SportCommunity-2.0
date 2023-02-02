@@ -7,8 +7,8 @@ import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayDa
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
 import com.glushko.sportcommunity.data.statistics.network.*
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
-import com.glushko.sportcommunity.domain.repository.main_screen.MainRepository
-import com.glushko.sportcommunity.domain.repository.tournament.TournamentRepository
+import com.glushko.sportcommunity.domain.main_screen.MainRepository
+import com.glushko.sportcommunity.domain.tournament.TournamentRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.components.SingletonComponent

@@ -7,7 +7,7 @@ import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
 import com.glushko.sportcommunity.data.statistics.network.*
-import com.glushko.sportcommunity.domain.repository.squad.SquadRepository
+import com.glushko.sportcommunity.domain.squad.SquadRepository
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
@@ -22,7 +22,7 @@ import javax.inject.Singleton
 class SquadRepositoryImpl @Inject constructor(
     private val networkUtils: NetworkUtils,
     private val api: ApiService
-): SquadRepository{
+): SquadRepository {
 
     private var squadStatistics = emptyList<PlayerWithStatisticsRes>()
     private var squad = emptyList<SquadPlayerUI>()

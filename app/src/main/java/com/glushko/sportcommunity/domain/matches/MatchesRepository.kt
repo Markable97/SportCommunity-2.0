@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.domain.repository.matches
+package com.glushko.sportcommunity.domain.matches
 
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.util.Resource

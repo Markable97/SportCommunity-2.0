@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.domain.repository.squad
+package com.glushko.sportcommunity.domain.squad
 
 import com.glushko.sportcommunity.data.squad.model.SquadPlayerUI
 import com.glushko.sportcommunity.data.squad.network.ResponseFootballSquad

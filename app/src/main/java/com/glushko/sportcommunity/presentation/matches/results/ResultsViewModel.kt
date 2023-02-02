@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
-import com.glushko.sportcommunity.domain.repository.matches.MatchesRepository
+import com.glushko.sportcommunity.domain.matches.MatchesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.domain.repository.admin.edit_match
+package com.glushko.sportcommunity.domain.admin.edit_match
 
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI

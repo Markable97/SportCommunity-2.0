@@ -15,7 +15,7 @@ import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseSt
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.toModel
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.network.BaseResponse
-import com.glushko.sportcommunity.domain.repository.admin.schedule.ScheduleRepository
+import com.glushko.sportcommunity.domain.admin.schedule.ScheduleRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
-import com.glushko.sportcommunity.domain.repository.tournament.TournamentRepository
+import com.glushko.sportcommunity.domain.tournament.TournamentRepository
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
