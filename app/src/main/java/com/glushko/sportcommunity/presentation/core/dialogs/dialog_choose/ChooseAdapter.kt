@@ -2,7 +2,7 @@ package com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.glushko.sportcommunity.data.choose.model.ChooseModel
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model.ChooseModel
 import com.glushko.sportcommunity.databinding.ItemChooseBinding
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
 

@@ -1,9 +1,9 @@
 package com.glushko.sportcommunity.domain.admin.schedule
 
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.CalendarDayUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.ScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.StadiumUI
 import com.glushko.sportcommunity.util.Result
 
 interface ScheduleRepository {

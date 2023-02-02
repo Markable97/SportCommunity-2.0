@@ -5,9 +5,7 @@ import android.icu.util.Calendar
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatches
 import com.glushko.sportcommunity.data.admin.assign_matches.network.toModel
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.CalendarDayUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.toModel
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.RequestSchedule
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseSchedule
@@ -16,6 +14,8 @@ import com.glushko.sportcommunity.data.admin.schedule.stadium.network.toModel
 import com.glushko.sportcommunity.data.network.ApiService
 import com.glushko.sportcommunity.data.network.BaseResponse
 import com.glushko.sportcommunity.domain.admin.schedule.ScheduleRepository
+import com.glushko.sportcommunity.presentation.admin.schedule.model.ScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.StadiumUI
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent

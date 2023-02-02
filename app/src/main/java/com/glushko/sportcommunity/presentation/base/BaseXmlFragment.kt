@@ -10,9 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
-import com.glushko.sportcommunity.data.choose.model.ChooseModel
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model.ChooseModel
 import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.ChooseDialog
-import java.lang.IllegalArgumentException
 
 abstract class BaseXmlFragment<B : ViewBinding>(@LayoutRes layout: Int) : Fragment(layout) {
 

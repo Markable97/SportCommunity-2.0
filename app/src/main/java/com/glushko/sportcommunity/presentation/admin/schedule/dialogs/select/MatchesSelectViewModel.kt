@@ -2,9 +2,9 @@ package com.glushko.sportcommunity.presentation.admin.schedule.dialogs.select
 
 import androidx.lifecycle.*
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.TimeScheduleUI
 import com.glushko.sportcommunity.domain.admin.schedule.ScheduleRepository
+import com.glushko.sportcommunity.presentation.admin.schedule.model.StadiumUI
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel

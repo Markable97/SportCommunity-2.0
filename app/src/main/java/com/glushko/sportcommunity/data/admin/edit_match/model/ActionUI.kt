@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.data.admin.edit_match.model
 
-import com.glushko.sportcommunity.data.choose.model.ChooseModel
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model.ChooseModel
 import com.glushko.sportcommunity.util.Constants
 
 data class ActionUI(

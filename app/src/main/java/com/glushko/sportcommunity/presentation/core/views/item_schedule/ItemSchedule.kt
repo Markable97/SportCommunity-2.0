@@ -1,16 +1,13 @@
 package com.glushko.sportcommunity.presentation.core.views.item_schedule
 
-import android.R.attr
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.animation.Animation
-import android.view.animation.RotateAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.TimeScheduleUI
 import com.glushko.sportcommunity.databinding.ViewScheduleItemBinding
 import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 import com.glushko.sportcommunity.util.extensions.setTextColorRes

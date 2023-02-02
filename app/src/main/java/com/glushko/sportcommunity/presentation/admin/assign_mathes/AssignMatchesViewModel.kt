@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
-import com.glushko.sportcommunity.data.choose.model.ChooseModel
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model.ChooseModel
 import com.glushko.sportcommunity.data.divisions.model.DivisionUI
 import com.glushko.sportcommunity.data.divisions.model.toChooseModel
 import com.glushko.sportcommunity.domain.admin.assign_matches.AssignMatchesRepository
@@ -15,7 +15,6 @@ import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

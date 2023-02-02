@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.choose.model.ChooseModel
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model.ChooseModel
 import com.glushko.sportcommunity.databinding.FragmentAssignMatchesCreateBinding
 import com.glushko.sportcommunity.presentation.admin.assign_mathes.AssignMatchesViewModel
 import com.glushko.sportcommunity.presentation.admin.assign_mathes.adapters.AssignMatchesListAdapter

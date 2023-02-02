@@ -5,11 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.CalendarDayUI
 import com.glushko.sportcommunity.domain.admin.schedule.ScheduleRepository
+import com.glushko.sportcommunity.presentation.admin.schedule.model.ScheduleUI
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.data
 import dagger.hilt.android.lifecycle.HiltViewModel

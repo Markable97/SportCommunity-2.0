@@ -2,11 +2,10 @@ package com.glushko.sportcommunity.presentation.admin.schedule.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.ScheduleUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.StadiumUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.TimeScheduleUI
 import com.glushko.sportcommunity.databinding.ItemScheduleBinding
+import com.glushko.sportcommunity.presentation.admin.schedule.model.ScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.StadiumUI
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
 
 class ScheduleAdapter(

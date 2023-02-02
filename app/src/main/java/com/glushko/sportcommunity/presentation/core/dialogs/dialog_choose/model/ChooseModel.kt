@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.choose.model
+package com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

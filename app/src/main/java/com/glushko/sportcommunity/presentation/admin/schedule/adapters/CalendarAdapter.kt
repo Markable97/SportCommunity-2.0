@@ -4,7 +4,7 @@ import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.CalendarDayUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.CalendarDayUI
 import com.glushko.sportcommunity.databinding.ItemCalendarDayBinding
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
 import com.glushko.sportcommunity.util.extensions.setTextColorRes

@@ -3,7 +3,7 @@ package com.glushko.sportcommunity.presentation.core.views.item_schedule
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.TimeScheduleUI
+import com.glushko.sportcommunity.presentation.admin.schedule.model.TimeScheduleUI
 import com.glushko.sportcommunity.databinding.ItemScheduleTimeBinding
 import com.glushko.sportcommunity.presentation.base.BaseAdapter
 

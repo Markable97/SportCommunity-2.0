@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.data.divisions.model
 
-import com.glushko.sportcommunity.data.choose.model.ChooseModel
+import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model.ChooseModel
 import com.glushko.sportcommunity.util.Constants
 import com.google.gson.annotations.SerializedName
 
