@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.data.tours
 
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 
 class ResponseUnassignedTours(
     success: Int,

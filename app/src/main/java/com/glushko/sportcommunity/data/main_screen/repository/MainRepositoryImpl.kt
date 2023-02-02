@@ -3,16 +3,13 @@ package com.glushko.sportcommunity.data.main_screen.repository
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.main_screen.leagues.network.toModel
 import com.glushko.sportcommunity.data.main_screen.model.*
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.media.network.ImagesResMain
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
-import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
+import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
-import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
@@ -21,7 +18,6 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 import it.czerwinski.android.hilt.annotations.BoundTo
 import javax.inject.Singleton
-import kotlin.random.Random
 
 @Singleton
 @BoundTo(supertype =  MainRepository::class, component = SingletonComponent::class)

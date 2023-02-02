@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.data.matches.network
 
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.matches.model.MatchFootball
 import com.glushko.sportcommunity.data.matches.model.toModel
 import com.glushko.sportcommunity.data.matches.model.toModelCalendar

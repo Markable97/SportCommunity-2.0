@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.tournament.model
+package com.glushko.sportcommunity.presentation.tournament.model
 
 data class TournamentTableDisplayData(
     val position: Int,

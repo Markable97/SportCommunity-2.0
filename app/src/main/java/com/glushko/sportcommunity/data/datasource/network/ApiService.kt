@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.network
+package com.glushko.sportcommunity.data.datasource.network
 
 import com.glushko.sportcommunity.data.admin.assign_matches.network.RequestMatchScore
 import com.glushko.sportcommunity.data.admin.edit_match.network.RequestPlayerInMatchMain

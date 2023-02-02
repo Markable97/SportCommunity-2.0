@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.data.matches.model
 
 import com.glushko.sportcommunity.data.main_screen.division.model.FootballDivision
 import com.glushko.sportcommunity.data.teams.model.FootballTeam
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.google.gson.annotations.SerializedName
 
 data class MatchFootball(

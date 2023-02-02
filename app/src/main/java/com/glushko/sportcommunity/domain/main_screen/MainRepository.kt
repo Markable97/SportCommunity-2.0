@@ -2,11 +2,11 @@ package com.glushko.sportcommunity.domain.main_screen
 
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
-import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
 

@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
-import com.glushko.sportcommunity.presentation.matches.calendar.ui.DateAndStadium
-import com.glushko.sportcommunity.presentation.matches.results.ui.ResultsFragmentDirections
-import com.glushko.sportcommunity.presentation.matches.results.ui.Score
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.results.ResultsFragment
+import com.glushko.sportcommunity.presentation.matches.results.ResultsFragmentDirections
+import com.glushko.sportcommunity.presentation.matches.results.Score
 import com.glushko.sportcommunity.util.Constants
 
 @OptIn(ExperimentalMaterialApi::class)

@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.data.squad.network
 
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.statistics.network.PlayerWithStatisticsRes
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
 

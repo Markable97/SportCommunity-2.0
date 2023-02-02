@@ -1,8 +1,6 @@
 package com.glushko.sportcommunity.domain.matches
 
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
-import com.glushko.sportcommunity.util.Resource
-import io.reactivex.Single
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 
 interface MatchesRepository {
     fun getResults(): List<MatchFootballDisplayData>

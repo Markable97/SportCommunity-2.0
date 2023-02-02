@@ -2,7 +2,7 @@ package com.glushko.sportcommunity.data.main_screen.leagues.network
 
 import com.glushko.sportcommunity.data.main_screen.leagues.model.FootballLeague
 import com.glushko.sportcommunity.data.main_screen.leagues.model.toModel
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 

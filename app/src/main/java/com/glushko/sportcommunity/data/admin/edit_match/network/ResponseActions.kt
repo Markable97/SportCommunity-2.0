@@ -1,14 +1,14 @@
 package com.glushko.sportcommunity.data.admin.edit_match.network
 
 import com.glushko.sportcommunity.data.admin.edit_match.model.ActionUI
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 class ResponseActions(
     success: Int,
     message: String,
     val actions: List<Action> = emptyList()
-) :BaseResponse(success, message) {
+) : BaseResponse(success, message) {
 }
 
 fun ResponseActions.toModel() = actions.map { it.toModel() }

@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.data.matches.repository
 
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.domain.matches.MatchesRepository
 import com.glushko.sportcommunity.util.NetworkUtils

@@ -3,8 +3,8 @@ package com.glushko.sportcommunity.data.match_detail.network
 
 import com.glushko.sportcommunity.data.match_detail.model.Player
 import com.glushko.sportcommunity.data.match_detail.model.toModel
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 

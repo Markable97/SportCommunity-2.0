@@ -28,13 +28,10 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
-import com.glushko.sportcommunity.presentation.core.DoSomething
-import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.tournament.TournamentViewModel
 import com.glushko.sportcommunity.util.Constants.BASE_URL_IMAGE
-import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

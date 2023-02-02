@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation.match_detail.ui
+package com.glushko.sportcommunity.presentation.match_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,15 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.databinding.FragmentMatchDetailBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.match_detail.adapters.MatchDetailAdapter
-import com.glushko.sportcommunity.presentation.match_detail.vm.DetailMatchViewModel
 import com.glushko.sportcommunity.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

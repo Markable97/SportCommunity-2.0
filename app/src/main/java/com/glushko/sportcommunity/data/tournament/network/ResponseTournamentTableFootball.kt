@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.data.tournament.network
 
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.model.toModel
 import com.google.gson.annotations.SerializedName

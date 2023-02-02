@@ -11,8 +11,8 @@ import com.glushko.sportcommunity.data.admin.schedule.stadium.network.RequestSch
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseSchedule
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseStadiums
 import com.glushko.sportcommunity.data.admin.schedule.stadium.network.toModel
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.domain.admin.schedule.ScheduleRepository
 import com.glushko.sportcommunity.presentation.admin.schedule.model.ScheduleUI
 import com.glushko.sportcommunity.presentation.admin.schedule.model.StadiumUI

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/resultsFragment"
-        android:name="com.glushko.sportcommunity.presentation.matches.results.ui.ResultsFragment"
+        android:name="com.glushko.sportcommunity.presentation.matches.results.ResultsFragment"
         android:label="fragment_results"
         tools:layout="@layout/fragment_results" >
         <action
@@ -17,13 +17,13 @@
 
     <fragment
         android:id="@+id/detailMatchFragment"
-        android:name="com.glushko.sportcommunity.presentation.match_detail.ui.MatchDetailFragment"
+        android:name="com.glushko.sportcommunity.presentation.match_detail.MatchDetailFragment"
         android:label="@string/match_detail"
         tools:layout="@layout/fragment_match_detail">
 
         <argument
             android:name="match"
-            app:argType="com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData" />
+            app:argType="com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData" />
         <action
             android:id="@+id/action_detailMatchFragment_to_nested_navigation_edit_matches"
             app:destination="@id/nested_navigation_edit_matches">

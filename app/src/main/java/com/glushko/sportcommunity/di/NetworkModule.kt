@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.di
 
 import android.content.Context
-import com.glushko.sportcommunity.data.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.util.Constants.BASE_URL
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.google.gson.Gson

@@ -3,7 +3,7 @@ package com.glushko.sportcommunity.data.admin.schedule.stadium.network
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.Schedule
 import com.glushko.sportcommunity.presentation.admin.schedule.model.TimeScheduleUI
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.toModel
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.presentation.admin.schedule.model.ScheduleUI
 import timber.log.Timber
 

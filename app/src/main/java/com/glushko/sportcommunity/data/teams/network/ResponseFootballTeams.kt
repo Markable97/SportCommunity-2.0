@@ -1,8 +1,8 @@
 package com.glushko.sportcommunity.data.teams.network
 
 import com.glushko.sportcommunity.data.teams.model.FootballTeam
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 
 
 class ResponseFootballTeams(success: Int,

@@ -2,7 +2,7 @@ package com.glushko.sportcommunity.data.divisions.network
 
 import com.glushko.sportcommunity.data.divisions.model.Division
 import com.glushko.sportcommunity.data.divisions.model.toModel
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 
 class ResponseDivisions(
     success: Int,

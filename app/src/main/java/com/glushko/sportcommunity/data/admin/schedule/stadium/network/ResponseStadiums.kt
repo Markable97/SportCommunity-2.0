@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.data.admin.schedule.stadium.network
 
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.Stadium
 
 class ResponseStadiums(

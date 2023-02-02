@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.data.admin.schedule.stadium.model
 
 import com.glushko.sportcommunity.data.admin.assign_matches.model.Match
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.google.gson.annotations.SerializedName
 
 data class Schedule(

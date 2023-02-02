@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.matches.model
+package com.glushko.sportcommunity.presentation.matches.model
 
 import android.os.Parcelable
 import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI

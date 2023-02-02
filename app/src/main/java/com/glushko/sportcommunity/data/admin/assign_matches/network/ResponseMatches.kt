@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.data.admin.assign_matches.network
 
 import com.glushko.sportcommunity.data.admin.assign_matches.model.Match
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 class ResponseMatches(

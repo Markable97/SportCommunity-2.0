@@ -1,11 +1,11 @@
 package com.glushko.sportcommunity.data.squad.repository
 
-import com.glushko.sportcommunity.data.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.squad.model.SquadPlayerUI
 import com.glushko.sportcommunity.data.squad.network.ResponseFootballSquad
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
-import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.TypeStatistics
 import com.glushko.sportcommunity.data.statistics.network.*
 import com.glushko.sportcommunity.domain.squad.SquadRepository
 import com.glushko.sportcommunity.util.Constants

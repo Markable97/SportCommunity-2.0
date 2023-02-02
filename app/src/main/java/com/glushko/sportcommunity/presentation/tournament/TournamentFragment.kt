@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
-import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.databinding.FragmentTournamentBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment

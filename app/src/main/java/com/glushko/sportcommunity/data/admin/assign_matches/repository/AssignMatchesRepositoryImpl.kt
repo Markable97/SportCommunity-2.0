@@ -6,8 +6,8 @@ import com.glushko.sportcommunity.data.admin.assign_matches.network.toModel
 import com.glushko.sportcommunity.data.divisions.model.DivisionUI
 import com.glushko.sportcommunity.data.divisions.network.ResponseDivisions
 import com.glushko.sportcommunity.data.divisions.network.toModel
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.tours.ResponseUnassignedTours
 import com.glushko.sportcommunity.data.tours.toModel
 import com.glushko.sportcommunity.domain.admin.assign_matches.AssignMatchesRepository

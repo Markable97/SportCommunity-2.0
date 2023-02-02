@@ -1,7 +1,7 @@
 package com.glushko.sportcommunity.data.media.network
 
 import com.glushko.sportcommunity.data.media.model.ImageUI
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 
 class ImagesResMain(
     success: Int,

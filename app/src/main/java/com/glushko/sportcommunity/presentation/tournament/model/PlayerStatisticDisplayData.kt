@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.statistics.model
+package com.glushko.sportcommunity.presentation.tournament.model
 
 import androidx.annotation.StringRes
 import com.glushko.sportcommunity.R

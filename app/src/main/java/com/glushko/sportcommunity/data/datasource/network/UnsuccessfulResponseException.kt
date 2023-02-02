@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.network
+package com.glushko.sportcommunity.data.datasource.network
 
 import java.lang.Exception
 

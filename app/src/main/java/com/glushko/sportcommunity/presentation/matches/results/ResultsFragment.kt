@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation.matches.results.ui
+package com.glushko.sportcommunity.presentation.matches.results
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,12 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
-import com.glushko.sportcommunity.data.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
-import com.glushko.sportcommunity.presentation.matches.results.ResultsViewModel
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 

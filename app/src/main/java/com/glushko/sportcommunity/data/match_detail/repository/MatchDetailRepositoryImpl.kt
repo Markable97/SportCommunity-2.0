@@ -5,7 +5,7 @@ import com.glushko.sportcommunity.data.match_detail.model.MatchSegment
 import com.glushko.sportcommunity.data.match_detail.model.PlayerAction
 import com.glushko.sportcommunity.data.match_detail.model.PlayerInMatchSegment
 import com.glushko.sportcommunity.data.match_detail.network.ResponsePlayersInMatch
-import com.glushko.sportcommunity.data.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.domain.match_detail.MatchDetailRepository
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.NetworkUtils

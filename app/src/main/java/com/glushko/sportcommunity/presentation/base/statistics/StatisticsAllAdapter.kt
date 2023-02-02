@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.databinding.ItemStatisticsRowBinding
 import com.glushko.sportcommunity.util.Constants
 

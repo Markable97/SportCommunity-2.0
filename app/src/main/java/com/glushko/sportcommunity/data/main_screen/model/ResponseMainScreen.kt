@@ -2,8 +2,8 @@ package com.glushko.sportcommunity.data.main_screen.model
 
 import com.glushko.sportcommunity.data.admin.schedule.stadium.model.Schedule
 import com.glushko.sportcommunity.data.media.network.MediaRes
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.model.toModel

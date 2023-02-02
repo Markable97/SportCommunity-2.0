@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.data.tournament.model
 
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.google.gson.annotations.SerializedName
 
 data class TournamentTableFootball(

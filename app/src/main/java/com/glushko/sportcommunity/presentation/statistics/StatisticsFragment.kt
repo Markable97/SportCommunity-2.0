@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
+import com.glushko.sportcommunity.presentation.tournament.model.TypeStatistics
 import com.glushko.sportcommunity.databinding.FragmentStatisticsBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsAllAdapter

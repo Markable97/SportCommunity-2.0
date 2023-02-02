@@ -1,8 +1,8 @@
 package com.glushko.sportcommunity.data.main_screen.division.network
 
 import com.glushko.sportcommunity.data.main_screen.division.model.FootballDivision
-import com.glushko.sportcommunity.data.network.ApiService
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 
 
 class ResponseFootballDivisions(

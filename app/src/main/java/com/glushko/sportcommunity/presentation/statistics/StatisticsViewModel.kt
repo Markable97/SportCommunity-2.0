@@ -1,9 +1,8 @@
 package com.glushko.sportcommunity.presentation.statistics
 
-import android.telecom.ConnectionService
 import androidx.lifecycle.*
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticDisplayData
-import com.glushko.sportcommunity.data.statistics.model.TypeStatistics
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.TypeStatistics
 import com.glushko.sportcommunity.domain.squad.SquadRepository
 import com.glushko.sportcommunity.domain.tournament.TournamentRepository
 import com.glushko.sportcommunity.util.Constants

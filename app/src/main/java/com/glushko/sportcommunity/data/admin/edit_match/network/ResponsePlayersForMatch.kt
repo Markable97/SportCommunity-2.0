@@ -5,7 +5,7 @@ import com.glushko.sportcommunity.data.admin.edit_match.model.PLayerUI
 import com.glushko.sportcommunity.data.admin.edit_match.model.PlayerWithActionUI
 import com.glushko.sportcommunity.data.match_detail.model.MatchAction
 import com.glushko.sportcommunity.data.match_detail.model.PlayerAction
-import com.glushko.sportcommunity.data.network.BaseResponse
+import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.util.Constants
 import com.google.gson.annotations.SerializedName
 

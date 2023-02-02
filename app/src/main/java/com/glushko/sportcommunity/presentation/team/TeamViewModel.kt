@@ -4,14 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.load
 import com.glushko.sportcommunity.data.squad.network.ResponseFootballSquad
-import com.glushko.sportcommunity.data.statistics.model.PlayerStatisticAdapter
-import com.glushko.sportcommunity.data.tournament.model.TournamentTableDisplayData
-import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.squad.SquadRepository
 import com.glushko.sportcommunity.domain.tournament.TournamentRepository
-import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
