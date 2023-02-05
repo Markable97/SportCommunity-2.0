@@ -33,6 +33,8 @@ data class Match(
     val teamHomeGoals: Int?,
     @SerializedName("team_guest_goals")
     val teamGuestGoals: Int?,
+    @SerializedName("played")
+    val played: Int?
 
 
 ) {
