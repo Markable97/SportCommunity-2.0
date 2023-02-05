@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.glushko.sportcommunity.presentation.matches.calendar.ui.CalendarFragment"
+        android:name="com.glushko.sportcommunity.presentation.matches.calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
 
