@@ -15,17 +15,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
-import com.glushko.sportcommunity.presentation.matches.results.ResultsFragment
-import com.glushko.sportcommunity.presentation.matches.results.ResultsFragmentDirections
 import com.glushko.sportcommunity.presentation.matches.results.Score
 import com.glushko.sportcommunity.util.Constants
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
+fun CardMatch(match: MatchFootballDisplayData, navController: NavController, action: NavDirections?){
     Card(
         modifier = Modifier
             .height(150.dp)
@@ -33,8 +32,10 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Color.LightGray,
         onClick = {
-            if (match.played == 1){
-                navController.navigate(ResultsFragmentDirections.actionResultsFragmentToDetailMatchFragment(match))
+            if (match.played == Constants.TYPE_MATCH_PLAYED){
+                if (action != null) {
+                    navController.navigate(action)
+                }
             }
         }
     ){
@@ -61,8 +62,8 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController){
                     Modifier
                         .weight(0.25f)
                 }
-                if(match.played==1){
-                    Score(match.teamHomeGoal, match.teamGuestGoal,modifierScore)
+                if(match.played==Constants.TYPE_MATCH_PLAYED){
+                    Score(match.teamHomeGoal, match.teamGuestGoal, modifierScore)
                 }
             }
         }

@@ -6,11 +6,11 @@ import com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI
 import com.glushko.sportcommunity.data.admin.assign_matches.network.ResponseMatches
 import com.glushko.sportcommunity.data.admin.assign_matches.network.toModel
 import com.glushko.sportcommunity.presentation.admin.schedule.model.CalendarDayUI
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.toModel
-import com.glushko.sportcommunity.data.admin.schedule.stadium.network.RequestSchedule
-import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseSchedule
-import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseStadiums
-import com.glushko.sportcommunity.data.admin.schedule.stadium.network.toModel
+import com.glushko.sportcommunity.data.admin.schedule.model.toModel
+import com.glushko.sportcommunity.data.admin.schedule.network.RequestSchedule
+import com.glushko.sportcommunity.data.admin.schedule.network.ResponseSchedule
+import com.glushko.sportcommunity.data.admin.schedule.network.ResponseStadiums
+import com.glushko.sportcommunity.data.admin.schedule.network.toModel
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.domain.admin.schedule.ScheduleRepository

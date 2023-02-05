@@ -71,6 +71,9 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
                 )
             )
         }
+        buttonGames.setOnClickListener {
+            findNavController().navigate(TeamFragmentDirections.actionTeamFragmentToGamesFragment(teamId = args.teamId))
+        }
     }
 
     private fun setupObservers() = viewModel.run {

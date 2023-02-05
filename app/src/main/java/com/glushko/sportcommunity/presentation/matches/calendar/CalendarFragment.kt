@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation.matches.calendar.ui
+package com.glushko.sportcommunity.presentation.matches.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -85,7 +85,7 @@ class CalendarFragment : BaseFragment() {
             .fillMaxSize()
             .background(Color.White)){
             items(matches){match ->
-                CardMatch(match, findNavController())
+                CardMatch(match, findNavController(), null)
             }
         }
     }

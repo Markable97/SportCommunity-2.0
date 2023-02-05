@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.admin.schedule.stadium.network
+package com.glushko.sportcommunity.data.admin.schedule.network
 
 import com.google.gson.annotations.SerializedName
 

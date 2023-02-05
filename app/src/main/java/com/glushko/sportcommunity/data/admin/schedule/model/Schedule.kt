@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.admin.schedule.stadium.model
+package com.glushko.sportcommunity.data.admin.schedule.model
 
 import com.glushko.sportcommunity.data.admin.assign_matches.model.Match
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
@@ -19,11 +19,11 @@ data class Schedule(
         teamHomeId = match?.teamHomeId ?: 0,
         teamHomeName = match?.teamHomeName ?: "",
         teamHomeImage = match?.teamHomeImage,
-        teamHomeGoal = 0,
+        teamHomeGoal = match?.teamHomeGoals?:0,
         teamGuestId = match?.teamGuestId ?: 0,
         teamGuestName = match?.teamGuestName ?: "",
         teamGuestImage = match?.teamGuestImage,
-        teamGuestGoal = 0,
+        teamGuestGoal = match?.teamGuestGoals ?: 0,
         matchDate = gameDate,
         stadium = stadium.stadiumName,
         played = match?.played?:0
@@ -44,7 +44,7 @@ data class Schedule(
         teamGuestGoal = 0,
         matchDate = gameDate,
         stadium = stadium.stadiumName,
-        played = 0
+        played = 1
     )
 
     fun toModelResults() = MatchFootballDisplayData(
@@ -62,6 +62,6 @@ data class Schedule(
         teamGuestGoal = match?.teamGuestGoals ?: 0,
         matchDate = gameDate,
         stadium = stadium.stadiumName,
-        played = 1
+        played = 2
     )
 }

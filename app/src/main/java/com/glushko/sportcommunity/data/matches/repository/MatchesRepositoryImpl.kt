@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.data.matches.repository
 
-import com.glushko.sportcommunity.data.admin.schedule.stadium.network.ResponseSchedule
+import com.glushko.sportcommunity.data.admin.schedule.network.ResponseSchedule
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.domain.main_screen.MainRepository

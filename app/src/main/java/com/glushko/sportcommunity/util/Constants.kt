@@ -9,6 +9,11 @@ object Constants {
 
     const val TIME_HALF_DEFAULT = 30
 
+    //Region played matches
+    const val TYPE_MATCH_PLAYED = 2
+    const val TYPE_MATCH_CALENDAR = 1
+    const val TYPE_MATCH_ASSIGN = 0
+
     //Region type value for ChooseDialog
     const val TYPE_VALUE_DIVISION = 0
     const val TYPE_VALUE_TOUR = 1

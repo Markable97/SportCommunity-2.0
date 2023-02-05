@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.data.admin.schedule.stadium.model
+package com.glushko.sportcommunity.data.admin.schedule.model
 
 import com.glushko.sportcommunity.presentation.admin.schedule.model.StadiumUI
 import com.google.gson.annotations.SerializedName

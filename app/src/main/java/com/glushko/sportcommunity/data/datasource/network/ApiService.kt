@@ -4,7 +4,7 @@ import com.glushko.sportcommunity.data.admin.assign_matches.network.RequestMatch
 import com.glushko.sportcommunity.data.admin.edit_match.network.RequestPlayerInMatchMain
 import com.glushko.sportcommunity.data.admin.edit_match.network.RequestPlayerWithAction
 import com.glushko.sportcommunity.data.admin.edit_match.network.RequestPlayersWithActionsGoals
-import com.glushko.sportcommunity.data.admin.schedule.stadium.network.RequestSchedule
+import com.glushko.sportcommunity.data.admin.schedule.network.RequestSchedule
 import com.glushko.sportcommunity.data.main_screen.leagues.network.ResponseFootballLeagues
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.google.gson.JsonObject

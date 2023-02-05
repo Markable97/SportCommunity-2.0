@@ -78,7 +78,7 @@ class ResultsFragment : BaseFragment() {
              .fillMaxSize()
              .background(Color.White)){
              items(matches){match ->
-                 CardMatch(match, findNavController())
+                 CardMatch(match, findNavController(), ResultsFragmentDirections.actionResultsFragmentToDetailMatchFragment(match))
              }
          }
     }

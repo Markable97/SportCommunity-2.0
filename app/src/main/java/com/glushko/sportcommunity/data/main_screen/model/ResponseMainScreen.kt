@@ -1,6 +1,6 @@
 package com.glushko.sportcommunity.data.main_screen.model
 
-import com.glushko.sportcommunity.data.admin.schedule.stadium.model.Schedule
+import com.glushko.sportcommunity.data.admin.schedule.model.Schedule
 import com.glushko.sportcommunity.data.media.network.MediaRes
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
