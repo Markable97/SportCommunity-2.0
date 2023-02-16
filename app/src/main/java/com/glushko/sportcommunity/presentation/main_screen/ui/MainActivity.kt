@@ -55,12 +55,16 @@ class MainActivity : AppCompatActivity() {
         R.id.gamesFragment
     )
 
-    private val destinationWithBack = listOf(R.id.tournamentMediaFragment, R.id.detailMatchFragment, R.id.teamFragment,
+    private val destinationWithoutBack = listOf(
+        R.id.eventsFragment, R.id.calendarFragment, R.id.resultsFragment,
+        R.id.tournamentFragment, R.id.adminFragment, R.id.aboutFragment,
+        R.id.settingFragment
+    )/*listOf(R.id.tournamentMediaFragment, R.id.detailMatchFragment, R.id.teamFragment,
         R.id.tournamentTableFragment, R.id.statisticsFragment,
         R.id.squadFragment, R.id.squadFragment, R.id.scheduleFragment, R.id.assignMatchesFragment,
         R.id.createScheduleFragment, R.id.editMatchListFragment, R.id.editMatchFragment, R.id.protocolFragment,
-        R.id.galleryFragment, R.id.gamesFragment
-    )
+        R.id.galleryFragment, R.id.gamesFragment, R.id.playerInfoFragment
+    )*/
     private val destinationWithBottomBar = listOf(
         R.id.eventsFragment, R.id.calendarFragment, R.id.resultsFragment, R.id.tournamentFragment, R.id.adminFragment
     )
@@ -90,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Timber.tag("MarkDev").d("Пришло в addOnDestinationChangedListener = ${destination.id} parent = ${destination.parent?.startDestinationId}")
-            if(destination.id in destinationWithBack){
+            if(destination.id !in destinationWithoutBack){
                 showBackButton(true)
                 if (destination.id !in destinationWithoutLabel){
                     binding.toolbar.title = destination.label

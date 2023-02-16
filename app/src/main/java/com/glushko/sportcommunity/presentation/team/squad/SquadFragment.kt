@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentSquadBinding
 import com.glushko.sportcommunity.presentation.base.BaseFragment
@@ -23,7 +24,16 @@ class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squ
     private val viewModel: SquadViewModel by viewModels()
 
     private val adapterSquad by lazy {
-        SquadAdapters()
+        SquadAdapters().apply {
+            listener = { player ->
+                findNavController().navigate(
+                    SquadFragmentDirections.actionSquadFragmentToPlayerInfoFragment(
+                        player.playerId,
+                        player.playerName
+                    )
+                )
+            }
+        }
     }
 
     override fun initBinding(

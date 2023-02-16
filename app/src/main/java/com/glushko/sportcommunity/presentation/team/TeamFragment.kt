@@ -137,7 +137,14 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
     }
 
     private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
-        viewPagerStatistics.adapter = StatisticsTournamentAdapter(Constants.OPEN_FROM_TEAM).apply { submitList(data) }
+        viewPagerStatistics.adapter = StatisticsTournamentAdapter(
+            fromOpen = Constants.OPEN_FROM_TEAM,
+            onClickPlayer = { id, name ->
+                findNavController().navigate(
+                    TeamFragmentDirections.actionTeamFragmentToPlayerInfoFragment(id, name)
+                )
+            }
+        ).apply { submitList(data) }
         viewPagerStatistics.addOnPageSelectedListener {  }
         TabLayoutMediator(tabLayoutStatistics, viewPagerStatistics) { _, _ -> }.attach()
     }

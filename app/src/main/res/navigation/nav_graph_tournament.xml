@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_teamFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_playerInfoFragment"
+            app:destination="@id/playerInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/tournamentFragment"
@@ -59,6 +62,9 @@
         <action
             android:id="@+id/action_tournamentFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_tournamentFragment_to_playerInfoFragment"
+            app:destination="@id/playerInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -76,6 +82,9 @@
         <argument
             android:name="id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_statisticsFragment_to_playerInfoFragment"
+            app:destination="@id/playerInfoFragment" />
 
     </fragment>
     <fragment
@@ -87,6 +96,9 @@
         <argument
             android:name="teamId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_squadFragment_to_playerInfoFragment"
+            app:destination="@id/playerInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/tournamentMediaFragment"
@@ -126,6 +138,16 @@
     <argument
         android:name="match"
         app:argType="com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerInfoFragment"
+        android:name="com.glushko.sportcommunity.presentation.player.PlayerInfoFragment">
+        <argument
+            android:name="player_id"
+            app:argType="integer" />
+        <argument
+            android:name="player_name"
+            app:argType="string" />
     </fragment>
 
 

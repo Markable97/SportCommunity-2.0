@@ -13,8 +13,12 @@ import com.glushko.sportcommunity.presentation.tournament.model.title
 import com.glushko.sportcommunity.databinding.ItemStatisticsBinding
 import com.glushko.sportcommunity.databinding.ItemStatisticsRowBinding
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 
-class StatisticsTournamentAdapter(private val fromOpen: Int): ListAdapter<PlayerStatisticAdapter, StatisticsTournamentAdapter.ViewHolder>(
+class StatisticsTournamentAdapter(
+    private val fromOpen: Int,
+    private val onClickPlayer: (Int, String) -> Unit
+): ListAdapter<PlayerStatisticAdapter, StatisticsTournamentAdapter.ViewHolder>(
     DiffCallback
 ) {
 
@@ -31,7 +35,28 @@ class StatisticsTournamentAdapter(private val fromOpen: Int): ListAdapter<Player
         private val binding: ItemStatisticsBinding
     ): RecyclerView.ViewHolder(binding.root){
 
+        private var selectItem: PlayerStatisticAdapter? = null
+
+        init {
+            binding.itemFirst.layoutPlayer.setSafeOnClickListener {
+                selectItem?.firstPlayer?.let {
+                    onClickPlayer.invoke(it.playerId, it.playerName)
+                }
+            }
+            binding.itemSecond.layoutPlayer.setSafeOnClickListener {
+                selectItem?.secondPlayer?.let {
+                    onClickPlayer.invoke(it.playerId, it.playerName)
+                }
+            }
+            binding.itemThird.layoutPlayer.setSafeOnClickListener {
+                selectItem?.thirdPlayer?.let {
+                    onClickPlayer.invoke(it.playerId, it.playerName)
+                }
+            }
+        }
+
         fun onBind(item: PlayerStatisticAdapter){
+            selectItem = item
             binding.textSubtitle.text = binding.root.context.getText(
                 item.typeStatistics.title
             )

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.presentation.tournament.model.TypeStatistics
@@ -24,7 +25,14 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
     private val args: StatisticsFragmentArgs by navArgs()
 
     private val adapterStatistics by lazy {
-        StatisticsAllAdapter(args.openFrom)
+        StatisticsAllAdapter(
+            args.openFrom,
+            onClickItem = { id, name ->
+                findNavController().navigate(
+                    StatisticsFragmentDirections.actionStatisticsFragmentToPlayerInfoFragment(id, name)
+                )
+            }
+        )
     }
 
     override fun initBinding(

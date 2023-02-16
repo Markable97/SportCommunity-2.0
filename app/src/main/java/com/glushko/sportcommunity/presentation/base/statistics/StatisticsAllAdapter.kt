@@ -10,8 +10,12 @@ import coil.transform.CircleCropTransformation
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.databinding.ItemStatisticsRowBinding
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 
-class StatisticsAllAdapter(private val fromOpen: Int): ListAdapter<PlayerStatisticDisplayData, StatisticsAllAdapter.ViewHolder>(DiffCallback) {
+class StatisticsAllAdapter(
+    private val fromOpen: Int,
+    private val onClickItem: (Int, String) -> Unit
+    ): ListAdapter<PlayerStatisticDisplayData, StatisticsAllAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,7 +32,19 @@ class StatisticsAllAdapter(private val fromOpen: Int): ListAdapter<PlayerStatist
     inner class ViewHolder(
         private val binding: ItemStatisticsRowBinding
     ): RecyclerView.ViewHolder(binding.root){
+
+        private var selectItem: PlayerStatisticDisplayData? = null
+
+        init {
+            binding.root.setSafeOnClickListener {
+                selectItem?.let { player ->
+                    onClickItem.invoke(player.playerId, player.playerName)
+                }
+            }
+        }
+
         fun onBind(item: PlayerStatisticDisplayData) = binding.run{
+            selectItem = item
             textPlayerName.text = item.playerName
             textDopInfo.text = if (fromOpen == Constants.OPEN_FROM_TEAM) item.amplua else item.playerTeam
             textPoints.text = item.points.toString()
