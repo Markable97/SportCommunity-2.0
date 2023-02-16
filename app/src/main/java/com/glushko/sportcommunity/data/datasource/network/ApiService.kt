@@ -25,6 +25,7 @@ interface ApiService {
         const val GET_MAIN_SCREEN = "MainScreen"
         const val GET_MEDIA_MATCH = "GetMatchMedia"
         const val GET_MATCHES = "GetFootballMatches"
+        const val GET_PLAYER_INFO = "GetPlayerProfile"
 //        const val GET_STATISTICS_TEAM = "GetFootballStatisticsTeam"
 //        const val GET_STATISTICS_TOURNAMENT = "GetFootballStatisticsTournament"
         //Regio admin
@@ -56,6 +57,7 @@ interface ApiService {
         const val PARAM_TOURS = "tours"
         const val PARAM_NATCHES = "matches"
         const val PARAM_ACTION_DELETE = "deleting"
+        const val PARAM_PLAYER_ID = "player_id"
 
     }
 
@@ -185,4 +187,9 @@ interface ApiService {
 
     @GET(GET_MEDIA_MATCH)
     suspend fun getMediaMatch(@Query(PARAM_MATCH_ID) matchId: Long) : Response<JsonObject>
+
+    @GET(GET_PLAYER_INFO)
+    suspend fun getPlayerInfo(
+        @Query(PARAM_PLAYER_ID) id: Int
+    ) : Response<JsonObject>
 }
