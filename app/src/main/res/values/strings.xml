@@ -115,6 +115,15 @@
     <string name="schedule_button_delete">Удалить</string>
     <string name="schedule_button_assign">Добавить</string>
 
+    <string name="player_statistics__games">Игры</string>
+    <string name="player_statistics__goals">Голы</string>
+    <string name="player_statistics__assists">Передачи</string>
+    <string name="player_statistics__penalty">Пенальти</string>
+    <string name="player_statistics__penalty_out">Незабит. пен.</string>
+    <string name="player_statistics__red_cards">Красные карточки</string>
+    <string name="player_statistics__yellow_cards">Желтые карточки</string>
+    <string name="player_statistics__own_goals">Автоголы</string>
+
 
 
 
