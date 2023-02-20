@@ -31,6 +31,103 @@
                 android:name="match"
                 app:argType="com.glushko.sportcommunity.data.admin.assign_matches.model.MatchUI"/>
         </action>
+        <action
+            android:id="@+id/action_detailMatchFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.glushko.sportcommunity.presentation.team.TeamFragment"
+        tools:layout="@layout/fragment_team"
+        android:label="" >
+    <argument
+        android:name="teamName"
+        app:argType="string" />
+    <argument
+        android:name="teamId"
+        app:argType="integer"/>
+    <argument
+        android:name="teamImage"
+        app:argType="string"
+        app:nullable="true" />
+
+        <action
+            android:id="@+id/action_teamFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_squadFragment"
+            app:destination="@id/squadFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_playerInfoFragment"
+            app:destination="@id/playerInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.glushko.sportcommunity.presentation.statistics.StatisticsFragment"
+        android:label="StatisticsFragment"
+        tools:layout="@layout/fragment_statistics">
+
+        <argument
+            android:name="teamName"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="openFrom"
+            app:argType="integer" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_statisticsFragment_to_playerInfoFragment"
+            app:destination="@id/playerInfoFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/playerInfoFragment"
+        android:name="com.glushko.sportcommunity.presentation.player.PlayerInfoFragment">
+        <argument
+            android:name="player_id"
+            app:argType="integer" />
+        <argument
+            android:name="player_name"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gamesFragment"
+        android:name="com.glushko.sportcommunity.presentation.matches.games.GamesFragment"
+        android:label="GamesFragment" >
+        <argument
+            android:name="teamId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="tournamentId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_gamesFragment_to_detailMatchFragment"
+            app:destination="@id/detailMatchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/squadFragment"
+        android:name="com.glushko.sportcommunity.presentation.team.squad.SquadFragment"
+        android:label="SquadFragment"
+        tools:layout="@layout/fragment_squad"
+        >
+        <argument
+            android:name="teamId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_squadFragment_to_playerInfoFragment"
+            app:destination="@id/playerInfoFragment" />
     </fragment>
 
     <include

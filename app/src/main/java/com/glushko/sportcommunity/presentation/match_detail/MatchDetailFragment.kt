@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
@@ -153,24 +154,37 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                         .padding(bottom = 5.dp)
                     val modifierScore = Modifier
                         .weight(1f)
-                    TeamInMatch(match.teamHomeName, modifierTeam, match.teamHomeImage)
+                    TeamInMatch(match.teamHomeName, modifierTeam, match.teamHomeImage, match.teamHomeId)
                     TourAndScore(
                         tour = match.tour,
                         goalHome = match.teamHomeGoal,
                         goalGuest = match.teamGuestGoal,
                         modifier = modifierScore
                     )
-                    TeamInMatch(match.teamGuestName, modifierTeam, match.teamGuestImage)
+                    TeamInMatch(match.teamGuestName, modifierTeam, match.teamGuestImage, match.teamGuestId)
                 }
             }
         }
     }
 
     @Composable
-    fun TeamInMatch(teamName: String, modifier: Modifier, teamImage: String?){
+    fun TeamInMatch(
+        teamName: String,
+        modifier: Modifier,
+        teamImage: String?,
+        teamId: Int
+    ){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
+            modifier = modifier.clickable {
+                findNavController().navigate(
+                    MatchDetailFragmentDirections.actionDetailMatchFragmentToTeamFragment(
+                        teamId = teamId,
+                        teamName = teamName,
+                        teamImage = teamImage
+                    )
+                )
+            }
         ) {
             AsyncImage(
                 model = teamImage ?: "${Constants.BASE_URL_IMAGE}$teamName.png",

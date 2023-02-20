@@ -120,8 +120,8 @@
     <string name="player_statistics__assists">Передачи</string>
     <string name="player_statistics__penalty">Пенальти</string>
     <string name="player_statistics__penalty_out">Незабит. пен.</string>
-    <string name="player_statistics__red_cards">Красные карточки</string>
-    <string name="player_statistics__yellow_cards">Желтые карточки</string>
+    <string name="player_statistics__red_cards"> КК </string>
+    <string name="player_statistics__yellow_cards"> ЖК </string>
     <string name="player_statistics__own_goals">Автоголы</string>
 
 

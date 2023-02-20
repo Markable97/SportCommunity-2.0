@@ -25,16 +25,16 @@
         <argument
             android:name="teamId"
             app:argType="integer"/>
+        <argument
+            android:name="teamImage"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_teamFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
         <action
             android:id="@+id/action_teamFragment_to_squadFragment"
             app:destination="@id/squadFragment" />
-        <argument
-            android:name="teamImage"
-            app:argType="string"
-            app:nullable="true" />
         <action
             android:id="@+id/action_teamFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
@@ -135,9 +135,13 @@
         android:label="@string/match_detail"
         tools:layout="@layout/fragment_match_detail">
 
-    <argument
-        android:name="match"
-        app:argType="com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData" />
+        <argument
+            android:name="match"
+            app:argType="com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData" />
+
+        <action
+            android:id="@+id/action_detailMatchFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
     </fragment>
     <fragment
         android:id="@+id/playerInfoFragment"
