@@ -65,7 +65,8 @@ class SquadRepositoryImpl @Inject constructor(
         squadStatistics.forEach { player ->
             when(player.actionId){
                 in Constants.TYPE_ACTION_GOALS -> goals.add(player.toModel())
-                Constants.TYPE_ACTION_ASSIST or Constants.TYPE_ACTION_ASSISTS -> assists.add(player.toModel())
+                Constants.TYPE_ACTION_ASSIST -> assists.add(player.toModel())
+                Constants.TYPE_ACTION_ASSISTS -> assists.add(player.toModel())
                 Constants.TYPE_ACTION_YELLOW_CARD -> yellowCards.add(player.toModel())
                 Constants.TYPE_ACTION_RED_CARD -> redCards.add(player.toModel())
             }
