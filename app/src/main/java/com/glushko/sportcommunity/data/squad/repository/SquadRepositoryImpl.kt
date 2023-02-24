@@ -4,6 +4,7 @@ import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.squad.model.SquadPlayerUI
 import com.glushko.sportcommunity.data.squad.network.ResponseFootballSquad
+import com.glushko.sportcommunity.data.squad.network.ResponseTeamMedia
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.presentation.tournament.model.TypeStatistics
@@ -111,7 +112,15 @@ class SquadRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMedia(teamId: Int): Result<List<MediaUI>> {
-        //TODO get team media from server
-        return Result.Success(emptyList())
+        val response = networkUtils.getResponseResult<ResponseTeamMedia>(ResponseTeamMedia::class.java) {
+            api.getMediaTeam(teamId)
+        }
+        return when (response) {
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(
+                response.data.media.map { it.toModelUI() }
+            )
+        }
     }
 }
