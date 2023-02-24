@@ -7,6 +7,7 @@ import com.glushko.sportcommunity.data.match_detail.model.MatchAction
 import com.glushko.sportcommunity.data.match_detail.model.PlayerAction
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.extensions.getShortName
 import com.google.gson.annotations.SerializedName
 
 class ResponsePlayersForMatch(
@@ -107,8 +108,8 @@ class PlayerWithAction(
         return PlayerAction(
                 idAction = index,
                 teamId = teamId,
-                playerName = playerName,
-                assist = if (playerAssistId == -1) null else playerAssistName,
+                playerName = playerName.getShortName(),
+                assist = if (playerAssistId == -1) null else playerAssistName?.getShortName(),
                 typeAction = actionFromId(actionId),
                 timeAction = time.replace("'","").split(":").firstOrNull()?.toInt() ?: 0
             )
