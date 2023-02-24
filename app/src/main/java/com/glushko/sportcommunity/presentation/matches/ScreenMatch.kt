@@ -40,7 +40,7 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController, act
         }
     ){
         Column{
-            ResultHeader(match.matchDate?:"14 Сентября 2022 (ПН)") //TODO проверит как приходит с сервера
+            ResultHeader(match.matchDate?:"Не назначено") //TODO проверит как приходит с сервера
             ResultFooter(match.stadium?:"Не назначено") //TODO проверит как приходит с сервера
             Row(modifier = Modifier.padding(bottom = 10.dp, end = 10.dp)) {
                 val modifierTour= Modifier
