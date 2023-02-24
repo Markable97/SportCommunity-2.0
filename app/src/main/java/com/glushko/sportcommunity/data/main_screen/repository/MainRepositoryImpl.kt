@@ -9,8 +9,8 @@ import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.media.network.ImagesResMain
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
-import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentInfoDisplayData
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
@@ -26,7 +26,7 @@ class MainRepositoryImpl @Inject constructor(
     private val networkUtils: NetworkUtils
 ): MainRepository {
 
-    override var tournamentTable: List<TournamentTableDisplayData> = emptyList()
+    override var tournamentInfo: TournamentInfoDisplayData = TournamentInfoDisplayData()
     override var calendar: List<MatchFootballDisplayData> = emptyList()
     override var results: List<MatchFootballDisplayData> = emptyList()
     override var statistics: PlayersWithStatisticsRes = PlayersWithStatisticsRes()
@@ -49,7 +49,7 @@ class MainRepositoryImpl @Inject constructor(
             api.getMainScreen(ResponseMainScreen.createMap(divisionId))
         }
         if (response is Resource.Success){
-            tournamentTable = response.data!!.toTournamentTable()
+            tournamentInfo = response.data!!.toTournamentInfo()
             calendar = response.data.toCalendar()
             results = response.data.toResults()
             statistics = response.data.statistics

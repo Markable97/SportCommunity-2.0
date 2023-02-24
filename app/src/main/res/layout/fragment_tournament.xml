@@ -52,5 +52,10 @@
             android:text="@string/tournament__kdk"
             android:textColor="@color/black" />
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/composeViewFullGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </ScrollView>

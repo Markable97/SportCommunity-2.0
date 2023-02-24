@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,56 +14,69 @@
             android:id="@+id/textTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?selectableItemBackground"
             android:gravity="center"
             android:text="@string/tournament__tournament_table"
             android:textAppearance="@style/text24_sp_bold"
-            android:foreground="?selectableItemBackground"
             app:drawableEndCompat="@drawable/ic_arrow_right"
+            app:layout_goneMarginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@id/itemHeader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <include
             android:id="@+id/itemHeader"
+            layout="@layout/item_tournament_table_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/textTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            layout="@layout/item_tournament_table_header"/>
+            app:layout_constraintTop_toBottomOf="@id/textTitle" />
+
         <include
             android:id="@+id/itemRowFirst"
+            layout="@layout/item_tournament_table_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/itemHeader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            layout="@layout/item_tournament_table_row"/>
+            app:layout_constraintTop_toBottomOf="@id/itemHeader" />
+
         <include
             android:id="@+id/itemRowSecond"
+            layout="@layout/item_tournament_table_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/itemRowFirst"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            layout="@layout/item_tournament_table_row"/>
+            app:layout_constraintTop_toBottomOf="@id/itemRowFirst" />
+
         <include
             android:id="@+id/itemRowThird"
+            layout="@layout/item_tournament_table_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/itemRowSecond"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            layout="@layout/item_tournament_table_row"/>
+            app:layout_constraintTop_toBottomOf="@id/itemRowSecond" />
+
         <include
             android:id="@+id/itemRowFourth"
+            layout="@layout/item_tournament_table_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/itemRowThird"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            layout="@layout/item_tournament_table_row"/>
+            app:layout_constraintTop_toBottomOf="@id/itemRowThird" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupTournamentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:visibility="visible"
+            app:constraint_referenced_ids="itemHeader, itemRowFirst, itemRowSecond, itemRowThird, itemRowFourth" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

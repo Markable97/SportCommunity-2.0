@@ -7,6 +7,7 @@ import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.model.toModel
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentInfoDisplayData
 import com.google.gson.annotations.SerializedName
 
 class ResponseMainScreen(
@@ -26,6 +27,18 @@ class ResponseMainScreen(
             return map
         }
     }
+
+    fun toTournamentInfo() : TournamentInfoDisplayData {
+        val firstItem = tournamentTable.firstOrNull()
+        val isCup = firstItem?.isCup ?: false
+        val imageGrid = firstItem?.imageCupGrid
+        return TournamentInfoDisplayData(
+            isCup = isCup,
+            imageCupGrid = imageGrid,
+            tournamentTable = if (isCup) emptyList() else toTournamentTable()
+        )
+    }
+
 }
 
 

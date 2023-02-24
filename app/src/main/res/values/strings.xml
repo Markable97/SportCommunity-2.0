@@ -45,6 +45,7 @@
     <string name="label_points">О</string>
 
     <string name="tournament__tournament_table">Турнирная таблица</string>
+    <string name="tournament__cup_grid">Сетка турнира</string>
     <string name="tournament__statistics">Стастистика игроков</string>
     <string name="tournament__games">Игры</string>
     <string name="tournament__media">Медия</string>

@@ -21,6 +21,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,7 @@ import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.media.model.ImageUI
+import com.glushko.sportcommunity.presentation.core.ZoomableBox
 
 @Composable
 fun GalleryScreen(
@@ -89,7 +91,7 @@ private fun CardImage(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun FullPhoto(
+fun FullPhoto(
     openFullImage: MutableState<Pair<Boolean, String>>,
     onClickShare: (Bitmap) -> Unit,
     onClickDownload: (String) -> Unit,
@@ -147,24 +149,32 @@ private fun FullPhoto(
                     modifier = Modifier.fillMaxSize(),
                     color = backgroundColor
                 ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                        AsyncImage(
-                            model = openFullImage.value.second,
-                            placeholder = painterResource(R.drawable.ic_healing_black_36dp),
-                            error = painterResource(R.drawable.ic_healing_black_36dp),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            onSuccess = { success ->
-                                bitmapShare = (success.result.drawable as BitmapDrawable).bitmap
-                            }
-
-                        )
+                    ZoomableBox(
+                        Modifier.fillMaxSize()
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ){
+                            AsyncImage(
+                                model = openFullImage.value.second,
+                                placeholder = painterResource(R.drawable.ic_healing_black_36dp),
+                                error = painterResource(R.drawable.ic_healing_black_36dp),
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .graphicsLayer(
+                                        scaleX = scale,
+                                        scaleY = scale,
+                                        translationX = offsetX,
+                                        translationY = offsetY
+                                    ),
+                                onSuccess = { success ->
+                                    bitmapShare = (success.result.drawable as BitmapDrawable).bitmap
+                                }
+                            )
+                        }
                     }
                 }
             }

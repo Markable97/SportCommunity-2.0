@@ -2,13 +2,10 @@ package com.glushko.sportcommunity.data.tournament.repository
 
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.datasource.network.ApiService
-import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
-import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticDisplayData
-import com.glushko.sportcommunity.presentation.tournament.model.TypeStatistics
 import com.glushko.sportcommunity.data.statistics.network.*
-import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.domain.tournament.TournamentRepository
+import com.glushko.sportcommunity.presentation.tournament.model.*
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.components.SingletonComponent
@@ -26,8 +23,12 @@ class TournamentRepositoryImpl @Inject constructor(
         const val COUNT_FOR_TABLE = 4
     }
 
+    override fun getTournamentInfo(): TournamentInfoDisplayData {
+        return mainRepository.tournamentInfo
+    }
+
     override fun getTournamentTable(): List<TournamentTableDisplayData> {
-        return mainRepository.tournamentTable
+        return mainRepository.tournamentInfo.tournamentTable
     }
 
     override fun getStatistics(): List<PlayerStatisticAdapter>{
@@ -49,7 +50,7 @@ class TournamentRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>? {
-        val tournamentTable = mainRepository.tournamentTable
+        val tournamentTable = mainRepository.tournamentInfo.tournamentTable
         val team = tournamentTable.find { it.teamId == teamId }
         val indexTeam = tournamentTable.indexOf(team)
         return when {

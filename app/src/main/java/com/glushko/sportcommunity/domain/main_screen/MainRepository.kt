@@ -6,13 +6,13 @@ import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDispla
 import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
-import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentInfoDisplayData
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
 
 interface MainRepository {
 
-    var tournamentTable: List<TournamentTableDisplayData>
+    var tournamentInfo: TournamentInfoDisplayData
     var calendar: List<MatchFootballDisplayData>
     var results: List<MatchFootballDisplayData>
     var statistics: PlayersWithStatisticsRes

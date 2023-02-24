@@ -17,7 +17,11 @@ data class TournamentTableFootball(
     val draws: Int,
     val losses: Int,
     @SerializedName("sc_con")val scCon: Int,
-    val points: Int
+    val points: Int,
+    @SerializedName("is_cup")
+    val isCup: Boolean,
+    @SerializedName("image_grid")
+    val imageCupGrid: String?,
 )
 
 fun TournamentTableFootball.toModel(positionTable: Int) = TournamentTableDisplayData(

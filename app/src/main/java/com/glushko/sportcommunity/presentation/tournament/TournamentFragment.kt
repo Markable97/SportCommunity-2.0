@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
@@ -16,10 +18,13 @@ import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
+import com.glushko.sportcommunity.presentation.media.FullPhoto
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
+import com.glushko.sportcommunity.util.extensions.gone
 import com.glushko.sportcommunity.util.extensions.toast
+import com.glushko.sportcommunity.util.extensions.visible
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,8 +61,8 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
             }
         }
         viewModel.run {
-            liveDataTable.observe(viewLifecycleOwner){
-                renderTournamentTable(it)
+            liveDataTournamentInfo.observe(viewLifecycleOwner) {
+                renderTournamentTable(it.tournamentTable, it.isCup)
             }
             liveDataStatistics.observe(viewLifecycleOwner){
                 renderStatistics(it)
@@ -65,9 +70,20 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
         }
     }
 
+    private fun openFullGrid(url: String) = binding.composeViewFullGrid.run {
+        setContent {
+            FullPhoto(openFullImage = mutableStateOf(true to url), onClickShare = {}, onClickDownload = {})
+        }
+    }
+
     private fun setupListener() = binding.run {
         itemTournamentTable.textTitle.setOnClickListener {
-            findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentTableFragment())
+            val tournamentInfo = viewModel.liveDataTournamentInfo.value ?: return@setOnClickListener
+            if (tournamentInfo.isCup) {
+                openFullGrid(tournamentInfo.imageCupGrid?:"")
+            } else {
+                findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentTableFragment())
+            }
         }
         itemStatistics.textTitle.setOnClickListener {
             viewModelMain.liveDataSelectedDivision.value?.let { divisionId ->
@@ -86,13 +102,24 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
         }
     }
 
-    private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
-        data.forEachIndexed { index, tournamentTableDisplayData ->
-            when(index){
-                0 -> renderRow(tournamentTableDisplayData, 1, itemRowFirst)
-                1 -> renderRow(tournamentTableDisplayData, 2, itemRowSecond)
-                2 -> renderRow(tournamentTableDisplayData, 3, itemRowThird)
-                3 -> renderRow(tournamentTableDisplayData, 4, itemRowFourth)
+    private fun renderTournamentTable(
+        data: List<TournamentTableDisplayData>,
+        cup: Boolean,
+    ) = binding.itemTournamentTable.run {
+        textTitle.text = getString(
+            if (cup) R.string.tournament__cup_grid else R.string.tournament__tournament_table
+        )
+        if (cup) {
+            groupTournamentItem.gone()
+        } else {
+            groupTournamentItem.visible()
+            data.forEachIndexed { index, tournamentTableDisplayData ->
+                when(index){
+                    0 -> renderRow(tournamentTableDisplayData, 1, itemRowFirst)
+                    1 -> renderRow(tournamentTableDisplayData, 2, itemRowSecond)
+                    2 -> renderRow(tournamentTableDisplayData, 3, itemRowThird)
+                    3 -> renderRow(tournamentTableDisplayData, 4, itemRowFourth)
+                }
             }
         }
     }
