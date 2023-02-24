@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
+    <!--<item
         android:id="@+id/eventsFragment"
         android:icon="@drawable/ic_events"
-        android:title="@string/bottom_tittle__events" />
+        android:title="@string/bottom_tittle__events" />-->
+
+    <item
+        android:id="@+id/nav_graph_tournament"
+        android:icon="@drawable/ic_trophy"
+        android:title="@string/bottom_tittle__tournament" />
 
     <item
         android:id="@+id/calendarFragment"
@@ -16,10 +21,6 @@
         android:icon="@drawable/ic_ball_soccer"
         android:title="@string/bottom_tittle__results" />
 
-    <item
-        android:id="@+id/nav_graph_tournament"
-        android:icon="@drawable/ic_trophy"
-        android:title="@string/bottom_tittle__tournament" />
 <!--    <item-->
 <!--        android:id="@+id/nav_graph_admin"-->
 <!--        android:icon="@drawable/ic_admin_panel"-->
