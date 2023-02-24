@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
     private val destinationWithoutLabel = listOf(R.id.createScheduleFragment, R.id.statisticsFragment,
         R.id.tournamentTableFragment, R.id.squadFragment, R.id.tournamentMediaFragment, R.id.galleryFragment,
-        R.id.gamesFragment
+        R.id.gamesFragment, R.id.teamMediaFragment
     )
 
     private val destinationWithoutBack = listOf(

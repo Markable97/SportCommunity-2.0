@@ -31,3 +31,13 @@ fun DoSomething(message: String, textButton: String, doSomething: ()->Unit){
         }
     }
 }
+
+@Composable
+fun EmptyText(textMessage: String) {
+    Box(
+        Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ){
+        Text(text = textMessage)
+    }
+}

@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.data.squad.repository
 
 import com.glushko.sportcommunity.data.datasource.network.ApiService
+import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.squad.model.SquadPlayerUI
 import com.glushko.sportcommunity.data.squad.network.ResponseFootballSquad
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
@@ -107,5 +108,10 @@ class SquadRepositoryImpl @Inject constructor(
                 TypeStatistics.RED_CARDS -> squadStatistics.filter { it.actionId == Constants.TYPE_ACTION_RED_CARD }.map { it.toModel() }
             }
         )
+    }
+
+    override suspend fun getMedia(teamId: Int): Result<List<MediaUI>> {
+        //TODO get team media from server
+        return Result.Success(emptyList())
     }
 }

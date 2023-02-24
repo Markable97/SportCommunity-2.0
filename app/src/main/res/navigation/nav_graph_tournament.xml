@@ -41,7 +41,13 @@
         <action
             android:id="@+id/action_teamFragment_to_playerInfoFragment"
             app:destination="@id/playerInfoFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_teamMediaFragment"
+            app:destination="@id/teamMediaFragment" />
     </fragment>
+
+
+
     <fragment
         android:id="@+id/tournamentFragment"
         android:name="com.glushko.sportcommunity.presentation.tournament.TournamentFragment"
@@ -156,6 +162,18 @@
         <argument
             android:name="player_name"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/teamMediaFragment"
+        android:name="com.glushko.sportcommunity.presentation.team.media.TeamMediaFragment"
+        android:label="TeamMediaFragment" >
+        <argument
+            android:name="team_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_teamMediaFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
     </fragment>
 
 

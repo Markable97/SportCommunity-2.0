@@ -58,6 +58,8 @@
     <string name="statistics_red">Красные карточки</string>
     <string name="statistics_red_short">КК</string>
 
+    <string name="media_empty">Пусто</string>
+
     <string name="team_leaders">Лидеры</string>
     <string name="team_squad">Состав</string>
     <string name="team_games">Игры</string>
