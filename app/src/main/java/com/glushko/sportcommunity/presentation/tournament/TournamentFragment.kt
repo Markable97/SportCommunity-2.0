@@ -5,20 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
-import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.databinding.FragmentTournamentBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
-import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
+import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
+import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import com.glushko.sportcommunity.presentation.media.FullPhoto
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
@@ -72,7 +72,14 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
 
     private fun openFullGrid(url: String) = binding.composeViewFullGrid.run {
         setContent {
-            FullPhoto(openFullImage = mutableStateOf(true to url), onClickShare = {}, onClickDownload = {})
+            FullPhoto(
+                openFullImage = mutableStateOf(true to url),
+                onClickShare = { bitmap ->
+                    viewModelMain.getUriToShare(bitmap, requireActivity().cacheDir.toString(), requireContext())
+                }, onClickDownload = {
+                    (requireActivity() as? MainActivity)?.downloadImage(url)
+                }
+            )
         }
     }
 

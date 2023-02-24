@@ -1,10 +1,16 @@
 package com.glushko.sportcommunity.presentation.main_screen.ui
 
+import android.app.DownloadManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,9 +29,12 @@ import com.glushko.sportcommunity.databinding.ActivityMainBinding
 import com.glushko.sportcommunity.databinding.HeaderNavigationDrawerBinding
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.toast
+import com.glushko.sportcommunity.util.extensions.toastLong
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.io.File
 
 
 @AndroidEntryPoint
@@ -218,6 +227,22 @@ class MainActivity : AppCompatActivity() {
                     is Resource.Empty -> {}
                 }
             }
+           eventShareUri.observe(this@MainActivity){ resultUri ->
+                when(resultUri){
+                    is Result.Error -> {
+                        toastLong(this@MainActivity, resultUri.exception.message ?: "Error share")
+                    }
+                    Result.Loading -> {
+                    }
+                    is Result.Success -> {
+                        val intent = Intent(Intent.ACTION_SEND).apply {
+                            type = "image/*"
+                            putExtra(Intent.EXTRA_STREAM, resultUri.data)
+                        }
+                        startActivity(Intent.createChooser(intent, "Share photo"))
+                    }
+                }
+            }
         }
     }
 
@@ -246,6 +271,32 @@ class MainActivity : AppCompatActivity() {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
             }
+        }
+    }
+
+    fun downloadImage(url: String){
+        try {
+            val fileName = "${System.currentTimeMillis()}"
+            val dm = this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+            val downloadUri: Uri = Uri.parse(url)
+            val request = DownloadManager.Request(downloadUri)
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false)
+                .setTitle(fileName)
+                .setMimeType("image/jpeg") // Your file type. You can use this code to download other file types also.
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_PICTURES,
+                    File.separator + fileName + ".jpg"
+                )
+            dm.enqueue(request)
+            Toast.makeText(this, R.string.download_start, Toast.LENGTH_SHORT)
+                .show()
+        } catch (e: Exception) {
+            Timber.e(e)
+            Toast.makeText(this, R.string.download_error, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

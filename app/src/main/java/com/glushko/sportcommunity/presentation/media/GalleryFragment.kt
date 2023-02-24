@@ -23,6 +23,7 @@ import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
+import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.toastLong
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,26 +49,6 @@ class GalleryFragment: BaseFragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mainViewModel.eventShareUri.observe(viewLifecycleOwner){ resultUri ->
-            when(resultUri){
-                is Result.Error -> {
-                    toastLong(requireContext(), resultUri.exception.message ?: "Error share")
-                }
-                Result.Loading -> {
-                }
-                is Result.Success -> {
-                    val intent = Intent(Intent.ACTION_SEND).apply {
-                        type = "image/*"
-                        putExtra(Intent.EXTRA_STREAM, resultUri.data)
-                    }
-                    startActivity(Intent.createChooser(intent, "Share photo"))
-                }
-            }
-        }
-    }
-
     @Composable
     private fun ScreenGallery() {
         val imagesResponse: Result<List<ImageUI>> by mainViewModel.liveDataGallery.observeAsState(Result.Loading)
@@ -85,29 +66,7 @@ class GalleryFragment: BaseFragment() {
                 GalleryScreen(
                     imagesList = (imagesResponse as Result.Success<List<ImageUI>>).data,
                     onClickDownload = { url ->
-                        try {
-                            val fileName = "${System.currentTimeMillis()}"
-                            val dm = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-
-                            val downloadUri: Uri = Uri.parse(url)
-                            val request = DownloadManager.Request(downloadUri)
-                            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-                                .setAllowedOverRoaming(false)
-                                .setTitle(fileName)
-                                .setMimeType("image/jpeg") // Your file type. You can use this code to download other file types also.
-                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                .setDestinationInExternalPublicDir(
-                                    Environment.DIRECTORY_PICTURES,
-                                    File.separator + fileName + ".jpg"
-                                )
-                            dm.enqueue(request)
-                            Toast.makeText(requireContext(), R.string.download_start, Toast.LENGTH_SHORT)
-                                .show()
-                        } catch (e: Exception) {
-                            Timber.e(e)
-                            Toast.makeText(requireContext(), R.string.download_error, Toast.LENGTH_SHORT)
-                                .show()
-                        }
+                        (requireActivity() as? MainActivity)?.downloadImage(url)
                     },
                     onClickShare = { bitmap ->
                         mainViewModel.getUriToShare(bitmap, requireActivity().cacheDir.toString(), requireContext())
