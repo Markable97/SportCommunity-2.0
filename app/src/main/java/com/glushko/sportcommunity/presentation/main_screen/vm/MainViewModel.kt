@@ -38,15 +38,8 @@ class MainViewModel @Inject constructor(
     private val _liveDataMainScreen = MutableLiveData<Resource<ResponseMainScreen>>()
     val liveDataMainScreen: LiveData<Resource<ResponseMainScreen>> = _liveDataMainScreen
 
-    private val _liveDataGallery = MutableLiveData<Result<List<ImageUI>>>()
-    val liveDataGallery: LiveData<Result<List<ImageUI>>> = _liveDataGallery
-
     private val _eventShareUri = EventLiveData<Result<Uri>>()
     val eventShareUri: LiveData<Result<Uri>> = _eventShareUri
-
-    private var jobMediaMatch: Job? = null
-
-    private var matchId: Long? = null
 
     init {
         getLeagues()
@@ -80,23 +73,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getMatchMedia(){
-        getMatchMedia(matchId?:return)
-    }
-
-    fun getMatchMedia(matchId: Long){
-        this.matchId = matchId
-        if (jobMediaMatch?.isActive == true) {
-            jobMediaMatch?.cancel()
-        }
-        jobMediaMatch = viewModelScope.launch(Dispatchers.IO){
-            _liveDataGallery.postValue(Result.Loading)
-            _liveDataGallery.postValue(
-                mainRepository.getMatchMedia(matchId)
-            )
-        }
-    }
-
     fun getUriToShare(bitmap: Bitmap, filePath: String, context: Context){
         val imagesFolder = File(filePath, "images")
         viewModelScope.launch(Dispatchers.IO) {
@@ -119,16 +95,6 @@ class MainViewModel @Inject constructor(
                 Timber.e(ex)
             }
         }
-    }
-
-    fun cancelJobMediaMatch(){
-        jobMediaMatch?.cancel()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        jobMediaMatch?.cancel()
-        jobMediaMatch = null
     }
 
 }

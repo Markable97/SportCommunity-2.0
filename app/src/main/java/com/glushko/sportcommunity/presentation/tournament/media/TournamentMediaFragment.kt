@@ -45,11 +45,10 @@ class TournamentMediaFragment : BaseFragment() {
     private fun ScreenMedia(){
         val mediaList: List<MediaUI> by viewModel.liveDataMedia.observeAsState(emptyList())
         CreateMediaAlbumScreen(mediaList){ matchId, title ->
-            mainViewModel.getMatchMedia(matchId)
             (requireActivity() as? MainActivity)?.apply {
                 setToolbarTitle(title)
             }
-            findNavController().navigate(TournamentMediaFragmentDirections.actionTournamentMediaFragmentToGalleryFragment())
+            findNavController().navigate(TournamentMediaFragmentDirections.actionTournamentMediaFragmentToGalleryFragment(matchId))
         }
     }
 

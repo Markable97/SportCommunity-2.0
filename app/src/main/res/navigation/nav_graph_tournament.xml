@@ -111,7 +111,11 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.glushko.sportcommunity.presentation.media.GalleryFragment"
-        android:label="GalleryFragment" />
+        android:label="GalleryFragment" >
+        <argument
+            android:name="match_id"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/gamesFragment"
         android:name="com.glushko.sportcommunity.presentation.matches.games.GamesFragment"
