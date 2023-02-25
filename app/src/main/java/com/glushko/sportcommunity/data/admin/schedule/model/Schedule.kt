@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.data.admin.schedule.model
 
 import com.glushko.sportcommunity.data.admin.assign_matches.model.Match
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.model.MatchScreenType
 import com.google.gson.annotations.SerializedName
 
 data class Schedule(
@@ -26,7 +27,8 @@ data class Schedule(
         teamGuestGoal = match?.teamGuestGoals ?: 0,
         matchDate = gameDate,
         stadium = stadium.stadiumName,
-        played = match?.played?:0
+        played = match?.played?:0,
+        screenType = MatchScreenType.getScreenType(match?.screenType)
     )
 
     fun toModelCalendar() = MatchFootballDisplayData(
@@ -44,7 +46,8 @@ data class Schedule(
         teamGuestGoal = 0,
         matchDate = gameDate,
         stadium = stadium.stadiumName,
-        played = 1
+        played = 1,
+        screenType = MatchScreenType.getScreenType(match?.screenType)
     )
 
     fun toModelResults() = MatchFootballDisplayData(
@@ -62,6 +65,7 @@ data class Schedule(
         teamGuestGoal = match?.teamGuestGoals ?: 0,
         matchDate = gameDate,
         stadium = stadium.stadiumName,
-        played = 2
+        played = 2,
+        screenType = MatchScreenType.getScreenType(match?.screenType)
     )
 }

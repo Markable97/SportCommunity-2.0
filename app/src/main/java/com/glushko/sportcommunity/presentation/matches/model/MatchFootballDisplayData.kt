@@ -22,6 +22,7 @@ data class MatchFootballDisplayData(
     val played: Int,
     val matchDate: String? = null,
     val stadium: String? = null,
+    val screenType: MatchScreenType
 ): Parcelable {
     fun toModelEditMatch() = MatchUI(
         matchId = matchId,

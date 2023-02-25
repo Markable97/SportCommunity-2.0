@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -24,11 +28,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
-import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.data.match_detail.model.MatchAction
+import com.glushko.sportcommunity.data.match_detail.model.MatchSegment
+import com.glushko.sportcommunity.data.match_detail.model.PlayerInMatchSegment
+import com.glushko.sportcommunity.data.match_detail.model.getDrawable
 import com.glushko.sportcommunity.databinding.FragmentMatchDetailBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.core.DoSomething
+import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.match_detail.adapters.MatchDetailAdapter
+import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
+import com.glushko.sportcommunity.presentation.matches.model.MatchScreenType
 import com.glushko.sportcommunity.util.Constants
+import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.extensions.gone
+import com.glushko.sportcommunity.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -45,81 +59,83 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
         container: ViewGroup?
     ): FragmentMatchDetailBinding = FragmentMatchDetailBinding.inflate(inflater)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Timber.d("Матч инфо = $match")
+        viewModel.getPlayersInMatch(match.matchId, match.teamHomeId, match.screenType)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.d("Матч инфо = $match")
-        viewModel.getPlayersInMatch(match.matchId, match.teamHomeId)
-        setupRecycler()
-        setupObservers()
-        renderCompose()
+        when(match.screenType) {
+            MatchScreenType.TIME_LINE -> {
+                setupRecycler()
+                setupObservers()
+                renderHeaderCompose()
+            }
+            MatchScreenType.LISTING -> {
+                binding.recyclerMatchActionDetail.gone()
+                renderOnlyCompose()
+            }
+        }
     }
 
-    private fun setupRecycler() {
-        binding.recyclerMatchActionDetail.adapter = adapterMatchDetail
-    }
-
-    private fun renderCompose() {
+    private fun renderOnlyCompose() {
         binding.composableMatchHeader.setContent {
             DetailMatchMainScreen()
         }
+    }
+
+    private fun renderHeaderCompose() {
+        binding.composableMatchHeader.setContent {
+            UpperCardMatch(match = match)
+        }
+    }
+
+    private fun setupRecycler() {
+        binding.recyclerMatchActionDetail.visible()
+        binding.recyclerMatchActionDetail.adapter = adapterMatchDetail
     }
 
     private fun setupObservers() = viewModel.run {
         liveDataPlayersInMatch.observe(viewLifecycleOwner){
             Timber.d("Live data $it")
             when(it){
-                is com.glushko.sportcommunity.util.Result.Error -> {}
-                is com.glushko.sportcommunity.util.Result.Loading -> {}
-                is com.glushko.sportcommunity.util.Result.Success -> {
+                is Result.Error -> {}
+                is Result.Loading -> {}
+                is Result.Success -> {
                     adapterMatchDetail.submitList(it.data)
                 }
             }
         }
     }
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        Timber.d("Матч инфо = $match")
-//        viewModel.getPlayersInMatch(match.match)
-//        return ComposeView(requireContext()).apply {
-//            setContent {
-//                DetailMatchMainScreen()
-//            }
-//        }
-//    }
-
     @Composable
     fun DetailMatchMainScreen(){
-        UpperCardMatch(match = match)
-//        val response by viewModel.liveDataPlayersInMatch.observeAsState(Resource.Empty())
-//        CreateScreen(response = response)
+        Column {
+            UpperCardMatch(match = match)
+            val response by viewModel.liveDataPlayersInMatch.observeAsState(Result.Loading)
+            Timber.d("Live data $response")
+            CreateScreen(response = response)
+        }
     }
 
-    /*@Composable
-    private fun CreateScreen(response: Resource<List<PlayerDisplayData>>){
-        Column {
-            UpperCardMatch(match)
-            when(response){
-                is Resource.Empty -> {}
-                is Resource.Error -> {
-                    DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
-                    viewModel.getPlayersInMatch(match.match, match.teamHomeId)
-                }
-                }
-                is Resource.Loading -> {
-                    Loader()
-                }
-                is Resource.Success -> {
-                    ActionsTeams(match, response.data!!)
+    @Composable
+    private fun CreateScreen(response: Result<List<PlayerInMatchSegment>>) {
+        when (response) {
+            is Result.Error -> {
+                DoSomething(message = response.exception.message ?: "", textButton = "Повторить") {
+                    viewModel.getPlayersInMatch(match.matchId, match.teamHomeId, match.screenType)
                 }
             }
-
+            is Result.Loading -> {
+                Loader()
+            }
+            is Result.Success -> {
+                ActionsTeams(response.data)
+            }
         }
-    }*/
+    }
 
     @Composable
     fun UpperCardMatch(match: MatchFootballDisplayData){
@@ -234,8 +250,8 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
         }
     }
 
-    /*@Composable
-    fun ActionsTeams(match: MatchFootballDisplayData, playersInMatch: List<PlayerDisplayData>){
+    @Composable
+    fun ActionsTeams(playersInMatch: List<PlayerInMatchSegment>){
         Row(modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
@@ -245,52 +261,43 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
                     .weight(1f)
                     .padding(all = 5.dp)
 
-                ListActionsPlayers(players = playersInMatch.filter{it.teamName == match.teamHomeName}, modifier)
+                ListActionsPlayers(players = playersInMatch.filter{it.segment == MatchSegment.ACTION_HOME}, modifier)
                 Box(modifier = Modifier
                     .width(1.dp)
                     .fillMaxHeight()
                     .background(Color.LightGray))
-                ListActionsPlayers(players = playersInMatch.filter{it.teamName == match.teamGuestName}, modifier)
+                ListActionsPlayers(players = playersInMatch.filter{it.segment == MatchSegment.ACTION_GUEST}, modifier)
             }
         }
-    }*/
+    }
 
-    /*@Composable
-    fun ListActionsPlayers(players: List<PlayerDisplayData>, modifier: Modifier) {
+    @Composable
+    fun ListActionsPlayers(players: List<PlayerInMatchSegment>, modifier: Modifier) {
         var assists = ""
         LazyColumn(modifier = modifier) {
             for(player in players){
-                if (player.goal > 0) item { ItemInfo(typeAction = "goal", playerName = "${player.playerName} (${player.goal})") }
-                if (player.penalty > 0) item { ItemInfo(typeAction = "penalty", playerName = player.playerName) }
-                if (player.penaltyOut > 0) item { ItemInfo(typeAction = "penalty out", playerName = player.playerName) }
-                if (player.ownGoal > 0) item { ItemInfo(typeAction = "own goal", playerName = player.playerName) }
-                if (player.yellow > 0) item { ItemInfo(typeAction = if(player.yellow == 1) "yellow card" else "two yellow", playerName = player.playerName) }
-                if (player.red > 0) item { ItemInfo(typeAction = "red card", playerName = player.playerName) }
-                if (player.assist > 0) assists = "${player.playerName} (${player.assist}), "
+                val action = player.player?.typeAction ?: continue
+                if (action == MatchAction.ASSIST) {
+                    assists += "${player.player.playerName}; "
+                } else {
+                    item {
+                        ItemInfo(typeAction = action, playerName = player.player.playerName)
+                    }
+                }
             }
             item { Text(text = "Ассистенты: $assists") }
         }
 
-    }*/
+    }
 
-    data class Result(val image: Painter, val description: String)
-   /* @Composable
-    fun ItemInfo(typeAction: String, playerName: String){
+    @Composable
+    fun ItemInfo(typeAction: MatchAction, playerName: String){
         Row {
             val modifierText = Modifier.weight(2f)
             val modifierImage = Modifier.weight(1f)
             Text(text = playerName, modifier = modifierText)
-            val (image,description) = when(typeAction) {
-                "goal" -> Result(painterResource(id = R.drawable.goal), typeAction)
-                "penalty" -> Result(painterResource(id = R.drawable.penalty), typeAction)
-                "penalty out" -> Result(painterResource(id = R.drawable.penalty_out), typeAction)
-                "own goal" -> Result(painterResource(id = R.drawable.own_goal), typeAction)
-                "yellow card" -> Result(painterResource(id = R.drawable.yellow_card), typeAction)
-                "red card" -> Result(painterResource(id = R.drawable.red_card), typeAction)
-                "two yellow" -> Result(painterResource(id = R.drawable.red_yellow_card), typeAction)
-                else -> Result(painterResource(id = R.drawable.ic_healing_black_36dp), "no image")
-            }
-            Image(painter = image, contentDescription = description, modifier = modifierImage)
+            val imageAction = typeAction.getDrawable()
+            Image(painter = painterResource(id = imageAction), contentDescription = null, modifier = modifierImage)
         }
-    }*/
+    }
 }

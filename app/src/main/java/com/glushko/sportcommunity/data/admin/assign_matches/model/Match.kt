@@ -34,7 +34,9 @@ data class Match(
     @SerializedName("team_guest_goals")
     val teamGuestGoals: Int?,
     @SerializedName("played")
-    val played: Int?
+    val played: Int?,
+    @SerializedName("screen_type")
+    val screenType: Int?
 
 
 ) {

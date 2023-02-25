@@ -3,8 +3,6 @@ package com.glushko.sportcommunity.data.matches.network
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.matches.model.MatchFootball
-import com.glushko.sportcommunity.data.matches.model.toModel
-import com.glushko.sportcommunity.data.matches.model.toModelCalendar
 
 class ResponseFootballMatches( success: Int,
                                message: String,
@@ -22,5 +20,6 @@ class ResponseFootballMatches( success: Int,
         }
     }
 }
+/*
 fun ResponseFootballMatches.toModel() = matches.map { it.toModel() }
-fun ResponseFootballMatches.toModelCalendar() = matches.map { it.toModelCalendar() }
+fun ResponseFootballMatches.toModelCalendar() = matches.map { it.toModelCalendar() }*/

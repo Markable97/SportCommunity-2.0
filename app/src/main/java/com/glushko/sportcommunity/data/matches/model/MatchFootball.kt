@@ -21,6 +21,7 @@ data class MatchFootball(
     val played: Int
 )
 
+/*
 fun MatchFootball.toModel() = MatchFootballDisplayData(
     matchId = matchId,
     leagueName = leagueName,
@@ -48,4 +49,4 @@ fun MatchFootball.toModelCalendar() = MatchFootballDisplayData(
     played = played,
     matchDate = matchDate,
     stadium = nameStadium
-)
+)*/
