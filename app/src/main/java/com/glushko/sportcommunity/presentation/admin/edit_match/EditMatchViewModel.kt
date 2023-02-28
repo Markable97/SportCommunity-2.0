@@ -250,7 +250,7 @@ class EditMatchViewModel @Inject constructor(
         } else {
             playersGuest.getOrNull(data.position?:-1)
         }
-        _eventSelectPlayer.postValue(player)
+        _eventSelectPlayer.postValue(player ?: return)
     }
 
     fun setPlayerWithAction( player: PLayerUI, position: Int, isAssistant: Boolean) {
