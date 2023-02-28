@@ -113,6 +113,8 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         }
     }
 
+    //TODO fix bug when open from cup tournament
+    //cun have not tournament table and crush with NPE
     private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
         renderRow(data[0],  itemRowFirst)
         renderRow(data[1],  itemRowSecond)
