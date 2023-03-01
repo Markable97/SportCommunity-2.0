@@ -24,6 +24,7 @@ import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.toast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team) {
@@ -82,11 +83,10 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
     private fun setupObservers() = viewModel.run {
         liveDataTable.observe(viewLifecycleOwner){
             when(it){
-                is Resource.Empty -> {}
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    renderTournamentTable(it.data!!)
+                is Result.Error -> {}
+                Result.Loading -> {}
+                is Result.Success -> {
+                    renderTournamentTable(it.data)
                 }
             }
         }
@@ -113,13 +113,16 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         }
     }
 
-    //TODO fix bug when open from cup tournament
-    //cun have not tournament table and crush with NPE
     private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
-        renderRow(data[0],  itemRowFirst)
-        renderRow(data[1],  itemRowSecond)
-        renderRow(data[2],  itemRowThird)
-        renderRow(data[3],  itemRowFourth)
+        data.forEachIndexed{ index, data ->
+            when(index) {
+                0 -> renderRow(data,  itemRowFirst)
+                1 -> renderRow(data,  itemRowSecond)
+                2 -> renderRow(data,  itemRowThird)
+                3 -> renderRow(data,  itemRowFourth)
+                else -> return@forEachIndexed
+            }
+        }
     }
 
     private fun renderRow(row: TournamentTableDisplayData, bindingRow: ItemTournamentTableRowBinding){

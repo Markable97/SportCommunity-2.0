@@ -3,6 +3,7 @@ package com.glushko.sportcommunity.domain.tournament
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.presentation.tournament.model.*
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.Result
 
 interface TournamentRepository {
     fun getTournamentInfo() : TournamentInfoDisplayData
@@ -10,5 +11,6 @@ interface TournamentRepository {
     fun getStatistics(): List<PlayerStatisticAdapter>
     fun getMedia(): List<MediaUI>
     suspend fun getStatisticsType(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>>
-    suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>?
+    fun getTournamentTableTeam(teamId: Int): List<TournamentTableDisplayData>
+    suspend fun getTournamentTableForTeam(teamId: Int): Result<List<TournamentTableDisplayData>>
 }

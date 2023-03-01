@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.glushko.sportcommunity.util.Result
+import timber.log.Timber
 
 @HiltViewModel
 class TeamViewModel @Inject constructor(
@@ -21,8 +22,8 @@ class TeamViewModel @Inject constructor(
     private val squadRepository: SquadRepository,
 ): ViewModel() {
 
-    private val _liveDataTable: MutableLiveData<Resource<List<TournamentTableDisplayData>>> = MutableLiveData()
-    val liveDataTable: LiveData<Resource<List<TournamentTableDisplayData>>> = _liveDataTable
+    private val _liveDataTable: MutableLiveData<Result<List<TournamentTableDisplayData>>> = MutableLiveData()
+    val liveDataTable: LiveData<Result<List<TournamentTableDisplayData>>> = _liveDataTable
 
     private val _liveDataSquadInfo: MutableLiveData<Result<ResponseFootballSquad>> = MutableLiveData()
     val liveDataSquadInfo: LiveData<Result<ResponseFootballSquad>> = _liveDataSquadInfo
@@ -34,8 +35,18 @@ class TeamViewModel @Inject constructor(
         viewModelScope.launch {
             _liveDataSquadInfo.postValue(Result.Loading)
             _liveDataSquadInfo.postValue(squadRepository.getSquadInfo(teamId))
-            _liveDataTable.postValue(tournamentRepository.getTournamentTableTeam(teamId))
+            checkTournamentTable(teamId)
         }
+    }
+
+    private suspend fun checkTournamentTable(teamId: Int){
+            val table = tournamentRepository.getTournamentTableTeam(teamId)
+            if (table.isEmpty()) {
+                _liveDataTable.postValue(Result.Loading)
+                _liveDataTable.postValue(tournamentRepository.getTournamentTableForTeam(teamId))
+            } else {
+                _liveDataTable.postValue(Result.Success(table))
+            }
     }
 
     fun getStatistics(){

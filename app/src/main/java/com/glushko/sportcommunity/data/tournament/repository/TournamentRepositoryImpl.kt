@@ -3,11 +3,14 @@ package com.glushko.sportcommunity.data.tournament.repository
 import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.statistics.network.*
+import com.glushko.sportcommunity.data.tournament.helper.TournamentTableHelper
+import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.domain.tournament.TournamentRepository
 import com.glushko.sportcommunity.presentation.tournament.model.*
 import com.glushko.sportcommunity.util.NetworkUtils
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.Result
 import dagger.hilt.components.SingletonComponent
 import it.czerwinski.android.hilt.annotations.BoundTo
 import javax.inject.Inject
@@ -49,24 +52,27 @@ class TournamentRepositoryImpl @Inject constructor(
         return Resource.Success(list)
     }
 
-    override suspend fun getTournamentTableTeam(teamId: Int): Resource<List<TournamentTableDisplayData>>? {
+    override fun getTournamentTableTeam(teamId: Int): List<TournamentTableDisplayData> {
         val tournamentTable = mainRepository.tournamentInfo.tournamentTable
-        val team = tournamentTable.find { it.teamId == teamId }
-        val indexTeam = tournamentTable.indexOf(team)
-        return when {
-            indexTeam < COUNT_FOR_TABLE -> {
-               Resource.Success( tournamentTable.take(COUNT_FOR_TABLE))
-            }
-            tournamentTable.size - COUNT_FOR_TABLE < indexTeam -> {
-                Resource.Success( tournamentTable.takeLast(COUNT_FOR_TABLE))
-            }
-            else -> {
-                val newList = mutableListOf<TournamentTableDisplayData>()
-                for (position in indexTeam - 1 until indexTeam + COUNT_FOR_TABLE){
-                    newList.add(tournamentTable[position])
-                }
-                Resource.Success(newList)
-            }
+        return TournamentTableHelper.getTournamentTableWithPositionTeam(
+            table = tournamentTable,
+            teamId = teamId
+        )
+    }
+
+    override suspend fun getTournamentTableForTeam(teamId: Int): Result<List<TournamentTableDisplayData>> {
+        val response = networkUtils.getResponseResult<ResponseTournamentTableFootball>(ResponseTournamentTableFootball::class.java){
+            api.getTournamentTableTeam(teamId)
+        }
+        return when(response) {
+            is Result.Error -> Result.Error(response.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(
+                TournamentTableHelper.getTournamentTableWithPositionTeam(
+                    table = response.data.toModel(),
+                    teamId = teamId
+                )
+            )
         }
     }
 }

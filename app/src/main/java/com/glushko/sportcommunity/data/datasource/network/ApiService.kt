@@ -20,6 +20,7 @@ interface ApiService {
 //        const val GET_TOURNAMENT_TABLE_FOOTBALL = "GetTournamentTableFootball"
 //        const val GET_FOOTBALL_MATCHES_DIVISION= "GetFootballMatchesDivision"
 //        const val GET_FOOTBALL_MATCHES_CALENDAR_DIVISION= "GetFootballMatchesCalendarDivision"
+        const val GET_TEAM_TOURNAMENT_TABLE = "GetTournamentTableForTeam"
         const val GET_FOOTBALL_SQUAD = "GetFootballSquad"
         const val GET_TEAM_MEDIA = "GetTeamMedia"
         const val GET_PLAYERS_IN_MATCH = "GetPlayersInMatch"
@@ -87,6 +88,9 @@ interface ApiService {
 
     @GET(GET_FOOTBALL_SQUAD)
     suspend fun getFootballSquad(@Query(PARAM_TEAM_ID) teamId: Int): Response<JsonObject>
+
+    @GET(GET_TEAM_TOURNAMENT_TABLE)
+    suspend fun getTournamentTableTeam(@Query(PARAM_TEAM_ID) teamId: Int): Response<JsonObject>
 
     @GET(GET_TEAM_MEDIA)
     suspend fun getMediaTeam(@Query(PARAM_TEAM_ID) teamId: Int): Response<JsonObject>
