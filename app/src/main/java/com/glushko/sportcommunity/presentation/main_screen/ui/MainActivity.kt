@@ -32,6 +32,8 @@ import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.toastLong
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.File
@@ -132,6 +134,16 @@ class MainActivity : AppCompatActivity() {
             setToolbarTitle(it.title.toString())
             binding.drawerLayout.close()
             true
+        }
+        getTokenFirebase()
+    }
+
+    private fun getTokenFirebase() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { v: Task<String> ->
+            if (v.isSuccessful) {
+                val firebaseToken = v.result
+                Timber.d("Firebase token -> $firebaseToken")
+            }
         }
     }
 
