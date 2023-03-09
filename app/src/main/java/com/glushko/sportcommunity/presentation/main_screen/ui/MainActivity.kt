@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         setupToolbar()
         setupDrawerToggle()
         setupObservers()
-        setupDrawerMenu()
+        //setupDrawerMenu()
         setupListener()
 
         val navHostFragment =
@@ -122,11 +122,11 @@ class MainActivity : AppCompatActivity() {
             if (it.itemId in destinationDrawerMenu){
                 navController.navigate(it.itemId)
             } else {
-                val navOptions = NavOptions.Builder()
+                /*val navOptions = NavOptions.Builder()
                     .setPopUpTo(navController.graph.startDestinationId, true)
-                    .build()
+                    .build()*/
 
-                navController.navigate(navController.graph.startDestinationId, null, navOptions)
+                //navController.navigate(navController.graph.startDestinationId, null, navOptions)
                 viewModel.chooseDivision(it.itemId)
                 backupTitle = it.title.toString()
                 backupItem = it.itemId
@@ -147,12 +147,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupDrawerMenu() {
+    /*private fun setupDrawerMenu() {
         binding.navigationView.menu.apply {
-            add(Menu.CATEGORY_SYSTEM/*groupId*/, R.id.settingFragment, MENU_ORDER_FOOTER, getString(R.string.menu_setting)).isCheckable = true
-            add(Menu.CATEGORY_SYSTEM/*groupId*/, R.id.aboutFragment, MENU_ORDER_FOOTER + 1, getString(R.string.menu_about)).isCheckable = true
+            add(Menu.CATEGORY_SYSTEM*//*groupId*//*, R.id.settingFragment, MENU_ORDER_FOOTER, getString(R.string.menu_setting)).isCheckable = true
+            add(Menu.CATEGORY_SYSTEM*//*groupId*//*, R.id.aboutFragment, MENU_ORDER_FOOTER + 1, getString(R.string.menu_about)).isCheckable = true
         }
-    }
+    }*/
 
     private fun setupListener() {
         bindingHeader.run {
