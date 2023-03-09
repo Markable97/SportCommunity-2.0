@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
-import com.glushko.sportcommunity.data.media.model.ImageUI
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
 import com.glushko.sportcommunity.util.EventLiveData
@@ -41,6 +40,8 @@ class MainViewModel @Inject constructor(
     private val _eventShareUri = EventLiveData<Result<Uri>>()
     val eventShareUri: LiveData<Result<Uri>> = _eventShareUri
 
+    private var jobMainScreen: Job? = null
+
     init {
         getLeagues()
     }
@@ -55,7 +56,10 @@ class MainViewModel @Inject constructor(
 
     fun chooseDivision(divisionId: Int){
         _liveDataSelectedDivision.value = divisionId
-        viewModelScope.launch {
+        if (jobMainScreen?.isActive == true) {
+            jobMainScreen?.cancel()
+        }
+        jobMainScreen = viewModelScope.launch {
             _liveDataMainScreen.postValue(Resource.Loading())
             _liveDataMainScreen.postValue(mainRepository.getMainScreen(divisionId))
         }
@@ -95,6 +99,12 @@ class MainViewModel @Inject constructor(
                 Timber.e(ex)
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        jobMainScreen?.cancel()
+        jobMainScreen = null
     }
 
 }
