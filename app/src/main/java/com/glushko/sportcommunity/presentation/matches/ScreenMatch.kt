@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -27,7 +28,6 @@ import com.glushko.sportcommunity.util.Constants
 fun CardMatch(match: MatchFootballDisplayData, navController: NavController, action: NavDirections?){
     Card(
         modifier = Modifier
-            .height(150.dp)
             .padding(5.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Color.LightGray,
@@ -40,9 +40,13 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController, act
         }
     ){
         Column{
-            ResultHeader(match.matchDate?:"Не назначено") //TODO проверит как приходит с сервера
-            ResultFooter(match.stadium?:"Не назначено") //TODO проверит как приходит с сервера
-            Row(modifier = Modifier.padding(bottom = 10.dp, end = 10.dp)) {
+            ResultHeader("${match.leagueName} | ${match.divisionName}")
+            ResultHeader(stringResource(id = R.string.match_time, match.matchDate?:"Не назначено"))
+            ResultFooter(stringResource(id = R.string.match_stadium, match.stadium?:"Не назначено"))
+            Row(
+                modifier = Modifier.fillMaxHeight().padding(bottom = 10.dp, end = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 val modifierTour= Modifier
                     .weight(0.1f)
                 TextTour(tour = match.tour,modifier = modifierTour)
@@ -72,9 +76,9 @@ fun CardMatch(match: MatchFootballDisplayData, navController: NavController, act
 
 
 @Composable
-fun ResultHeader(date: String) {
+fun ResultHeader(description: String) {
     Column(modifier = Modifier.padding(top = 5.dp)) {
-        Text(text = date,
+        Text(text = description,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
         )
