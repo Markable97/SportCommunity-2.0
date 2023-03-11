@@ -65,7 +65,9 @@
     <string name="statistics_red">Красные карточки</string>
     <string name="statistics_red_short">КК</string>
 
-    <string name="media_empty">Пусто</string>
+    <string name="empty_media">Пусто</string>
+    <string name="empty_calendar">Нет предстоящих игр</string>
+    <string name="empty_result">Результатов пока нет</string>
 
     <string name="team_leaders">Лидеры</string>
     <string name="team_squad">Состав</string>

@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.media.model.MediaUI
@@ -80,7 +77,7 @@ class TeamMediaFragment : BaseFragment() {
             findNavController().navigate(TeamMediaFragmentDirections.actionTeamMediaFragmentToGalleryFragment(matchId))
             }
         } else {
-            EmptyText(textMessage = getString(R.string.media_empty))
+            EmptyText(textMessage = getString(R.string.empty_media))
         }
     }
 

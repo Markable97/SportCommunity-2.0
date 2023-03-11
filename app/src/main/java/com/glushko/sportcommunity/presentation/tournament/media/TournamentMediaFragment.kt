@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -20,7 +18,6 @@ import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.EmptyText
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.media.CreateMediaAlbumScreen
-import com.glushko.sportcommunity.presentation.tournament.TournamentFragmentDirections
 import com.glushko.sportcommunity.presentation.tournament.TournamentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,7 +51,7 @@ class TournamentMediaFragment : BaseFragment() {
                 findNavController().navigate(TournamentMediaFragmentDirections.actionTournamentMediaFragmentToGalleryFragment(matchId))
             }
         } else {
-            EmptyText(textMessage = getString(R.string.media_empty))
+            EmptyText(textMessage = getString(R.string.empty_media))
         }
     }
 

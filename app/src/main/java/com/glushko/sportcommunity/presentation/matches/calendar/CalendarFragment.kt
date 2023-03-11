@@ -18,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
@@ -26,10 +27,11 @@ import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
+import com.glushko.sportcommunity.presentation.core.EmptyText
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
-import com.glushko.sportcommunity.presentation.matches.calendar.CalendarViewModel
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -73,7 +75,11 @@ class CalendarFragment : BaseFragment() {
                 is Resource.Success -> {
                     viewModel.init()
                     val calendar by viewModel.liveDataCalendar.observeAsState(emptyList())
-                    CalendarList(matches = calendar)
+                    if (calendar.isEmpty()) {
+                        EmptyText(textMessage = stringResource(id = R.string.empty_calendar))
+                    } else {
+                        CalendarList(matches = calendar)
+                    }
                 }
             }
         }
