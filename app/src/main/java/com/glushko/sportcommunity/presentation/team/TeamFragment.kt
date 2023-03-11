@@ -82,6 +82,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
 
     private fun setupObservers() = viewModel.run {
         liveDataTable.observe(viewLifecycleOwner){
+            showProgress(loadingVisible())
             when(it){
                 is Result.Error -> {}
                 Result.Loading -> {}
@@ -91,6 +92,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
             }
         }
         liveDataSquadInfo.observe(viewLifecycleOwner){
+            showProgress(loadingVisible())
             when(it){
                 is Result.Error -> {
                     toast(requireContext(), it.exception.message ?: getString(R.string.error_network_default))

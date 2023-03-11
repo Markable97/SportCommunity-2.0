@@ -100,6 +100,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
     private fun setupObservers() = viewModel.run {
         liveDataPlayersInMatch.observe(viewLifecycleOwner){
             Timber.d("Live data $it")
+            showProgress(it is Result.Loading)
             when(it){
                 is Result.Error -> {}
                 is Result.Loading -> {}

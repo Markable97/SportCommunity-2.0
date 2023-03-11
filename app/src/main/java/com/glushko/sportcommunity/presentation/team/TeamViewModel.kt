@@ -14,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.glushko.sportcommunity.util.Result
-import timber.log.Timber
 
 @HiltViewModel
 class TeamViewModel @Inject constructor(
@@ -31,22 +30,26 @@ class TeamViewModel @Inject constructor(
     private val _liveDataStatistics: MutableLiveData<Resource<List<PlayerStatisticAdapter>>> = MutableLiveData()
     val liveDataStatistics: LiveData<Resource<List<PlayerStatisticAdapter>>> = _liveDataStatistics
 
+    fun loadingVisible(): Boolean {
+        return !(_liveDataSquadInfo.value !is Result.Loading  && _liveDataTable.value !is Result.Loading)
+    }
+
     fun init(teamId: Int){
         viewModelScope.launch {
             _liveDataSquadInfo.postValue(Result.Loading)
+            _liveDataTable.postValue(Result.Loading)
             _liveDataSquadInfo.postValue(squadRepository.getSquadInfo(teamId))
             checkTournamentTable(teamId)
         }
     }
 
     private suspend fun checkTournamentTable(teamId: Int){
-            val table = tournamentRepository.getTournamentTableTeam(teamId)
-            if (table.isEmpty()) {
-                _liveDataTable.postValue(Result.Loading)
-                _liveDataTable.postValue(tournamentRepository.getTournamentTableForTeam(teamId))
-            } else {
-                _liveDataTable.postValue(Result.Success(table))
-            }
+        val table = tournamentRepository.getTournamentTableTeam(teamId)
+        if (table.isEmpty()) {
+            _liveDataTable.postValue(tournamentRepository.getTournamentTableForTeam(teamId))
+        } else {
+            _liveDataTable.postValue(Result.Success(table))
+        }
     }
 
     fun getStatistics(){
