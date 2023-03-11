@@ -57,7 +57,7 @@ class TeamMediaFragment : BaseFragment() {
     private fun CreateScreen(response: Result<List<MediaUI>>) {
         when(response) {
             is Result.Error -> {
-                DoSomething(message = response.exception.message ?: "", textButton = "Повторить") {
+                DoSomething(message = response.exception.message ?: "") {
                     viewModel.getMediaTeam()
                 }
             }

@@ -125,7 +125,7 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
     private fun CreateScreen(response: Result<List<PlayerInMatchSegment>>) {
         when (response) {
             is Result.Error -> {
-                DoSomething(message = response.exception.message ?: "", textButton = "Повторить") {
+                DoSomething(message = response.exception.message ?: "") {
                     viewModel.getPlayersInMatch(match.matchId, match.teamHomeId, match.screenType)
                 }
             }

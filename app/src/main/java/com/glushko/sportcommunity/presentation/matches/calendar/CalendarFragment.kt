@@ -63,7 +63,7 @@ class CalendarFragment : BaseFragment() {
             when(response){
                 is Resource.Empty -> {}
                 is Resource.Error -> {
-                    DoSomething(message = response.error?.message?:"", textButton = "Повторить"){
+                    DoSomething(message = response.error?.message?:""){
                         mainViewModel.getCalendarRetry()
                     }
                 }
