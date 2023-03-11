@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.model.ChooseModel
 import com.glushko.sportcommunity.presentation.core.dialogs.dialog_choose.ChooseDialog
+import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 
 abstract class BaseXmlFragment<B : ViewBinding>(@LayoutRes layout: Int) : Fragment(layout) {
 
@@ -35,6 +36,10 @@ abstract class BaseXmlFragment<B : ViewBinding>(@LayoutRes layout: Int) : Fragme
         findNavController().navigate(resId = resId, args = args, navOptions = navOption)
     }
 
+    protected fun showProgress(show: Boolean) {
+        (requireActivity() as? MainActivity)?.showProgress(show)
+    }
+
     /**
      * Принимает сигнал от ChooseDialog и выполяется действие, которое мы передали
      * Обязательно нужен Bundle, чтобы определить, что вернулось
@@ -50,6 +55,11 @@ abstract class BaseXmlFragment<B : ViewBinding>(@LayoutRes layout: Int) : Fragme
         ) { _, bundleFromDialog ->
             actionChooseDialog?.invoke(bundleFromDialog.getParcelable(ChooseDialog.BUNDLE_DATA) as? ChooseModel)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        showProgress(false)
     }
 
     override fun onDestroy() {

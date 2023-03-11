@@ -48,6 +48,7 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
     private fun setupObservers() {
         viewModelMain.run {
             liveDataMainScreen.observe(viewLifecycleOwner){
+                showProgress(it is Resource.Loading)
                 when(it){
                     is Resource.Empty -> {}
                     is Resource.Error -> {

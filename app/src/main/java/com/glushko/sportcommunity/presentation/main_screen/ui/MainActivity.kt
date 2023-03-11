@@ -30,6 +30,7 @@ import com.glushko.sportcommunity.databinding.HeaderNavigationDrawerBinding
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.extensions.showGone
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.toastLong
 import com.google.android.gms.tasks.Task
@@ -285,6 +286,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun showProgress(show: Boolean) {
+        binding.progressBar.showGone(show)
     }
 
     fun downloadImage(url: String){

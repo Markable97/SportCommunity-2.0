@@ -37,7 +37,30 @@
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/nav_graph"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/bottomNav"/>
+                app:layout_constraintBottom_toTopOf="@id/bottomNav"
+                tools:layout="@layout/fragment_tournament" />
+
+            <FrameLayout
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/bottomNav"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:foregroundGravity="center"
+                    android:indeterminateTint="@color/purple_500"
+                    />
+
+            </FrameLayout>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNav"
