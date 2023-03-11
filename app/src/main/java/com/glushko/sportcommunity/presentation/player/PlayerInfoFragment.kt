@@ -50,6 +50,7 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
 
     private fun setupObservers() {
         viewModel.liveDataInfoPlayer.observe(viewLifecycleOwner) {
+            showProgress(it is Result.Loading)
             when(it) {
                 is Result.Error -> {}
                 Result.Loading -> {}
