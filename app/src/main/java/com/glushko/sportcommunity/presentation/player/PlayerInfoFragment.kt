@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.platform.ComposeView
-import androidx.fragment.app.Fragment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
@@ -19,9 +17,9 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentPlayerInfoBinding
 import com.glushko.sportcommunity.databinding.ItemStatisticPlayerBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
-import com.glushko.sportcommunity.presentation.core.DoSomething
-import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
+import com.glushko.sportcommunity.presentation.player.career.CareerWidget
+import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerInfoUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerStatisticsUI
 import com.glushko.sportcommunity.util.Result
@@ -46,6 +44,26 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as? MainActivity)?.setToolbarTitle(args.playerName)
         setupObservers()
+        setupCompose()
+    }
+
+    private fun setupCompose() = binding.run {
+        composeCareerWidget.setContent {
+            MaterialTheme {
+                Surface {
+                    Column(
+                        modifier = Modifier.padding(bottom = 5.dp)
+                    ) {
+                        CareerWidget(
+                            widgetInfo = CareerWidgetUI(
+                                teamName = "Тестовая команда",
+                                teamImage = ""
+                            )
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun setupObservers() {

@@ -137,6 +137,7 @@
     <string name="player_statistics__own_goals">Автоголы</string>
 
 
-
+    <string name="player__career">Карьера</string>
+    <string name="player__current_club">Текущий клуб:</string>
 
 </resources>
