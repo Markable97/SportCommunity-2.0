@@ -13,6 +13,7 @@ class Application: Application() {
         Timber.plant(Timber.DebugTree())
 
         val imageLoader = ImageLoader.Builder(this)
+            .placeholder(R.drawable.ic_healing_black_36dp)
             .error(R.drawable.ic_healing_black_36dp)
             .build()
         Coil.setImageLoader(imageLoader)
