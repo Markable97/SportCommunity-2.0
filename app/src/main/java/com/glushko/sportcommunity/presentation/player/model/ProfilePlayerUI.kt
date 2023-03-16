@@ -3,10 +3,18 @@ package com.glushko.sportcommunity.presentation.player.model
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.glushko.sportcommunity.R
+import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
 
 data class ProfilePlayerUI(
     val info: PlayerInfoUI,
-    val statistics: List<PlayerStatisticsUI>
+    val statistics: List<PlayerStatisticsUI>,
+    val currentTeam: CareerWidgetUI = getCurrentTeamSample()
+)
+
+//TODO удалить после получения данных с сервера
+private fun getCurrentTeamSample() = CareerWidgetUI(
+    "Тестовая команда",
+    ""
 )
 
 data class PlayerInfoUI(

@@ -44,10 +44,9 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as? MainActivity)?.setToolbarTitle(args.playerName)
         setupObservers()
-        setupCompose()
     }
 
-    private fun setupCompose() = binding.run {
+    private fun renderCompose(currentTeam: CareerWidgetUI) = binding.run {
         composeCareerWidget.setContent {
             MaterialTheme {
                 Surface {
@@ -55,10 +54,7 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
                         modifier = Modifier.padding(bottom = 5.dp)
                     ) {
                         CareerWidget(
-                            widgetInfo = CareerWidgetUI(
-                                teamName = "Тестовая команда",
-                                teamImage = ""
-                            )
+                            widgetInfo = currentTeam
                         )
                     }
                 }
@@ -75,6 +71,7 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
                 is Result.Success -> {
                     renderHeaderInfo(it.data.info)
                     renderStatisticsZone(it.data.statistics)
+                    renderCompose(it.data.currentTeam)
                 }
             }
         }

@@ -20,6 +20,7 @@ class ResponseProfilePlayer(
     fun toModelUI() = ProfilePlayerUI(
         info = playerInfo.toModelUI(),
         statistics = playerStatistics.mapNotNull { it.toModelUI() }
+        //TODO mapping info from server
     )
 }
 

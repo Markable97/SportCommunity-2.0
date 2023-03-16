@@ -42,8 +42,9 @@ fun CareerWidget(
             ) {
                 val modifierText = Modifier.fillMaxWidth()
                 Text(
-                    modifier = modifierText.padding(bottom = 5.dp),
+                    modifier = modifierText,
                     textAlign = TextAlign.Center,
+                    fontSize = 12.sp,
                     text = stringResource(id = R.string.player__current_club)
                 )
                 Text(
