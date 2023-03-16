@@ -8,13 +8,7 @@ import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetU
 data class ProfilePlayerUI(
     val info: PlayerInfoUI,
     val statistics: List<PlayerStatisticsUI>,
-    val currentTeam: CareerWidgetUI = getCurrentTeamSample()
-)
-
-//TODO удалить после получения данных с сервера
-private fun getCurrentTeamSample() = CareerWidgetUI(
-    "Тестовая команда",
-    ""
+    val currentTeam: CareerWidgetUI
 )
 
 data class PlayerInfoUI(

@@ -11,6 +11,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.glushko.sportcommunity.R
@@ -23,6 +24,7 @@ import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetU
 import com.glushko.sportcommunity.presentation.player.model.PlayerInfoUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerStatisticsUI
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,7 +56,20 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
                         modifier = Modifier.padding(bottom = 5.dp)
                     ) {
                         CareerWidget(
-                            widgetInfo = currentTeam
+                            widgetInfo = currentTeam,
+                            clickAction = {
+                                snackbar(binding.root, "Пока в разработке")
+                            },
+                            clickTeamAction = { careerInfo ->
+                                findNavController().navigate(
+                                    PlayerInfoFragmentDirections.actionPlayerInfoFragmentToTeamFragment(
+                                        teamId = careerInfo.teamId,
+                                        teamName = careerInfo.teamName,
+                                        teamImage = careerInfo.teamImage
+                                    )
+                                )
+                            }
+
                         )
                     }
                 }

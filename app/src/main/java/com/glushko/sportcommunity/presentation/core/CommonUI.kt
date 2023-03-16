@@ -84,7 +84,8 @@ fun Widget(
         Column(modifier = Modifier.padding(5.dp))/*contentPadding)*/ {
             TitleNavigate(
                 textTitle = title,
-                isVisibleIconNavigate = navigationAction != null
+                isVisibleIconNavigate = navigationAction != null,
+                navigationAction = navigationAction
             )
             filling.invoke()
         }

@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.data.player.network
 
 import com.glushko.sportcommunity.data.admin.schedule.model.Schedule
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
+import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerInfoUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerStatisticsUI
 import com.glushko.sportcommunity.presentation.player.model.ProfilePlayerUI
@@ -19,8 +20,8 @@ class ResponseProfilePlayer(
 ) : BaseResponse(success, message) {
     fun toModelUI() = ProfilePlayerUI(
         info = playerInfo.toModelUI(),
-        statistics = playerStatistics.mapNotNull { it.toModelUI() }
-        //TODO mapping info from server
+        statistics = playerStatistics.mapNotNull { it.toModelUI() },
+        currentTeam = playerInfo.currentTeam.toModelUI()
     )
 }
 
@@ -32,7 +33,9 @@ data class PlayerInfo(
     @SerializedName("img_url")
     val imageUrl: String?,
     val birthday: String,
-    val amplua: String
+    val amplua: String,
+    @SerializedName("current_team")
+    val currentTeam: CurrentTeam,
 ) {
     fun toModelUI() = PlayerInfoUI(
         id = id,
@@ -57,6 +60,21 @@ data class PlayerActionsInMatch(
     val matchInfo: Schedule,
     val actions: PlayerPointsActions
 )
+
+data class CurrentTeam(
+    @SerializedName("team_id")
+    val teamId: Int,
+    @SerializedName("team_name")
+    val teamName: String,
+    @SerializedName("team_image")
+    val teamImage: String?
+) {
+    fun toModelUI() = CareerWidgetUI(
+        teamId = teamId,
+        teamName = teamName,
+        teamImage = teamImage ?: ""
+    )
+}
 
 data class PlayerPointsActions(
     @SerializedName("goals")

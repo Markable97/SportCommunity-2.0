@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.presentation.player.career
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,16 +23,22 @@ class CareerWidgetPreview : PreviewParameterProvider<CareerWidgetUI> {
         get() = listOf(
           CareerWidgetUI(
               teamName = "Футбольная академия им. Гаврилова",
-              teamImage = ""
+              teamImage = "",
+              teamId = 1
           )
         ).asSequence()
 }
 @Preview
 @Composable
 fun CareerWidget(
-    @PreviewParameter(CareerWidgetPreview::class) widgetInfo: CareerWidgetUI
+    @PreviewParameter(CareerWidgetPreview::class) widgetInfo: CareerWidgetUI,
+    clickAction: (()->Unit)? = null,
+    clickTeamAction: ((CareerWidgetUI)->Unit)? = null,
 ){
-    Widget(title = stringResource(id = R.string.player__career)) {
+    Widget(
+        title = stringResource(id = R.string.player__career),
+        navigationAction = clickAction
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -57,7 +64,11 @@ fun CareerWidget(
             AsyncImage(
                 model = widgetInfo.teamImage,
                 contentDescription = null,
-                modifier = Modifier.size(50.dp)
+                modifier = Modifier
+                    .size(50.dp)
+                    .clickable(enabled = clickTeamAction != null) {
+                        clickTeamAction?.invoke(widgetInfo)
+                    }
             )
         }
     }

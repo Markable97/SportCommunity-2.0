@@ -155,13 +155,18 @@
     </fragment>
     <fragment
         android:id="@+id/playerInfoFragment"
-        android:name="com.glushko.sportcommunity.presentation.player.PlayerInfoFragment">
+        android:name="com.glushko.sportcommunity.presentation.player.PlayerInfoFragment"
+        tools:layout="@layout/fragment_player_info"
+        >
         <argument
             android:name="player_id"
             app:argType="integer" />
         <argument
             android:name="player_name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_playerInfoFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
     </fragment>
 
     <fragment
