@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuHost
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -41,7 +42,7 @@ import java.io.File
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MenuHost {
 
     companion object{
         private const val MENU_ITEM_SETTING = -1
