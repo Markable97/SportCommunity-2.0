@@ -3,6 +3,7 @@ package com.glushko.sportcommunity.data.player.network
 import com.glushko.sportcommunity.data.admin.schedule.model.Schedule
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
+import com.glushko.sportcommunity.presentation.player.model.PlayerActionsInMatchUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerInfoUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerStatisticsUI
 import com.glushko.sportcommunity.presentation.player.model.ProfilePlayerUI
@@ -21,7 +22,8 @@ class ResponseProfilePlayer(
     fun toModelUI() = ProfilePlayerUI(
         info = playerInfo.toModelUI(),
         statistics = playerStatistics.mapNotNull { it.toModelUI() },
-        currentTeam = playerInfo.currentTeam.toModelUI()
+        currentTeam = playerInfo.currentTeam.toModelUI(),
+        playerActions = playerActions.map { it.toModel() }
     )
 }
 
@@ -57,9 +59,15 @@ data class PlayerAllStatistics(
 }
 
 data class PlayerActionsInMatch(
+    @SerializedName("match")
     val matchInfo: Schedule,
     val actions: PlayerPointsActions
-)
+) {
+    fun toModel() = PlayerActionsInMatchUI(
+        match = matchInfo.toModelResults(),
+        actions = actions
+    )
+}
 
 data class CurrentTeam(
     @SerializedName("team_id")

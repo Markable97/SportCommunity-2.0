@@ -139,5 +139,8 @@
 
     <string name="player__career">Карьера</string>
     <string name="player__current_club">Текущий клуб</string>
+    <string name="player__last_activity">Последняя активность</string>
+    <string name="player__actions">Действия:</string>
+
 
 </resources>

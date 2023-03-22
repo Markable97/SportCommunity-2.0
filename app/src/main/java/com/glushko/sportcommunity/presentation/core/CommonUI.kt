@@ -76,7 +76,6 @@ fun Widget(
         elevation = 2.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .clickable(enabled = navigationAction != null) {
                 navigationAction?.invoke()
             },

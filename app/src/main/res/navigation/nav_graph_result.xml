@@ -105,6 +105,9 @@
         <action
             android:id="@+id/action_playerInfoFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
+        <action
+            android:id="@+id/action_playerInfoFragment_to_detailMatchFragment"
+            app:destination="@id/detailMatchFragment" />
     </fragment>
 
     <fragment
