@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -115,9 +116,15 @@ class TournamentTableFragment : BaseFragment() {
     }
     @Composable
     fun TableRow(num: Int, team: TournamentTableDisplayData, modifier: Modifier, modifierOther: Modifier){
+        val colorPosition = if (team.positionColor != null ){
+            Color(android.graphics.Color.parseColor(team.positionColor))
+        } else {
+            Color.White
+        }
         Row(modifier = Modifier
             .border(1.dp, Color.LightGray)
             .fillMaxWidth()
+            .background(colorPosition)
             .wrapContentHeight()
             .clickable(
                 onClick = {

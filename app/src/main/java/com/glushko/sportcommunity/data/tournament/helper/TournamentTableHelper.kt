@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.data.tournament.helper
 
+import com.glushko.sportcommunity.data.tournament.model.TournamentColor
 import com.glushko.sportcommunity.data.tournament.repository.TournamentRepositoryImpl
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.util.Resource
@@ -30,6 +31,14 @@ object TournamentTableHelper {
                 }
                 newList
             }
+        }
+    }
+
+    fun getColorPosition(position: Int, tournamentColors: List<TournamentColor>) : String? {
+        return tournamentColors.find {
+            position in it.startPosition..it.endPosition
+        }?.hex?.let {
+            "#$it"
         }
     }
 

@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.presentation.tournament.model
 
 data class TournamentTableDisplayData(
     val position: Int,
+    val positionColor: String? = null,
     val teamId: Int,
     val teamName: String,
     val teamImage: String?,

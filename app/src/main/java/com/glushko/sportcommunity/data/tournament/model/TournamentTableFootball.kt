@@ -24,7 +24,7 @@ data class TournamentTableFootball(
     val imageCupGrid: String?,
 )
 
-fun TournamentTableFootball.toModel(positionTable: Int) = TournamentTableDisplayData(
+fun TournamentTableFootball.toModel(positionTable: Int, color: String?) = TournamentTableDisplayData(
     teamId = teamId.toInt(),
     teamName = teamName,
     teamImage = teamImage,
@@ -34,5 +34,6 @@ fun TournamentTableFootball.toModel(positionTable: Int) = TournamentTableDisplay
     losses = losses,
     scCon = scCon,
     points = points,
-    position = positionTable
+    position = positionTable,
+    positionColor = color
 )

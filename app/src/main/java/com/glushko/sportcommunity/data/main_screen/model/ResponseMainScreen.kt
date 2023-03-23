@@ -5,8 +5,10 @@ import com.glushko.sportcommunity.data.media.network.MediaRes
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
+import com.glushko.sportcommunity.data.tournament.helper.TournamentTableHelper
 import com.glushko.sportcommunity.data.tournament.model.TournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.model.toModel
+import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTable
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentInfoDisplayData
 import com.google.gson.annotations.SerializedName
 
@@ -16,7 +18,7 @@ class ResponseMainScreen(
     val calendar: List<Schedule> = listOf(),
     val results: List<Schedule> = listOf(),
     @SerializedName("tournament_table")
-    val tournamentTable: List<TournamentTableFootball> = listOf(),
+    val tournamentTable: ResponseTournamentTable,
     val statistics: PlayersWithStatisticsRes,
     val media: List<MediaRes> = listOf()
 ) : BaseResponse(success, message){
@@ -29,7 +31,7 @@ class ResponseMainScreen(
     }
 
     fun toTournamentInfo() : TournamentInfoDisplayData {
-        val firstItem = tournamentTable.firstOrNull()
+        val firstItem = tournamentTable.table.firstOrNull()
         val isCup = firstItem?.isCup ?: false
         val imageGrid = firstItem?.imageCupGrid
         return TournamentInfoDisplayData(
@@ -45,7 +47,8 @@ class ResponseMainScreen(
 
 fun ResponseMainScreen.toCalendar() = calendar.map { it.toModelCalendar() }
 fun ResponseMainScreen.toResults() = results.map { it.toModelResults() }
-fun ResponseMainScreen.toTournamentTable() = tournamentTable.mapIndexed { position, data ->
-    data.toModel(position + 1)
+fun ResponseMainScreen.toTournamentTable() = tournamentTable.table.mapIndexed { position, data ->
+    val positionReal = position + 1
+    data.toModel(positionReal, TournamentTableHelper.getColorPosition(positionReal, tournamentTable.color))
 }
 fun ResponseMainScreen.toMedia() = media.map { it.toModelUI() }
