@@ -1,28 +1,14 @@
 package com.glushko.sportcommunity.util.extensions
 
 import android.app.Activity
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Handler
+import android.graphics.Typeface
 import android.os.SystemClock
-import android.text.*
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.URLSpan
-import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import com.glushko.sportcommunity.R
 
 private const val MIN_CLICK_DELAY = 500L
 
@@ -87,6 +73,10 @@ fun View.disable(): View {
 internal fun TextView.setTextColorRes(@ColorRes color: Int) =
     setTextColor(ContextCompat.getColor(context, color))
 
+fun TextView.setSelection() {
+    typeface = Typeface.defaultFromStyle(Typeface.BOLD_ITALIC)
+    setTextColor(ContextCompat.getColor(context, R.color.bg_tournament_table_team_selected))
+}
 
 fun View.hideKeyboardFrom() {
     val imm: InputMethodManager =

@@ -4,7 +4,7 @@
     <style name="TextViewTableRow">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textAppearance">@style/text14_sp_regular</item>
+        <item name="android:textAppearance">@style/text14_sp_light</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

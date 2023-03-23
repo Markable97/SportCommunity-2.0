@@ -1,10 +1,10 @@
 package com.glushko.sportcommunity.presentation.team
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,10 +21,10 @@ import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
+import com.glushko.sportcommunity.util.extensions.setSelection
 import com.glushko.sportcommunity.util.extensions.toast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team) {
@@ -128,10 +128,20 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
     }
 
     private fun renderRow(row: TournamentTableDisplayData, bindingRow: ItemTournamentTableRowBinding){
-        bindingRow.apply {
+        with(bindingRow) {
+            row.positionColor?.let { color ->
+                root.setBackgroundColor(Color.parseColor(color))
+            }
             if (row.teamId == args.teamId) {
-                root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.drawer_item_selected))
-                textTeamName.setTextColor(ContextCompat.getColor(requireContext(), R.color.bg_tournament_table_team_selected))
+                textPosition.setSelection()
+                textTeamName.setSelection()
+                textGames.setSelection()
+                textWins.setSelection()
+                textDraws.setSelection()
+                textLoses.setSelection()
+                textDifferences.setSelection()
+                textPoints.setSelection()
+
             }
             textPosition.text = row.position.toString()
             val image = row.teamImage ?: "${Constants.BASE_URL_IMAGE}${row.teamName}.png"
