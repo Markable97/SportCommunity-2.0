@@ -170,6 +170,9 @@
         <action
             android:id="@+id/action_playerInfoFragment_to_detailMatchFragment"
             app:destination="@id/detailMatchFragment" />
+        <action
+            android:id="@+id/action_playerInfoFragment_to_matchesPlayerFragment"
+            app:destination="@id/matchesPlayer" />
     </fragment>
 
     <fragment
@@ -182,6 +185,17 @@
         <action
             android:id="@+id/action_teamMediaFragment_to_galleryFragment"
             app:destination="@id/galleryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchesPlayer"
+        android:name="com.glushko.sportcommunity.presentation.player.matches.MatchesPlayerFragment"
+        android:label="MatchesPlayer" >
+        <argument
+            android:name="matches"
+            app:argType="com.glushko.sportcommunity.presentation.player.matches.model.PlayerActionsInMatchUI[]" />
+        <action
+            android:id="@+id/action_matchesPlayer_to_detailMatchFragment"
+            app:destination="@id/detailMatchFragment" />
     </fragment>
 
 

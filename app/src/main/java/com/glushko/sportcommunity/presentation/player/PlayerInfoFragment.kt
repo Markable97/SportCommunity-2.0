@@ -22,7 +22,7 @@ import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.player.career.CareerWidget
 import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
-import com.glushko.sportcommunity.presentation.player.model.PlayerActionsInMatchUI
+import com.glushko.sportcommunity.presentation.player.matches.model.PlayerActionsInMatchUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerInfoUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerStatisticsUI
 import com.glushko.sportcommunity.util.Result
@@ -50,7 +50,7 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
         setupObservers()
     }
 
-    private fun renderCompose(currentTeam: CareerWidgetUI, lastMatchPlayer: PlayerActionsInMatchUI?) = binding.run {
+    private fun renderCompose(currentTeam: CareerWidgetUI, matchesPlayer: List<PlayerActionsInMatchUI>) = binding.run {
         composeCareerWidget.setContent {
             MaterialTheme {
                 Surface {
@@ -73,13 +73,16 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
                             }
 
                         )
-                        lastMatchPlayer?.let {matchPlayer ->
+                        matchesPlayer.firstOrNull()?.let {matchPlayer ->
                             Spacer(modifier = Modifier.padding(5.dp))
                             LastMatchWidget(
                                 match = matchPlayer.match,
                                 navController = findNavController(),
                                 clickMatchDirection = PlayerInfoFragmentDirections.actionPlayerInfoFragmentToDetailMatchFragment(matchPlayer.match),
-                                playerActions = matchPlayer.actions
+                                playerActions = matchPlayer.actions,
+                                clickActionTitle = {
+                                    findNavController().navigate(PlayerInfoFragmentDirections.actionPlayerInfoFragmentToMatchesPlayerFragment(matchesPlayer.toTypedArray()))
+                                }
                             )
                         }
                     }
@@ -97,7 +100,7 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
                 is Result.Success -> {
                     renderHeaderInfo(it.data.info)
                     renderStatisticsZone(it.data.statistics)
-                    renderCompose(it.data.currentTeam, it.data.playerActions.lastOrNull())
+                    renderCompose(it.data.currentTeam, it.data.playerActions)
                 }
             }
         }

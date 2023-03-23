@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.presentation.player.model
 
 import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
+import com.glushko.sportcommunity.presentation.player.matches.model.PlayerActionsInMatchUI
 
 data class ProfilePlayerUI(
     val info: PlayerInfoUI,

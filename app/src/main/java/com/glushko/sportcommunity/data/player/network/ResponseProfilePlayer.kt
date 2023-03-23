@@ -1,13 +1,15 @@
 package com.glushko.sportcommunity.data.player.network
 
+import android.os.Parcelable
 import com.glushko.sportcommunity.data.admin.schedule.model.Schedule
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
-import com.glushko.sportcommunity.presentation.player.model.PlayerActionsInMatchUI
+import com.glushko.sportcommunity.presentation.player.matches.model.PlayerActionsInMatchUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerInfoUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerStatisticsUI
 import com.glushko.sportcommunity.presentation.player.model.ProfilePlayerUI
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 class ResponseProfilePlayer(
     success: Int,
@@ -83,7 +85,7 @@ data class CurrentTeam(
         teamImage = teamImage ?: ""
     )
 }
-
+@Parcelize
 data class PlayerPointsActions(
     @SerializedName("goals")
     val goals: Int,
@@ -99,4 +101,4 @@ data class PlayerPointsActions(
     val penaltyOut: Int,
     @SerializedName("own_goals")
     val ownGoals: Int
-)
+) : Parcelable

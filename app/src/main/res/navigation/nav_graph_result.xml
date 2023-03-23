@@ -108,6 +108,9 @@
         <action
             android:id="@+id/action_playerInfoFragment_to_detailMatchFragment"
             app:destination="@id/detailMatchFragment" />
+        <action
+            android:id="@+id/action_playerInfoFragment_to_matchesPlayerFragment"
+            app:destination="@id/matchesPlayer" />
     </fragment>
 
     <fragment
@@ -162,8 +165,21 @@
             app:argType="long" />
     </fragment>
 
+    <fragment
+        android:id="@+id/matchesPlayer"
+        android:name="com.glushko.sportcommunity.presentation.player.matches.MatchesPlayerFragment"
+        android:label="MatchesPlayer" >
+        <argument
+            android:name="matches"
+            app:argType="com.glushko.sportcommunity.presentation.player.matches.model.PlayerActionsInMatchUI[]" />
+        <action
+            android:id="@+id/action_matchesPlayer_to_detailMatchFragment"
+            app:destination="@id/detailMatchFragment" />
+    </fragment>
+
     <include
         android:id="@+id/nested_navigation_edit_matches"
         app:graph="@navigation/nested_navigation_edit_matches"
         />
+
 </navigation>
