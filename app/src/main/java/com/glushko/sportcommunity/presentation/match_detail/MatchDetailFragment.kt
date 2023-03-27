@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.MenuHost
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -34,25 +35,45 @@ import com.glushko.sportcommunity.data.match_detail.model.PlayerInMatchSegment
 import com.glushko.sportcommunity.data.match_detail.model.getDrawable
 import com.glushko.sportcommunity.databinding.FragmentMatchDetailBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.base.menu.MenuHostFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
+import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.match_detail.adapters.MatchDetailAdapter
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.matches.model.MatchScreenType
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.gone
 import com.glushko.sportcommunity.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.fragment_match_detail) {
+class MatchDetailFragment
+    : BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.fragment_match_detail), MenuHostFragment {
     private val viewModel: DetailMatchViewModel by viewModels()
     private val args: MatchDetailFragmentArgs by navArgs()
     private val match: MatchFootballDisplayData by lazy { args.match }
 
+    private val matchUrl by lazy {
+        args.match.matchUrl
+    }
+
     private val adapterMatchDetail by lazy { MatchDetailAdapter() }
+
+    override val menuRes: Int
+        get() = R.menu.menu_web_link
+    override val menuActions: Map<Int, () -> Boolean>
+        get() = mapOf(
+            R.id.menuAdd to {
+                matchUrl?.let {url ->
+                    (requireActivity() as? MainActivity)?.openWeb(url.getFullUrl())
+                }
+                true
+            }
+        )
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -63,6 +84,19 @@ class MatchDetailFragment: BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.
         super.onCreate(savedInstanceState)
         Timber.d("Матч инфо = $match")
         viewModel.getPlayersInMatch(match.matchId, match.teamHomeId, match.screenType)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        matchUrl?.let {
+            (requireActivity() as? MenuHost)?.let {host ->
+                setupMenu(host, viewLifecycleOwner)
+            }
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

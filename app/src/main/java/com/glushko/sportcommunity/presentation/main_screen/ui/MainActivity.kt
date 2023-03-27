@@ -319,6 +319,15 @@ class MainActivity : AppCompatActivity(), MenuHost {
         }
     }
 
+    fun openWeb(url: String) {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(url)
+            )
+        )
+    }
+
     private fun addMenuItemInNavMenuDrawer(divisions: List<DivisionDisplayData>) {
         val menu = binding.navigationView.menu
         menu.removeGroup(Menu.FIRST)

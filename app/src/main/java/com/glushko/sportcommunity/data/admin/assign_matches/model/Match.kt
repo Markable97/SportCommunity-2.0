@@ -36,7 +36,9 @@ data class Match(
     @SerializedName("played")
     val played: Int?,
     @SerializedName("screen_type")
-    val screenType: Int?
+    val screenType: Int?,
+    @SerializedName("match_url")
+    val matchUrl: String?
 
 
 ) {

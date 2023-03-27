@@ -28,7 +28,8 @@ data class Schedule(
         matchDate = gameDate,
         stadium = stadium.stadiumName,
         played = match?.played?:0,
-        screenType = MatchScreenType.getScreenType(match?.screenType)
+        screenType = MatchScreenType.getScreenType(match?.screenType),
+        matchUrl = match?.matchUrl
     )
 
     fun toModelCalendar() = MatchFootballDisplayData(
@@ -47,7 +48,8 @@ data class Schedule(
         matchDate = gameDate,
         stadium = stadium.stadiumName,
         played = 1,
-        screenType = MatchScreenType.getScreenType(match?.screenType)
+        screenType = MatchScreenType.getScreenType(match?.screenType),
+        matchUrl = match?.matchUrl
     )
 
     fun toModelResults() = MatchFootballDisplayData(
@@ -66,6 +68,7 @@ data class Schedule(
         matchDate = gameDate,
         stadium = stadium.stadiumName,
         played = 2,
-        screenType = MatchScreenType.getScreenType(match?.screenType)
+        screenType = MatchScreenType.getScreenType(match?.screenType),
+        matchUrl = match?.matchUrl
     )
 }
