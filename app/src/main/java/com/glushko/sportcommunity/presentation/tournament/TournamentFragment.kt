@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.view.MenuHost
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentTournamentBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.base.menu.MenuHostFragment
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
@@ -22,6 +24,7 @@ import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableD
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
+import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.gone
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.visible
@@ -29,16 +32,38 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fragment_tournament) {
+class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fragment_tournament), MenuHostFragment {
 
     private val viewModelMain: MainViewModel by activityViewModels()
     private val viewModel: TournamentViewModel by hiltNavGraphViewModels(R.id.nav_graph_tournament)
+
+    override val menuRes: Int
+        get() = R.menu.menu_web_link
+    override val menuActions: Map<Int, () -> Boolean>
+        get() = mapOf(
+            R.id.menuAdd to {
+                viewModelMain.liveDataMainScreen.value?.data?.tournamentUrl?.let { url ->
+                    (requireActivity() as? MainActivity)?.openWeb(url.getFullUrl())
+                }
+                true
+            }
+        )
 
     override fun initBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentTournamentBinding = FragmentTournamentBinding.inflate(inflater)
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        (requireActivity() as? MenuHost)?.let { host ->
+            setupMenu(host, viewLifecycleOwner)
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()

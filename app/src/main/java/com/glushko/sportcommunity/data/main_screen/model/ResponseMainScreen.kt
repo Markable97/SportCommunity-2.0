@@ -6,7 +6,6 @@ import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.datasource.network.BaseResponse
 import com.glushko.sportcommunity.data.statistics.network.PlayersWithStatisticsRes
 import com.glushko.sportcommunity.data.tournament.helper.TournamentTableHelper
-import com.glushko.sportcommunity.data.tournament.model.TournamentTableFootball
 import com.glushko.sportcommunity.data.tournament.model.toModel
 import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTable
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentInfoDisplayData
@@ -20,7 +19,9 @@ class ResponseMainScreen(
     @SerializedName("tournament_table")
     val tournamentTable: ResponseTournamentTable,
     val statistics: PlayersWithStatisticsRes,
-    val media: List<MediaRes> = listOf()
+    val media: List<MediaRes> = listOf(),
+    @SerializedName("tournament_url")
+    val tournamentUrl: String?
 ) : BaseResponse(success, message){
     companion object {
         fun createMap(division_id: Int): Map<String, String>{
