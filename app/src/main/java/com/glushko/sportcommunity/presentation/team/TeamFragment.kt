@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,23 +16,38 @@ import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableD
 import com.glushko.sportcommunity.databinding.FragmentTeamBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.base.menu.MenuHostFragment
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.data
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
+import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.setSelection
 import com.glushko.sportcommunity.util.extensions.toast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team) {
+class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team), MenuHostFragment {
 
     private val args: TeamFragmentArgs by navArgs()
 
     private val viewModel: TeamViewModel by viewModels()
+
+    override val menuRes: Int
+        get() = R.menu.menu_web_link
+    override val menuActions: Map<Int, () -> Boolean>
+        get() = mapOf(
+            R.id.menuAdd to {
+                viewModel.liveDataSquadInfo.value?.data?.teamUrl?.let { url ->
+                    (requireActivity() as? MainActivity)?.openWeb(url.getFullUrl())
+                }
+                true
+            }
+        )
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentTeamBinding {
         return FragmentTeamBinding.inflate(inflater)
@@ -40,6 +56,17 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.init(args.teamId)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        (requireActivity() as? MenuHost)?.let {
+            setupMenu(it, viewLifecycleOwner)
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
