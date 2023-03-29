@@ -22,7 +22,7 @@ interface MenuHostFragment {
      * @see MenuProvider.onMenuItemSelected Почему Value  возвращает Boolean
      *
      **/
-    val menuActions: Map<Int, (()->Boolean)>
+    val menuActions: Map<Int, ((MenuItem)->Boolean)>
 
     fun setupMenu(host: MenuHost, owner: LifecycleOwner) {
         host.addMenuProvider(object : MenuProvider{
@@ -32,7 +32,7 @@ interface MenuHostFragment {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 val lambdaMenu = {
-                    menuActions[menuItem.itemId]?.invoke() ?: false
+                    menuActions[menuItem.itemId]?.invoke(menuItem) ?: false
                 }
                 return lambdaMenu.invoke()
             }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuFavorite"
+        android:icon="@drawable/ic_not_favorite"
+        android:title="@string/favorite"
+        android:checkable="true"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/menuAdd"
+        android:icon="@drawable/ic_web"
+        android:title="@string/more_detailed"
+        app:showAsAction="withText"/>
+</menu>

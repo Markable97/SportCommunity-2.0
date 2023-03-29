@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/primary_variant_color">
 
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
+        android:textColor="@color/white"
         android:textAppearance="@style/text16_sp_medium"
         android:text="Любительская футбольная лига"
         app:layout_constraintStart_toStartOf="parent"

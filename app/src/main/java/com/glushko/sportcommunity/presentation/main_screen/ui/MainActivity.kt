@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -20,7 +21,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.glushko.sportcommunity.R
@@ -280,6 +280,7 @@ class MainActivity : AppCompatActivity(), MenuHost {
                     selectItemPosition: Int,
                     selectedId: Long
                 ) {
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(getColor(R.color.white))
                     addMenuItemInNavMenuDrawer(leagues[selectItemPosition].divisions)
                 }
 

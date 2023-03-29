@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.presentation.match_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -65,7 +67,7 @@ class MatchDetailFragment
 
     override val menuRes: Int
         get() = R.menu.menu_web_link
-    override val menuActions: Map<Int, () -> Boolean>
+    override val menuActions: Map<Int, (MenuItem) -> Boolean>
         get() = mapOf(
             R.id.menuAdd to {
                 matchUrl?.let {url ->
@@ -176,7 +178,7 @@ class MatchDetailFragment
     fun UpperCardMatch(match: MatchFootballDisplayData){
         Card(
             elevation = 10.dp,
-            backgroundColor = Color(0xFFFA4659),
+            backgroundColor = colorResource(id = R.color.primary_variant_color),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -194,6 +196,7 @@ class MatchDetailFragment
                 Text(
                     text = "${match.leagueName} | ${match.divisionName}",
                     textAlign = TextAlign.Center,
+                    color = colorResource(id = R.color.white),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Row(
@@ -251,6 +254,7 @@ class MatchDetailFragment
                 text = teamName,
                 textAlign = TextAlign.Center,
                 softWrap = true,
+                color = colorResource(id = R.color.white),
                 maxLines = 2
             )
         }
@@ -270,6 +274,7 @@ class MatchDetailFragment
                 //.wrapContentHeight()
                 //.weight(1f)
                 ,
+                color = colorResource(id = R.color.white),
                 textAlign = TextAlign.Center
             )
             Text(
@@ -279,6 +284,7 @@ class MatchDetailFragment
                 //.wrapContentHeight()
                 //.weight(2f)
                 ,
+                color = colorResource(id = R.color.white),
                 textAlign = TextAlign.Center,
                 fontSize = 25.sp
             )

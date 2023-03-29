@@ -12,7 +12,8 @@
 
     <string name="choose">Выбрать</string>
     
-    <string name="more_detailed">Подробнее</string>
+    <string name="more_detailed">Веб-сайт</string>
+    <string name="favorite">Избранное</string>
 
     <string name="yes">Да</string>
     <string name="no">Нет</string>

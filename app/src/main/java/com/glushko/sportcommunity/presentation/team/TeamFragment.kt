@@ -3,6 +3,7 @@ package com.glushko.sportcommunity.presentation.team
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuHost
@@ -39,7 +40,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
 
     override val menuRes: Int
         get() = R.menu.menu_web_link
-    override val menuActions: Map<Int, () -> Boolean>
+    override val menuActions: Map<Int, (MenuItem) -> Boolean>
         get() = mapOf(
             R.id.menuAdd to {
                 viewModel.liveDataSquadInfo.value?.data?.teamUrl?.let { url ->

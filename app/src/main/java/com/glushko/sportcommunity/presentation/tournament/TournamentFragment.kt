@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.presentation.tournament
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.gone
+import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.visible
 import com.google.android.material.tabs.TabLayoutMediator
@@ -38,12 +40,21 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
     private val viewModel: TournamentViewModel by hiltNavGraphViewModels(R.id.nav_graph_tournament)
 
     override val menuRes: Int
-        get() = R.menu.menu_web_link
-    override val menuActions: Map<Int, () -> Boolean>
+        get() = R.menu.menu_tournament
+    override val menuActions: Map<Int, (MenuItem) -> Boolean>
         get() = mapOf(
             R.id.menuAdd to {
                 viewModelMain.liveDataMainScreen.value?.data?.tournamentUrl?.let { url ->
                     (requireActivity() as? MainActivity)?.openWeb(url.getFullUrl())
+                }
+                true
+            },
+            R.id.menuFavorite to {
+                it.isChecked = !it.isChecked
+                if (it.isChecked) {
+                    snackbar(binding.root, "Добавлено в избранное")
+                } else {
+                    snackbar(binding.root, "Удалено из избранного")
                 }
                 true
             }
