@@ -40,6 +40,10 @@ import timber.log.Timber
 @AndroidEntryPoint
 class TournamentTableFragment : BaseFragment() {
 
+    companion object {
+        private const val BORDER_SIZE = 0.5
+    }
+
     private val viewModel: TournamentViewModel by hiltNavGraphViewModels(R.id.nav_graph_tournament)
 
     override fun onCreateView(
@@ -90,7 +94,7 @@ class TournamentTableFragment : BaseFragment() {
     @Composable
     fun TableHead(modifier: Modifier, modifierOther: Modifier){
         Row(modifier = Modifier
-            .border(1.dp, colorResource(id = R.color.primary_color))
+            .border(BORDER_SIZE.dp, colorResource(id = R.color.primary_color))
             .fillMaxWidth()
             .wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically
@@ -123,7 +127,7 @@ class TournamentTableFragment : BaseFragment() {
             Color.White
         }
         Row(modifier = Modifier
-            .border(1.dp, colorResource(id = R.color.primary_color))
+            .border(BORDER_SIZE.dp, colorResource(id = R.color.primary_color))
             .fillMaxWidth()
             .background(colorPosition)
             .wrapContentHeight()
