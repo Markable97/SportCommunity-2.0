@@ -10,8 +10,10 @@
     <color name="light_gray">#8E8E93</color>
     <color name="gray">#8c8c8c</color>
     <color name="text_gray">#5F6368</color>
+    <color name="primary_color">#569283</color>
+    <color name="primary_variant_color">#497568</color>
 
-    <color name="drawer_item_selected">#172196f3</color>
+    <color name="drawer_item_selected">#C195C9BF</color>
     <color name="image_match_segments">#ff6161</color>
     <color name="divider">#a6a6a6</color>
     <color name="bg_tournament_table_header">#80D1D1D1</color>
@@ -19,7 +21,7 @@
     <color name="outline_button">#BFBFBF</color>
     <color name="buttons">#D9D9D9</color>
     <color name="bg_team_header">#d1d1d1</color>
-    <color name="bg_tournament_table_team_selected">#2196f3</color>
+    <color name="bg_tournament_table_team_selected">#4CAF50</color>
     <color name="schedule_create_text_hint">#6C6C72</color>
     <color name="schedule_bg_item_stadium">#A37AFF</color>
     <color name="schedule_bg_item_with_match">#FF3700B3</color>

@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -89,7 +90,7 @@ class TournamentTableFragment : BaseFragment() {
     @Composable
     fun TableHead(modifier: Modifier, modifierOther: Modifier){
         Row(modifier = Modifier
-            .border(1.dp, Color.LightGray)
+            .border(1.dp, colorResource(id = R.color.primary_color))
             .fillMaxWidth()
             .wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically
@@ -122,7 +123,7 @@ class TournamentTableFragment : BaseFragment() {
             Color.White
         }
         Row(modifier = Modifier
-            .border(1.dp, Color.LightGray)
+            .border(1.dp, colorResource(id = R.color.primary_color))
             .fillMaxWidth()
             .background(colorPosition)
             .wrapContentHeight()
