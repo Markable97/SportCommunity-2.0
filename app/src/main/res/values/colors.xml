@@ -16,11 +16,11 @@
     <color name="drawer_item_selected">#C195C9BF</color>
     <color name="image_match_segments">#ff6161</color>
     <color name="divider">#a6a6a6</color>
-    <color name="bg_tournament_table_header">#80D1D1D1</color>
+    <color name="bg_tournament_table_header">#C195C9BF</color>
     <color name="dot_default">#BFBFBF</color>
     <color name="outline_button">#BFBFBF</color>
     <color name="buttons">#D9D9D9</color>
-    <color name="bg_team_header">#d1d1d1</color>
+    <color name="bg_team_header">#497568</color>
     <color name="bg_tournament_table_team_selected">#4CAF50</color>
     <color name="schedule_create_text_hint">#6C6C72</color>
     <color name="schedule_bg_item_stadium">#A37AFF</color>
