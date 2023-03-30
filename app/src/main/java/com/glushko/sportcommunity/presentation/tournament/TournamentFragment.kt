@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.presentation.tournament
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -19,15 +20,19 @@ import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournam
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import com.glushko.sportcommunity.presentation.media.FullPhoto
+import com.glushko.sportcommunity.presentation.tournament.model.AlreadyExistsFavoriteException
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
+import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.gone
+import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.visible
+import com.glushko.sportcommunity.util.succeeded
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -50,11 +55,45 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
             },
             R.id.menuFavorite to {
                 it.isChecked = !it.isChecked
+                var isClick = false
                 if (it.isChecked) {
-                    viewModelMain.saveFavorite()
+                    when(val save = viewModelMain.saveFavorite()) {
+                        is Result.Error -> {
+                            if (save.exception is AlreadyExistsFavoriteException) {
+                                isClick = false
+                                AlertDialog.Builder(requireContext())
+                                    .setTitle(R.string.favorite_warning_title)
+                                    .setMessage(R.string.favorite_warning_message)
+                                    .setPositiveButton(R.string.yes) { dialog, _ ->
+                                        val change = viewModelMain.saveFavorite(true)
+                                        if (change.succeeded) {
+                                            snackbar(binding.root, getString(R.string.favorite_changed_success))
+                                            checkFavorite(true)
+                                        } else {
+                                            snackbar(binding.root, getString(R.string.error_default))
+                                        }
+                                        dialog.dismiss()
+                                    }
+                                    .setNegativeButton(R.string.no) { dialog, _ ->
+                                        checkFavorite(false)
+                                        dialog.dismiss()
+                                    }
+                                    .create()
+                                    .show()
+                            }
+                        }
+                        Result.Loading -> {}
+                        is Result.Success -> {
+                            snackbar(binding.root, getString(R.string.favorite_save_success))
+                            isClick = true
+                        }
+                    }
                 } else {
                     viewModelMain.deleteFavorite()
+                    snackbar(binding.root, getString(R.string.favorite_delete_success))
+                    isClick = true
                 }
+                isClick
             }
         )
 

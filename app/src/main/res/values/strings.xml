@@ -15,6 +15,15 @@
     <string name="more_detailed">Веб-сайт</string>
     <string name="favorite">Избранное</string>
 
+    <string name="favorite_save_success">Турнир добавлен в избранное</string>
+    <string name="favorite_changed_success">Новый турнир добавлен в избранное</string>
+    <string name="favorite_delete_success">Турнир удален из избранного</string>
+
+    <string name="favorite_warning_title">Предупреждение!</string>
+    <string name="favorite_warning_message">У вас уже выбран любимый турнир. Заменить?</string>
+
+
+
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 
@@ -28,7 +37,7 @@
     <string name="menu_setting">Настройки</string>
     <string name="menu_about">О приложении</string>
 
-
+    <string name="error_default">Что-то пошло не так =(</string>
     <string name="error_network_default">Ошибка сервера</string>
     <string name="error_network_connection">Ошибка сети</string>
 

@@ -11,6 +11,7 @@ import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayD
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
+import com.glushko.sportcommunity.presentation.tournament.model.AlreadyExistsFavoriteException
 import com.glushko.sportcommunity.presentation.tournament.model.DivisionSelected
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Resource
@@ -108,20 +109,20 @@ class MainViewModel @Inject constructor(
         selectedLeague = leagueId
     }
 
-    fun saveFavorite() : Boolean {
-        val leagueId = selectedLeague ?: return false
-        val divisionId = _liveDataSelectedDivision.value?.selectedId ?: return false
-        return try {
+    fun saveFavorite(isForced: Boolean = false) : Result<Boolean> {
+        val leagueId = selectedLeague ?: return Result.Error(Exception())
+        val divisionId = _liveDataSelectedDivision.value?.selectedId ?: return Result.Error(Exception())
+        return if (mainRepository.getFavoriteDivision() != -1 && !isForced) {
+            Result.Error(AlreadyExistsFavoriteException())
+        } else {
             mainRepository.saveFavoriteTournament(leagueId, divisionId)
-            true
-        } catch (ex: Exception) {
-            false
+            Result.Success(true)
         }
+
     }
 
-    fun deleteFavorite(): Boolean {
+    fun deleteFavorite() {
         mainRepository.deleteFavoriteTournament()
-        return true
     }
 
 
