@@ -1,5 +1,6 @@
 package com.glushko.sportcommunity.data.main_screen.repository
 
+import com.glushko.sportcommunity.data.datasource.db.UserStorage
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.data.main_screen.leagues.network.toModel
 import com.glushko.sportcommunity.data.main_screen.model.*
@@ -23,7 +24,8 @@ import javax.inject.Singleton
 @BoundTo(supertype =  MainRepository::class, component = SingletonComponent::class)
 class MainRepositoryImpl @Inject constructor(
     private val api: ApiService,
-    private val networkUtils: NetworkUtils
+    private val networkUtils: NetworkUtils,
+    private val userStorage: UserStorage
 ): MainRepository {
 
     override var tournamentInfo: TournamentInfoDisplayData = TournamentInfoDisplayData()
@@ -67,5 +69,18 @@ class MainRepositoryImpl @Inject constructor(
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(response.data.images.map { it.toModelUI() })
         }
+    }
+
+    override fun saveFavoriteTournament(leagueId: Int, division: Int) {
+        userStorage.favoriteLeagueId = leagueId
+        userStorage.favoriteDivisionId = division
+    }
+
+    override fun deleteFavoriteTournament() {
+        userStorage.clearFavorite()
+    }
+
+    override fun getFavoriteDivision(): Int {
+        return userStorage.favoriteDivisionId
     }
 }

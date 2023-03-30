@@ -69,7 +69,7 @@ class MatchDetailFragment
         get() = R.menu.menu_web_link
     override val menuActions: Map<Int, (MenuItem) -> Boolean>
         get() = mapOf(
-            R.id.menuAdd to {
+            R.id.menuWeb to {
                 matchUrl?.let {url ->
                     (requireActivity() as? MainActivity)?.openWeb(url.getFullUrl())
                 }

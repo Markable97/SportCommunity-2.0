@@ -42,7 +42,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         get() = R.menu.menu_web_link
     override val menuActions: Map<Int, (MenuItem) -> Boolean>
         get() = mapOf(
-            R.id.menuAdd to {
+            R.id.menuWeb to {
                 viewModel.liveDataSquadInfo.value?.data?.teamUrl?.let { url ->
                     (requireActivity() as? MainActivity)?.openWeb(url.getFullUrl())
                 }

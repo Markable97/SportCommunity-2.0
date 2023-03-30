@@ -281,7 +281,9 @@ class MainActivity : AppCompatActivity(), MenuHost {
                     selectedId: Long
                 ) {
                     (parent?.getChildAt(0) as? TextView)?.setTextColor(getColor(R.color.white))
-                    addMenuItemInNavMenuDrawer(leagues[selectItemPosition].divisions)
+                    val selectedLeague = leagues[selectItemPosition]
+                    viewModel.selectLeague(selectedLeague.id)
+                    addMenuItemInNavMenuDrawer(selectedLeague.divisions)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {

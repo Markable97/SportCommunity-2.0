@@ -21,4 +21,7 @@ interface MainRepository {
     suspend fun getLeagues(): Resource<List<LeaguesDisplayData>>
     suspend fun getMainScreen(divisionId: Int): Resource<ResponseMainScreen>
     suspend fun getMatchMedia(matchId: Long): Result<List<ImageUI>>
+    fun saveFavoriteTournament(leagueId: Int, division: Int)
+    fun deleteFavoriteTournament()
+    fun getFavoriteDivision(): Int
 }

@@ -8,7 +8,7 @@
         android:checkable="true"
         app:showAsAction="withText"/>
     <item
-        android:id="@+id/menuAdd"
+        android:id="@+id/menuWeb"
         android:icon="@drawable/ic_web"
         android:title="@string/more_detailed"
         app:showAsAction="withText"/>

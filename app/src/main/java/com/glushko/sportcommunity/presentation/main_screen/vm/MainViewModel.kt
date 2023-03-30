@@ -11,6 +11,7 @@ import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayD
 import com.glushko.sportcommunity.data.main_screen.model.ResponseMainScreen
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
+import com.glushko.sportcommunity.presentation.tournament.model.DivisionSelected
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,8 +32,8 @@ class MainViewModel @Inject constructor(
     private val _liveDataLeagues: MutableLiveData<Resource<List<LeaguesDisplayData>>> = MutableLiveData()
     val liveDataLeagues: LiveData<Resource<List<LeaguesDisplayData>>> = _liveDataLeagues
 
-    private val _liveDataSelectedDivision: MutableLiveData<Int> = MutableLiveData()
-    val liveDataSelectedDivision: LiveData<Int> = _liveDataSelectedDivision
+    private val _liveDataSelectedDivision: MutableLiveData<DivisionSelected> = MutableLiveData()
+    val liveDataSelectedDivision: LiveData<DivisionSelected> = _liveDataSelectedDivision
 
     private val _liveDataMainScreen = MutableLiveData<Resource<ResponseMainScreen>>()
     val liveDataMainScreen: LiveData<Resource<ResponseMainScreen>> = _liveDataMainScreen
@@ -41,6 +42,8 @@ class MainViewModel @Inject constructor(
     val eventShareUri: LiveData<Result<Uri>> = _eventShareUri
 
     private var jobMainScreen: Job? = null
+
+    private var selectedLeague: Int? = null
 
     init {
         getLeagues()
@@ -55,7 +58,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun chooseDivision(divisionId: Int){
-        _liveDataSelectedDivision.value = divisionId
+        _liveDataSelectedDivision.value = DivisionSelected(divisionId, mainRepository.getFavoriteDivision())
         if (jobMainScreen?.isActive == true) {
             jobMainScreen?.cancel()
         }
@@ -67,13 +70,13 @@ class MainViewModel @Inject constructor(
 
     fun getCalendarRetry(){
         _liveDataSelectedDivision.value?.let {
-            chooseDivision(it)
+            chooseDivision(it.selectedId)
         }
     }
 
     fun getResultsRetry(){
         _liveDataSelectedDivision.value?.let {
-            chooseDivision(it)
+            chooseDivision(it.selectedId)
         }
     }
 
@@ -100,6 +103,28 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    fun selectLeague(leagueId: Int){
+        selectedLeague = leagueId
+    }
+
+    fun saveFavorite() : Boolean {
+        val leagueId = selectedLeague ?: return false
+        val divisionId = _liveDataSelectedDivision.value?.selectedId ?: return false
+        return try {
+            mainRepository.saveFavoriteTournament(leagueId, divisionId)
+            true
+        } catch (ex: Exception) {
+            false
+        }
+    }
+
+    fun deleteFavorite(): Boolean {
+        mainRepository.deleteFavoriteTournament()
+        return true
+    }
+
+
 
     override fun onCleared() {
         super.onCleared()

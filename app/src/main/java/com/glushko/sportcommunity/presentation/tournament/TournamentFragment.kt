@@ -14,8 +14,7 @@ import coil.load
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentTournamentBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
-import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
-import com.glushko.sportcommunity.presentation.base.menu.MenuHostFragment
+import com.glushko.sportcommunity.presentation.base.BaseFragmentWithToolbarMenu
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
@@ -27,14 +26,14 @@ import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.gone
-import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.visible
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fragment_tournament), MenuHostFragment {
+class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>(R.layout.fragment_tournament) {
 
     private val viewModelMain: MainViewModel by activityViewModels()
     private val viewModel: TournamentViewModel by hiltNavGraphViewModels(R.id.nav_graph_tournament)
@@ -43,7 +42,7 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
         get() = R.menu.menu_tournament
     override val menuActions: Map<Int, (MenuItem) -> Boolean>
         get() = mapOf(
-            R.id.menuAdd to {
+            R.id.menuWeb to {
                 viewModelMain.liveDataMainScreen.value?.data?.tournamentUrl?.let { url ->
                     (requireActivity() as? MainActivity)?.openWeb(url.getFullUrl())
                 }
@@ -52,11 +51,10 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
             R.id.menuFavorite to {
                 it.isChecked = !it.isChecked
                 if (it.isChecked) {
-                    snackbar(binding.root, "Добавлено в избранное")
+                    viewModelMain.saveFavorite()
                 } else {
-                    snackbar(binding.root, "Удалено из избранного")
+                    viewModelMain.deleteFavorite()
                 }
-                true
             }
         )
 
@@ -96,6 +94,10 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
                     }
                 }
             }
+            liveDataSelectedDivision.observe(viewLifecycleOwner) {
+                Timber.d("$it")
+                checkFavorite(it.selectedId == it.favoriteId)
+            }
         }
         viewModel.run {
             liveDataTournamentInfo.observe(viewLifecycleOwner) {
@@ -130,7 +132,7 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
             }
         }
         itemStatistics.textTitle.setOnClickListener {
-            viewModelMain.liveDataSelectedDivision.value?.let { divisionId ->
+            viewModelMain.liveDataSelectedDivision.value?.selectedId?.let { divisionId ->
                 findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToStatisticsFragment(
                     null,
                     Constants.OPEN_FROM_TOURNAMENT,
@@ -142,7 +144,12 @@ class TournamentFragment: BaseXmlFragment<FragmentTournamentBinding>(R.layout.fr
             findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentMediaFragment())
         }
         buttonGames.setOnClickListener {
-            findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToGamesFragment(tournamentId = viewModelMain.liveDataSelectedDivision.value ?: 0))
+            findNavController().navigate(
+                TournamentFragmentDirections
+                    .actionTournamentFragmentToGamesFragment(
+                        tournamentId = viewModelMain.liveDataSelectedDivision.value?.selectedId ?: 0
+                    )
+            )
         }
     }
 
