@@ -1,4 +1,4 @@
-package com.glushko.sportcommunity.presentation.main_screen.vm
+package com.glushko.sportcommunity.presentation.main_screen.ui
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -124,6 +124,8 @@ class MainViewModel @Inject constructor(
     fun deleteFavorite() {
         mainRepository.deleteFavoriteTournament()
     }
+
+    fun getFavoriteDivision() = mainRepository.getFavoriteDivision()
 
 
 

@@ -18,7 +18,7 @@ import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseFragmentWithToolbarMenu
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
-import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
+import com.glushko.sportcommunity.presentation.main_screen.ui.MainViewModel
 import com.glushko.sportcommunity.presentation.media.FullPhoto
 import com.glushko.sportcommunity.presentation.tournament.model.AlreadyExistsFavoriteException
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter

@@ -40,7 +40,15 @@ class MainRepositoryImpl @Inject constructor(
             api.getFootballLeagues()
         }
         return if (response is Resource.Success) {
-            Resource.Success(response.data!!.toModel())
+            val leagues = response.data!!.toModel().toMutableList()
+            leagues.find { it.id == getFavoriteLeague() }?.let { favoriteLeague ->
+                val index = leagues.indexOf(favoriteLeague)
+                if (index != -1) {
+                    leagues.removeAt(index)
+                    leagues.add(0, favoriteLeague)
+                }
+            }
+            Resource.Success(leagues)
         } else {
             Resource.Error(error = response.error)
         }
@@ -82,5 +90,9 @@ class MainRepositoryImpl @Inject constructor(
 
     override fun getFavoriteDivision(): Int {
         return userStorage.favoriteDivisionId
+    }
+
+    override fun getFavoriteLeague(): Int {
+        return userStorage.favoriteLeagueId
     }
 }

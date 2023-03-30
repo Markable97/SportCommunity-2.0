@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuHost
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -28,7 +29,6 @@ import com.glushko.sportcommunity.data.main_screen.division.model.DivisionDispla
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.databinding.ActivityMainBinding
 import com.glushko.sportcommunity.databinding.HeaderNavigationDrawerBinding
-import com.glushko.sportcommunity.presentation.main_screen.vm.MainViewModel
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.showGone
@@ -335,15 +335,30 @@ class MainActivity : AppCompatActivity(), MenuHost {
         val menu = binding.navigationView.menu
         menu.removeGroup(Menu.FIRST)
         divisions.forEachIndexed { index, division ->
-            menu.add(Menu.FIRST/*groupId*/, division.id, index, division.name).isCheckable = true
+            menu.add(Menu.FIRST/*groupId*/, division.id, index, division.name).apply {
+                isCheckable = true
+                isChecked = division.id == viewModel.getFavoriteDivision()
+            }
         }
         binding.navigationView.invalidate()
-        val firstItem = binding.navigationView.menu.getItem(0)
-        firstItem.isChecked = true
-        viewModel.chooseDivision(firstItem.itemId)
-        backupTitle = firstItem.title.toString()
-        backupItem = firstItem.itemId
-        setToolbarTitle(backupTitle)
+        var findChecked = false
+        binding.navigationView.menu.forEach {item ->
+            if (item.isChecked) {
+                findChecked = true
+                viewModel.chooseDivision(item.itemId)
+                backupTitle = item.title.toString()
+                backupItem = item.itemId
+                setToolbarTitle(backupTitle)
+            }
+        }
+        if (!findChecked) {
+            val firstItem = binding.navigationView.menu.getItem(0)
+            firstItem.isChecked = true
+            viewModel.chooseDivision(firstItem.itemId)
+            backupTitle = firstItem.title.toString()
+            backupItem = firstItem.itemId
+            setToolbarTitle(backupTitle)
+        }
     }
 
     override fun onDestroy() {

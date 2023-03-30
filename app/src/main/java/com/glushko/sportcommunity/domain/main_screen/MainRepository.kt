@@ -24,4 +24,5 @@ interface MainRepository {
     fun saveFavoriteTournament(leagueId: Int, division: Int)
     fun deleteFavoriteTournament()
     fun getFavoriteDivision(): Int
+    fun getFavoriteLeague(): Int
 }
