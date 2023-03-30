@@ -11,6 +11,9 @@ object Constants {
 
     const val TIME_HALF_DEFAULT = 30
 
+    //region shared preferences
+    const val SHARED_PREFERENCES = "shared_preferences"
+
     //Region played matches
     const val TYPE_MATCH_PLAYED = 2
     const val TYPE_MATCH_CALENDAR = 1
