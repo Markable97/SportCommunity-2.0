@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
@@ -100,11 +103,14 @@ fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier){
                 .width(1.dp)
         )
         Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
-            Text(text = "$goalHome", modifier = Modifier
+            Text(
+                text = "$goalHome",
+                modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
                 .wrapContentHeight(),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold
             )
             Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
             Text(text = "$goalGuest", modifier = Modifier
@@ -112,7 +118,7 @@ fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier){
                 .height(48.dp)
                 .wrapContentHeight(),
                 textAlign = TextAlign.Center,
-
+                fontWeight = FontWeight.Bold
             )
         }
     }

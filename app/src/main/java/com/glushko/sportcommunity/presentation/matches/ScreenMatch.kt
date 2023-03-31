@@ -68,7 +68,7 @@ fun CardMatch(
             Row(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(bottom = 10.dp, end = 10.dp),
+                    .padding(bottom = 10.dp, end = 10.dp, top = 5.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val modifierTour= Modifier
@@ -112,6 +112,7 @@ fun ResultHeader(description: String) {
         Text(text = description,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium
         )
     }
 }
@@ -122,6 +123,7 @@ fun ResultFooter(stadium: String) {
         Text(text = stadium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium
         )
     }
 }
@@ -160,7 +162,9 @@ fun Team(teamName: String, teamImage: String){
         )
         Text(text = teamName, modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 5.dp), textAlign = TextAlign.Start)
+            .padding(start = 5.dp), textAlign = TextAlign.Start
+        , fontWeight = FontWeight.Bold
+        )
     }
 }
 
