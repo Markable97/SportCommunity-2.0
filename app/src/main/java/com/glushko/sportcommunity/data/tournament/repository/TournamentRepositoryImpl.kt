@@ -4,7 +4,7 @@ import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.data.datasource.network.ApiService
 import com.glushko.sportcommunity.data.statistics.network.*
 import com.glushko.sportcommunity.data.tournament.helper.TournamentTableHelper
-import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTableFootball
+import com.glushko.sportcommunity.data.tournament.network.ResponseTournamentTable
 import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.domain.tournament.TournamentRepository
 import com.glushko.sportcommunity.presentation.tournament.model.*
@@ -61,7 +61,7 @@ class TournamentRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTournamentTableForTeam(teamId: Int): Result<List<TournamentTableDisplayData>> {
-        val response = networkUtils.getResponseResult<ResponseTournamentTableFootball>(ResponseTournamentTableFootball::class.java){
+        val response = networkUtils.getResponseResult<ResponseTournamentTable>(ResponseTournamentTable::class.java){
             api.getTournamentTableTeam(teamId)
         }
         return when(response) {
