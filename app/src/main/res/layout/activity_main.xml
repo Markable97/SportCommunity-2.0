@@ -5,6 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
     tools:openDrawer="end">
 
     <!-- this layout contains main content -->
@@ -87,6 +88,7 @@
         app:itemTextColor="@color/black"
         app:itemIconTint="@color/black"
         app:itemBackground="@drawable/select_drawer_item"
+        android:background="@drawable/bg_main"
         android:fitsSystemWindows="true"
         />
 

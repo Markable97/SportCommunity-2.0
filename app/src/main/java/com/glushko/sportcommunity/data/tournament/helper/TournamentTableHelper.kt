@@ -38,7 +38,7 @@ object TournamentTableHelper {
         return tournamentColors.find {
             position in it.startPosition..it.endPosition
         }?.hex?.let {
-            "#$it"
+            "#A6$it"
         }
     }
 

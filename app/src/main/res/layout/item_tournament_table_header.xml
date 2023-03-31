@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:padding="5dp"
     android:weightSum="100"
-    android:background="@drawable/bg_tournament_table_header"
     android:orientation="horizontal">
 
     <TextView

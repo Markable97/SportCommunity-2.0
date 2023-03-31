@@ -18,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
@@ -54,7 +55,7 @@ class TournamentTableFragment : BaseFragment() {
         //return super.onCreateView(inflater, container, savedInstanceState)
         return ComposeView(requireContext()).apply {
             setContent {
-                Surface(color = MaterialTheme.colors.background) {
+                Surface() {
                     ScreenTournamentTable()
                 }
             }
@@ -70,7 +71,8 @@ class TournamentTableFragment : BaseFragment() {
 
     @Composable
     private fun CreateScreen(response: List<TournamentTableDisplayData>) {
-        Column() {
+        Column(
+        ) {
             CreateTable(response = response)
         }
     }
@@ -78,7 +80,16 @@ class TournamentTableFragment : BaseFragment() {
     @Composable
     fun CreateTable(response: List<TournamentTableDisplayData>) {
         Timber.d("Отрисовка")
-        Column(modifier = Modifier.fillMaxHeight()) {
+        Column(
+            modifier = Modifier.fillMaxHeight().background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        colorResource(id = R.color.main_gradient_start),
+                        colorResource(id = R.color.main_gradient_end)
+                    )
+                )
+            )
+        ) {
             val modifierName = Modifier
                 .wrapContentHeight()
                 .weight(8f)
@@ -94,7 +105,7 @@ class TournamentTableFragment : BaseFragment() {
     @Composable
     fun TableHead(modifier: Modifier, modifierOther: Modifier){
         Row(modifier = Modifier
-            .border(BORDER_SIZE.dp, colorResource(id = R.color.primary_color))
+//            .border(BORDER_SIZE.dp, colorResource(id = R.color.primary_color))
             .fillMaxWidth()
             .wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically
@@ -124,10 +135,10 @@ class TournamentTableFragment : BaseFragment() {
         val colorPosition = if (team.positionColor != null ){
             Color(android.graphics.Color.parseColor(team.positionColor))
         } else {
-            Color.White
+            Color.Transparent
         }
         Row(modifier = Modifier
-            .border(BORDER_SIZE.dp, colorResource(id = R.color.primary_color))
+//            .border(BORDER_SIZE.dp, colorResource(id = R.color.primary_color))
             .fillMaxWidth()
             .background(colorPosition)
             .wrapContentHeight()
