@@ -13,6 +13,7 @@ import com.glushko.sportcommunity.domain.main_screen.MainRepository
 import com.glushko.sportcommunity.presentation.base.BaseViewModel
 import com.glushko.sportcommunity.presentation.tournament.model.AlreadyExistsFavoriteException
 import com.glushko.sportcommunity.presentation.tournament.model.DivisionSelected
+import com.glushko.sportcommunity.util.Constants.DELAY_SPLASH
 import com.glushko.sportcommunity.util.EventLiveData
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,8 @@ import javax.inject.Inject
 import com.glushko.sportcommunity.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -29,6 +32,9 @@ import java.io.FileOutputStream
 class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ): BaseViewModel() {
+
+    private val _eventSplashNavigate = EventLiveData<Result<Unit>>()
+    val eventSplashNavigate: LiveData<Result<Unit>> = _eventSplashNavigate
 
     private val _liveDataLeagues: MutableLiveData<Resource<List<LeaguesDisplayData>>> = MutableLiveData()
     val liveDataLeagues: LiveData<Resource<List<LeaguesDisplayData>>> = _liveDataLeagues
@@ -47,13 +53,36 @@ class MainViewModel @Inject constructor(
     private var selectedLeague: Int? = null
 
     init {
-        getLeagues()
+        startPreload()
     }
+
+    private fun startPreload() {
+        viewModelScope.launch {
+            val leaguesAsync = async {
+                val response = getLeaguesInternal()
+                _liveDataLeagues.postValue(response)
+                response
+            }
+            val splashDelayAsync = async {
+                delay(DELAY_SPLASH)
+                true
+            }
+            val leaguesResponse = leaguesAsync.await()
+            val splashDelay = splashDelayAsync.await()
+            if (leaguesResponse is Resource.Success && splashDelay) {
+                _eventSplashNavigate.postValue(Result.Success(Unit))
+            } else {
+                _eventSplashNavigate.postValue(Result.Error(leaguesResponse.error ?: Exception()))
+            }
+        }
+    }
+
+    private suspend fun getLeaguesInternal() = mainRepository.getLeagues()
 
     fun getLeagues() {
         viewModelScope.launch {
             _liveDataLeagues.postValue(
-                mainRepository.getLeagues()
+                getLeaguesInternal()
             )
         }
     }

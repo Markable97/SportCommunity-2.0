@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_graph_tournament">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/calendarFragment"
@@ -32,6 +32,16 @@
         android:id="@+id/settingFragment"
         android:name="com.glushko.sportcommunity.presentation.setting.SettingFragment"
         android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.glushko.sportcommunity.presentation.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_nav_graph_tournament"
+            app:destination="@id/nav_graph_tournament"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 
 </navigation>

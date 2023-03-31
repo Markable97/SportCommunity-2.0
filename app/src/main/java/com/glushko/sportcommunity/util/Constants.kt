@@ -6,6 +6,8 @@ object Constants {
 
     const val LFL_URL = "https://lfl.ru/"
 
+    const val DELAY_SPLASH = 3000L
+
     const val OPEN_FROM_TOURNAMENT = 1
     const val OPEN_FROM_TEAM = 2
 

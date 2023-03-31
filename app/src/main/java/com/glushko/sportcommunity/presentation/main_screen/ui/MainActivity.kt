@@ -81,6 +81,9 @@ class MainActivity : AppCompatActivity(), MenuHost {
     private val destinationWithBottomBar = listOf(
         R.id.eventsFragment, R.id.calendarFragment, R.id.resultsFragment, R.id.tournamentFragment, R.id.adminFragment
     )
+
+    private val destinationWithoutToolbar = listOf(R.id.splashFragment)
+
     private val destinationDrawerMenu = listOf(R.id.aboutFragment, R.id.settingFragment)
     private var backupTitle: String = ""
     private var backupItem: Int? = null
@@ -116,6 +119,7 @@ class MainActivity : AppCompatActivity(), MenuHost {
                 showBackButton(false)
             }
 
+            binding.toolbar.isVisible = destination.id !in destinationWithoutToolbar
             binding.bottomNav.isVisible = destination.id in destinationWithBottomBar
         }
 
