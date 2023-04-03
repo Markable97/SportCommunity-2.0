@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.presentation.matches
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,8 +53,12 @@ fun CardMatch(
     Card(
         modifier = Modifier
             .padding(5.dp),
-        shape = RoundedCornerShape(8.dp),
-        backgroundColor = Color.LightGray,
+        shape = RoundedCornerShape(0.dp),
+        /*border = BorderStroke(
+            1.dp,
+            colorResource(id = R.color.black)
+        ),*/
+        backgroundColor = Color.Transparent,
         onClick = {
             if (match.played == Constants.TYPE_MATCH_PLAYED){
                 if (action != null) {
@@ -95,7 +101,7 @@ fun CardMatch(
                 }
             }
             playerActions?.let {
-                Divider(color = Color.Gray, modifier = Modifier
+                Divider(color = Color.Transparent, modifier = Modifier
                     .padding(bottom = 5.dp)
                     .fillMaxWidth()
                     .height(1.dp))
@@ -131,7 +137,7 @@ fun ResultFooter(stadium: String) {
 @Composable
 fun TextTour(tour: String, modifier: Modifier){
     Box(contentAlignment = Alignment.Center, modifier =  modifier.fillMaxHeight()) {
-        Text(text = tour, textAlign = TextAlign.Center)
+        Text(text = tour, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold)
     }
 
 }
@@ -140,9 +146,10 @@ fun TextTour(tour: String, modifier: Modifier){
 fun Teams(match: MatchFootballDisplayData, modifier: Modifier){
     Column(modifier = modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
         Team(teamName = match.teamHomeName, teamImage = match.teamHomeImage?:"${Constants.BASE_URL_IMAGE}${match.teamHomeName}.png")
-        Divider(color = Color.Gray, modifier = Modifier
+        Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(1.dp))
+            .height(5.dp)
+        )
         Team(teamName = match.teamGuestName, teamImage = match.teamGuestImage?:"${Constants.BASE_URL_IMAGE}${match.teamGuestName}.png")
     }
 }
@@ -214,7 +221,7 @@ private fun ItemPlayerAction(
             contentDescription = "",
             modifier = Modifier.size(24.dp)
         )
-        Divider(color = Color.Gray, modifier = Modifier
+        Divider(color = colorResource(id = R.color.black), modifier = Modifier
             .fillMaxHeight()
             .width(1.dp))
     }

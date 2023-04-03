@@ -12,9 +12,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -30,6 +32,7 @@ import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.EmptyText
 import com.glushko.sportcommunity.presentation.core.Loader
+import com.glushko.sportcommunity.presentation.core.bgMainGradient
 import com.glushko.sportcommunity.presentation.matches.CardMatch
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,65 +61,81 @@ class ResultsFragment : BaseFragment() {
         val response by mainViewModel.liveDataMainScreen.observeAsState(Resource.Empty())
         CreateScreen(response = response)
     }
+
     @Composable
-    private fun CreateScreen(response: Resource<ResponseMainScreen>){
-        when(response){
-            is Resource.Empty -> {}
-            is Resource.Error -> {
-                DoSomething(message = response.error?.message?:"") {
-                    mainViewModel.getResultsRetry()
+    private fun CreateScreen(response: Resource<ResponseMainScreen>) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = bgMainGradient()
+                )
+        ) {
+            when (response) {
+                is Resource.Empty -> {}
+                is Resource.Error -> {
+                    DoSomething(message = response.error?.message ?: "") {
+                        mainViewModel.getResultsRetry()
+                    }
                 }
-            }
-            is Resource.Loading -> {
-                Loader()
-            }
-            is Resource.Success -> {
-                viewModel.init()
-                val matches by viewModel.liveDataResults.observeAsState(emptyList())
-                if (matches.isEmpty()) {
-                    EmptyText(textMessage = stringResource(id = R.string.empty_result))
-                } else {
-                    ResultsList(matches)
+                is Resource.Loading -> {
+                    Loader()
+                }
+                is Resource.Success -> {
+                    viewModel.init()
+                    val matches by viewModel.liveDataResults.observeAsState(emptyList())
+                    if (matches.isEmpty()) {
+                        EmptyText(textMessage = stringResource(id = R.string.empty_result))
+                    } else {
+                        ResultsList(matches)
+                    }
                 }
             }
         }
+
     }
 
-     @Composable
+    @Composable
     private fun ResultsList(matches: List<MatchFootballDisplayData>) {
-         LazyColumn(modifier = Modifier
-             .fillMaxSize()
-             .background(Color.White)){
-             items(matches){match ->
-                 CardMatch(match, findNavController(), ResultsFragmentDirections.actionResultsFragmentToDetailMatchFragment(match))
-             }
-         }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            items(matches) { match ->
+                CardMatch(
+                    match,
+                    findNavController(),
+                    ResultsFragmentDirections.actionResultsFragmentToDetailMatchFragment(match)
+                )
+            }
+        }
     }
 }
+
 @Composable
-fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier){
-    Row(modifier = modifier) {
-        Divider(
-            color = Color.Gray,
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(1.dp)
-        )
-        Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
+fun Score(goalHome: Int, goalGuest: Int, modifier: Modifier) {
+    Row(
+        modifier = modifier,
+    ) {
+        Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceEvenly) {
             Text(
                 text = "$goalHome",
                 modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-                .wrapContentHeight(),
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .wrapContentHeight(),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold
             )
-            Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
-            Text(text = "$goalGuest", modifier = Modifier
+            Spacer(modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
-                .wrapContentHeight(),
+                .height(5.dp)
+            )
+            Text(
+                text = "$goalGuest", modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .wrapContentHeight(),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold
             )

@@ -33,6 +33,7 @@ import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.presentation.base.BaseFragment
+import com.glushko.sportcommunity.presentation.core.bgMainGradient
 import com.glushko.sportcommunity.presentation.tournament.TournamentViewModel
 import com.glushko.sportcommunity.util.Constants.BASE_URL_IMAGE
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,12 +83,7 @@ class TournamentTableFragment : BaseFragment() {
         Timber.d("Отрисовка")
         Column(
             modifier = Modifier.fillMaxHeight().background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        colorResource(id = R.color.main_gradient_start),
-                        colorResource(id = R.color.main_gradient_end)
-                    )
-                )
+                brush = bgMainGradient()
             )
         ) {
             val modifierName = Modifier

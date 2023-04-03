@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.presentation.base.BaseFragment
+import com.glushko.sportcommunity.presentation.core.bgMainGradient
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,12 +59,7 @@ class SplashFragment : BaseFragment() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            colorResource(id = R.color.main_gradient_start),
-                            colorResource(id = R.color.main_gradient_end)
-                        )
-                    )
+                    brush = bgMainGradient()
                 ),
             contentAlignment = Alignment.Center
         ) {

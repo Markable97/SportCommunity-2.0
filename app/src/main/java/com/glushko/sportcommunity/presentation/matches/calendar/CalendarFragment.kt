@@ -32,6 +32,7 @@ import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.matches.CardMatch
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.R
+import com.glushko.sportcommunity.presentation.core.bgMainGradient
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,18 +55,25 @@ class CalendarFragment : BaseFragment() {
     }
 
     @Composable
-    private fun ScreenCalendar(){
+    private fun ScreenCalendar() {
         val response by mainViewModel.liveDataMainScreen.observeAsState(Resource.Empty())
         CreateScreen(response = response)
 
     }
+
     @Composable
-    private fun CreateScreen(response: Resource<ResponseMainScreen>){
-        Column {
-            when(response){
+    private fun CreateScreen(response: Resource<ResponseMainScreen>) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = bgMainGradient()
+                )
+        ) {
+            when (response) {
                 is Resource.Empty -> {}
                 is Resource.Error -> {
-                    DoSomething(message = response.error?.message?:""){
+                    DoSomething(message = response.error?.message ?: "") {
                         mainViewModel.getCalendarRetry()
                     }
                 }
@@ -86,11 +94,12 @@ class CalendarFragment : BaseFragment() {
     }
 
     @Composable
-    private fun CalendarList(matches: List<MatchFootballDisplayData>){
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)){
-            items(matches){match ->
+    private fun CalendarList(matches: List<MatchFootballDisplayData>) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            items(matches) { match ->
                 CardMatch(match, findNavController(), null)
             }
         }
@@ -106,14 +115,16 @@ fun DateAndStadium(matchDate: String, stadium: String, modifier: Modifier) {
                 .fillMaxHeight()
                 .width(1.dp)
         )
-        Column(modifier = Modifier.fillMaxHeight(),verticalArrangement  = Arrangement.SpaceEvenly) {
-            Text(text = matchDate, modifier = Modifier
-                .fillMaxWidth(),
+        Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceEvenly) {
+            Text(
+                text = matchDate, modifier = Modifier
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
             Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
-            Text(text = stadium, modifier = Modifier
-                .fillMaxWidth(),
+            Text(
+                text = stadium, modifier = Modifier
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
         }
