@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +17,7 @@
             android:id="@+id/viewHeader"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="@color/bg_team_header"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="@color/white"
-            android:textAppearance="@style/text20_sp_medium"
+            android:textColor="@color/black"
+            android:textAppearance="@style/text20_sp_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/viedBackground"
@@ -60,8 +62,8 @@
             android:layout_height="wrap_content"
             tools:text="11.04.1997 (25)"
             android:layout_marginTop="5dp"
-            android:textColor="@color/white"
-            android:textAppearance="@style/text16_sp_medium"
+            android:textColor="@color/black"
+            android:textAppearance="@style/text16_sp_bold"
             app:layout_constraintTop_toBottomOf="@id/textPlayerName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -71,9 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Полузащитник"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:layout_marginTop="5dp"
-            android:textAppearance="@style/text16_sp_medium"
+            android:textAppearance="@style/text16_sp_bold"
             app:layout_constraintTop_toBottomOf="@id/textBirthday"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

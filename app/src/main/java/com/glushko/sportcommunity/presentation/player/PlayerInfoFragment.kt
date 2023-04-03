@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -50,12 +50,11 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
         setupObservers()
     }
 
+
     private fun renderCompose(currentTeam: CareerWidgetUI, matchesPlayer: List<PlayerActionsInMatchUI>) = binding.run {
         composeCareerWidget.setContent {
-            MaterialTheme {
-                Surface {
                     Column(
-                        modifier = Modifier.padding(bottom = 5.dp, start = 16.dp, end = 16.dp)
+                        modifier = Modifier.padding(bottom = 5.dp, start = 5.dp, end = 5.dp).background(Color.Transparent)
                     ) {
                         CareerWidget(
                             widgetInfo = currentTeam,
@@ -86,8 +85,6 @@ class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.f
                             )
                         }
                     }
-                }
-            }
         }
     }
 

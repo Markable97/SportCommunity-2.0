@@ -15,7 +15,7 @@
     </style>
 
     <style name="FontBold">
-        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -34,6 +34,9 @@
     <style name="text14_sp_medium" parent="FontMedium">
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="text14_sp_bold" parent="FontBold">
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <style name="text14_sp_light" parent="FontLight">
         <item name="android:textSize">14sp</item>
@@ -47,11 +50,19 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="text16_sp_bold" parent="FontBold">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="text20_sp_regular" parent="FontRegular">
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="text20_sp_medium" parent="FontMedium">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="text20_sp_bold" parent="FontBold">
         <item name="android:textSize">20sp</item>
     </style>
 

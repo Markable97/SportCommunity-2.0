@@ -38,7 +38,7 @@ fun CardMatchWithPlayerActions(
     playerActions: PlayerPointsActions
 ) {
     CardMatch(
-        match, navController, action, playerActions
+        match, navController, action, playerActions, false
     )
 }
 
@@ -48,16 +48,23 @@ fun CardMatch(
     match: MatchFootballDisplayData,
     navController: NavController,
     action: NavDirections?,
-    playerActions: PlayerPointsActions? = null
+    playerActions: PlayerPointsActions? = null,
+    isBorder: Boolean = true,
 ){
+    val border = if (isBorder) {
+        BorderStroke(
+            1.dp ,
+            colorResource(id = R.color.black)
+        )
+    } else {
+        null
+    }
     Card(
         modifier = Modifier
             .padding(5.dp),
-        shape = RoundedCornerShape(0.dp),
-        /*border = BorderStroke(
-            1.dp,
-            colorResource(id = R.color.black)
-        ),*/
+        shape = RoundedCornerShape(20.dp),
+        elevation = 0.dp,
+        border = border,
         backgroundColor = Color.Transparent,
         onClick = {
             if (match.played == Constants.TYPE_MATCH_PLAYED){
@@ -74,7 +81,7 @@ fun CardMatch(
             Row(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(bottom = 10.dp, end = 10.dp, top = 5.dp),
+                    .padding(bottom = 10.dp, end = 10.dp, top = 5.dp, start = 5.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val modifierTour= Modifier
@@ -118,7 +125,7 @@ fun ResultHeader(description: String) {
         Text(text = description,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -129,7 +136,7 @@ fun ResultFooter(stadium: String) {
         Text(text = stadium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -182,7 +189,7 @@ fun FooterPlayerActions(
     Row(
         modifier = Modifier.padding(start = 5.dp)
     ) {
-        Text(text = stringResource(id = R.string.player__actions))
+        Text(text = stringResource(id = R.string.player__actions), fontWeight = FontWeight.Bold)
         actionsPLayer.goals.takeIf { it > 0 }
             ?.also { ItemPlayerAction(points = it, picture = R.drawable.goal) }
         actionsPLayer.assists.takeIf { it > 0 }

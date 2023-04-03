@@ -33,14 +33,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageAction"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textAppearance="@style/text14_sp_medium"
+            android:textAppearance="@style/text14_sp_bold"
             tools:text="Голы"/>
 
         <TextView
             android:id="@+id/textCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/text16_sp_medium"
+            android:textAppearance="@style/text16_sp_bold"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             tools:text="25"
