@@ -157,9 +157,6 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
 
     private fun renderRow(row: TournamentTableDisplayData, bindingRow: ItemTournamentTableRowBinding){
         with(bindingRow) {
-            row.positionColor?.let { color ->
-                root.setBackgroundColor(Color.parseColor(color))
-            }
             if (row.teamId == args.teamId) {
                 textPosition.setSelection()
                 textTeamName.setSelection()
