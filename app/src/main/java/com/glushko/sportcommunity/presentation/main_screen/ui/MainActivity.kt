@@ -284,7 +284,7 @@ class MainActivity : AppCompatActivity(), MenuHost {
                     selectItemPosition: Int,
                     selectedId: Long
                 ) {
-                    (parent?.getChildAt(0) as? TextView)?.setTextColor(getColor(R.color.white))
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(getColor(R.color.black))
                     val selectedLeague = leagues[selectItemPosition]
                     viewModel.selectLeague(selectedLeague.id)
                     addMenuItemInNavMenuDrawer(selectedLeague.divisions)
