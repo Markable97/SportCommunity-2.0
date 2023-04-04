@@ -48,7 +48,7 @@
                 android:id="@+id/progressBar"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/bg_main"
+                android:background="@android:color/transparent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/bottomNav"
                 android:clickable="true"

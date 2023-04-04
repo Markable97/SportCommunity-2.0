@@ -40,7 +40,7 @@ fun Loader() {
     Box(
         Modifier
             .fillMaxSize()
-            .background(bgMainGradient()),
+            .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
