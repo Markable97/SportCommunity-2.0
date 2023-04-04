@@ -187,7 +187,7 @@ fun FooterPlayerActions(
     actionsPLayer: PlayerPointsActions
 ) {
     Row(
-        modifier = Modifier.padding(start = 5.dp)
+        modifier = Modifier.padding(start = 15.dp)
     ) {
         Text(text = stringResource(id = R.string.player__actions), fontWeight = FontWeight.Bold)
         actionsPLayer.goals.takeIf { it > 0 }

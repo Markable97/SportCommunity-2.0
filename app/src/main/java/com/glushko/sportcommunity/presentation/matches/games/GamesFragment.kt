@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,13 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
+import com.glushko.sportcommunity.presentation.core.bgMainGradient
 import com.glushko.sportcommunity.presentation.matches.CardMatch
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.util.Constants
@@ -53,6 +54,11 @@ class GamesFragment : Fragment() {
     }
     @Composable
     private fun CreateScreen(response: Result<List<MatchFootballDisplayData>>){
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(brush = bgMainGradient())) {
+
+        }
         when(response){
             is Result.Error -> {
                 DoSomething(message = response.exception.message ?: "") {
@@ -72,7 +78,7 @@ class GamesFragment : Fragment() {
     private fun ResultsList(matches: List<MatchFootballDisplayData>) {
         LazyColumn(modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)){
+            ){
             items(matches){match ->
                 CardMatch(
                     match,

@@ -12,11 +12,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.glushko.sportcommunity.presentation.base.BaseFragment
+import com.glushko.sportcommunity.presentation.core.bgMainGradient
 import com.glushko.sportcommunity.presentation.matches.CardMatch
 
 class MatchesPlayerFragment : BaseFragment() {
@@ -41,7 +41,7 @@ class MatchesPlayerFragment : BaseFragment() {
     private fun ScreenMatchesPlayer() {
         LazyColumn(modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)){
+            .background(brush = bgMainGradient())){
             items(matchesPlayerArgs.matches){ match ->
                 CardMatch(match.match, findNavController(), MatchesPlayerFragmentDirections.actionMatchesPlayerToDetailMatchFragment(match.match), match.actions)
             }
