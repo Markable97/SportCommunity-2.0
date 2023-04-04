@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -196,7 +197,8 @@ class MatchDetailFragment
                 Text(
                     text = "${match.leagueName} | ${match.divisionName}",
                     textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.white),
+                    color = colorResource(id = R.color.black),
+                    fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Row(
@@ -254,7 +256,8 @@ class MatchDetailFragment
                 text = teamName,
                 textAlign = TextAlign.Center,
                 softWrap = true,
-                color = colorResource(id = R.color.white),
+                fontWeight = FontWeight.SemiBold,
+                color = colorResource(id = R.color.black),
                 maxLines = 2
             )
         }
@@ -274,7 +277,8 @@ class MatchDetailFragment
                 //.wrapContentHeight()
                 //.weight(1f)
                 ,
-                color = colorResource(id = R.color.white),
+                color = colorResource(id = R.color.black),
+                fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
             )
             Text(
@@ -284,7 +288,8 @@ class MatchDetailFragment
                 //.wrapContentHeight()
                 //.weight(2f)
                 ,
-                color = colorResource(id = R.color.white),
+                color = colorResource(id = R.color.black),
+                fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
                 fontSize = 25.sp
             )
