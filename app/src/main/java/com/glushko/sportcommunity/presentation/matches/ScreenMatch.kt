@@ -187,7 +187,8 @@ fun FooterPlayerActions(
     actionsPLayer: PlayerPointsActions
 ) {
     Row(
-        modifier = Modifier.padding(start = 15.dp)
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(start = 15.dp, bottom = 5.dp)
     ) {
         Text(text = stringResource(id = R.string.player__actions), fontWeight = FontWeight.Bold)
         actionsPLayer.goals.takeIf { it > 0 }
@@ -229,7 +230,8 @@ private fun ItemPlayerAction(
             modifier = Modifier.size(24.dp)
         )
         Divider(color = colorResource(id = R.color.black), modifier = Modifier
-            .fillMaxHeight()
+            .padding(start = 2.dp)
+            .height(24.dp)
             .width(1.dp))
     }
 }
