@@ -38,7 +38,9 @@ fun bgMainGradient(): Brush =
 @Composable
 fun Loader() {
     Box(
-        Modifier.fillMaxSize(),
+        Modifier
+            .fillMaxSize()
+            .background(bgMainGradient()),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(

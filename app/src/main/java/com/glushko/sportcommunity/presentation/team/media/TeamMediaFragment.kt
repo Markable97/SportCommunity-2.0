@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +21,7 @@ import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.EmptyText
 import com.glushko.sportcommunity.presentation.core.Loader
+import com.glushko.sportcommunity.presentation.core.bgMainGradient
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.media.CreateMediaAlbumScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,17 +56,19 @@ class TeamMediaFragment : BaseFragment() {
 
     @Composable
     private fun CreateScreen(response: Result<List<MediaUI>>) {
-        when(response) {
-            is Result.Error -> {
-                DoSomething(message = response.exception.message ?: "") {
-                    viewModel.getMediaTeam()
+        Column(modifier = Modifier.background(bgMainGradient())) {
+            when(response) {
+                is Result.Error -> {
+                    DoSomething(message = response.exception.message ?: "") {
+                        viewModel.getMediaTeam()
+                    }
                 }
-            }
-            Result.Loading -> {
-                Loader()
-            }
-            is Result.Success -> {
-                ItemsMedia(mediaList = response.data)
+                Result.Loading -> {
+                    Loader()
+                }
+                is Result.Success -> {
+                    ItemsMedia(mediaList = response.data)
+                }
             }
         }
     }
