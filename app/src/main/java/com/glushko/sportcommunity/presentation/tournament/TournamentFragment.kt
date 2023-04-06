@@ -29,6 +29,7 @@ import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.gone
+import com.glushko.sportcommunity.util.extensions.showDebugUnderDevelopmentMessage
 import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.visible
@@ -189,6 +190,9 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
                         tournamentId = viewModelMain.liveDataSelectedDivision.value?.selectedId ?: 0
                     )
             )
+        }
+        buttonKdk.setOnClickListener {
+            binding.root.showDebugUnderDevelopmentMessage()
         }
     }
 

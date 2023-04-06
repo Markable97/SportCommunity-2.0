@@ -22,7 +22,7 @@
     <string name="favorite_warning_title">Предупреждение!</string>
     <string name="favorite_warning_message">У вас уже выбран любимый турнир. Заменить?</string>
 
-
+    <string name="debug_under_development">Функционал находится на стадии разработки</string>
 
     <string name="yes">Да</string>
     <string name="no">Нет</string>

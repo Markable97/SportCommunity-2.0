@@ -27,6 +27,7 @@ import com.glushko.sportcommunity.util.data
 import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.setSelection
+import com.glushko.sportcommunity.util.extensions.showDebugUnderDevelopmentMessage
 import com.glushko.sportcommunity.util.extensions.toast
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,6 +106,9 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         }
         buttonMedia.setOnClickListener {
             findNavController().navigate(TeamFragmentDirections.actionTeamFragmentToTeamMediaFragment(args.teamId))
+        }
+        buttonHistory.setOnClickListener {
+            binding.root.showDebugUnderDevelopmentMessage()
         }
     }
 

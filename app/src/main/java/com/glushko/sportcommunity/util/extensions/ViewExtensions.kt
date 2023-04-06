@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.glushko.sportcommunity.R
+import com.google.android.material.snackbar.Snackbar
 
 private const val MIN_CLICK_DELAY = 500L
 
@@ -25,6 +26,12 @@ fun View.setSafeOnClickListener(action: (View) -> Unit) {
         }
     })
 }
+
+fun View.showDebugUnderDevelopmentMessage() = Snackbar.make(
+    this,
+    R.string.debug_under_development,
+    Snackbar.LENGTH_LONG
+).show()
 
 fun View.showGone(show: Boolean): View {
     visibility = if (show) View.VISIBLE else View.GONE
