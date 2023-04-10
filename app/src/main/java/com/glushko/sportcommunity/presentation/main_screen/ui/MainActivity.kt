@@ -35,14 +35,10 @@ import com.glushko.sportcommunity.util.extensions.showGone
 import com.glushko.sportcommunity.util.extensions.toast
 import com.glushko.sportcommunity.util.extensions.toastLong
 import com.google.android.gms.tasks.Task
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.File
-import kotlin.system.exitProcess
 
 
 @AndroidEntryPoint
@@ -52,7 +48,6 @@ class MainActivity : AppCompatActivity(), MenuHost {
         private const val MENU_ITEM_SETTING = -1
         private const val MENU_ITEM_ABOUT = -2
         private const val MENU_ORDER_FOOTER = 50
-        private const val REQUEST_CODE_UPDATE_FLOW = 77
     }
 
     private var _binding: ActivityMainBinding? = null
@@ -93,15 +88,12 @@ class MainActivity : AppCompatActivity(), MenuHost {
     private var backupTitle: String = ""
     private var backupItem: Int? = null
 
-    private val appUpdateManager by lazy {
-        AppUpdateManagerFactory.create(this)
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        checkUpdate()
         setupToolbar()
         setupDrawerToggle()
         setupObservers()
@@ -152,51 +144,6 @@ class MainActivity : AppCompatActivity(), MenuHost {
             true
         }
         getTokenFirebase()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        appUpdateManager
-            .appUpdateInfo
-            .addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability()
-                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
-                ) {
-                    // If an in-app update is already running, resume the update.
-                    appUpdateManager.startUpdateFlowForResult(
-                        appUpdateInfo,
-                        AppUpdateType.IMMEDIATE,
-                        this,
-                        REQUEST_CODE_UPDATE_FLOW
-                    )
-                }
-            }
-    }
-
-
-    private fun checkUpdate() {
-        // Returns an intent object that you use to check for an update.
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-        // Checks that the platform will allow the specified type of update.
-        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-            ) {
-                appUpdateManager.startUpdateFlowForResult(
-                    appUpdateInfo,
-                    AppUpdateType.IMMEDIATE,
-                    this,
-                    REQUEST_CODE_UPDATE_FLOW)
-            }
-        }
-        appUpdateInfoTask.addOnFailureListener {
-            toastLong(this, "Ошибка обновления $it")
-        }
-        appUpdateInfoTask.addOnCanceledListener {
-            toastLong(this, "Для дальнейшего использования необходимо обновить приложение")
-            exitProcess(0)
-        }
     }
 
     private fun getTokenFirebase() {
