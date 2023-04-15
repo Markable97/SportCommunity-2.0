@@ -36,6 +36,11 @@ class SquadRepositoryImpl @Inject constructor(
         if (response is Result.Success){
             squadStatistics = response.data.squad
             squad = response.data.squad.distinctBy { it.playerId }.map { it.toModelSquad() }
+        } else {
+            //TODO убрать этот костыль. Сервер кидает тайм аут и старые значения сохранятся
+            //По идеи надо убрать у репозитория @Singleton
+            squadStatistics = emptyList()
+            squad = emptyList()
         }
         return when(response){
             is Result.Error -> Result.Error(response.exception)
