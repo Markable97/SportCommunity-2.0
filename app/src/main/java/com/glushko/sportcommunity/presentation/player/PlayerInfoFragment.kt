@@ -2,6 +2,7 @@ package com.glushko.sportcommunity.presentation.player
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.view.MenuHost
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,6 +21,7 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentPlayerInfoBinding
 import com.glushko.sportcommunity.databinding.ItemStatisticPlayerBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
+import com.glushko.sportcommunity.presentation.base.menu.MenuHostFragment
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.player.career.CareerWidget
 import com.glushko.sportcommunity.presentation.player.career.model.CareerWidgetUI
@@ -26,22 +29,44 @@ import com.glushko.sportcommunity.presentation.player.matches.model.PlayerAction
 import com.glushko.sportcommunity.presentation.player.model.PlayerInfoUI
 import com.glushko.sportcommunity.presentation.player.model.PlayerStatisticsUI
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.extensions.getFullUrl
 import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.fragment_player_info) {
+class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.fragment_player_info), MenuHostFragment {
 
     private val args: PlayerInfoFragmentArgs by navArgs()
 
     private val viewModel by viewModels<PlayerInfoViewModel>()
+
+    override val menuRes: Int
+        get() = R.menu.menu_web_link
+    override val menuActions: Map<Int, (MenuItem) -> Boolean>
+        get() = mapOf(
+            R.id.menuWeb to {
+               (requireActivity() as? MainActivity)?.openWeb( args.playerUrl.getFullUrl())
+                true
+            }
+        )
 
     override fun initBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentPlayerInfoBinding {
         return FragmentPlayerInfoBinding.inflate(inflater)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        (requireActivity() as? MenuHost)?.let { host ->
+            setupMenu(host, viewLifecycleOwner)
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
