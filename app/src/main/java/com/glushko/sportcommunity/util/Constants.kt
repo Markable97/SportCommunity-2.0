@@ -1,8 +1,10 @@
 package com.glushko.sportcommunity.util
 
+import com.glushko.sportcommunity.BuildConfig
+
 object Constants {
-    const val BASE_URL = "http://192.168.0.155:8080/SportCommunityServer/"
-    const val BASE_URL_IMAGE = "http://192.168.0.155:8080/SportCommunityServer/ImagesOfTeams/"
+    const val BASE_URL = "http://${BuildConfig.HOST_NAME}/SportCommunityServer/"
+    const val BASE_URL_IMAGE = "http://${BuildConfig.HOST_NAME}/SportCommunityServer/ImagesOfTeams/"
 
     const val LFL_URL = "https://lfl.ru/"
 

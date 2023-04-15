@@ -35,6 +35,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField  "String", "HOST_NAME", '"185.155.19.22:8080"'
+        }
+        debug {
+            buildConfigField  "String", "HOST_NAME", '"192.168.0.155:8080"'
         }
     }
     compileOptions {
