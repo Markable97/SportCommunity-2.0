@@ -29,7 +29,8 @@ class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squ
                 findNavController().navigate(
                     SquadFragmentDirections.actionSquadFragmentToPlayerInfoFragment(
                         player.playerId,
-                        player.playerName
+                        player.playerName,
+                        player.playerUrl
                     )
                 )
             }

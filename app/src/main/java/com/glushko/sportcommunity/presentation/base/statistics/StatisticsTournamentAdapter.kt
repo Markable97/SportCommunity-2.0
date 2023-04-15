@@ -17,7 +17,7 @@ import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 
 class StatisticsTournamentAdapter(
     private val fromOpen: Int,
-    private val onClickPlayer: (Int, String) -> Unit
+    private val onClickPlayer: (Int, String, String) -> Unit
 ): ListAdapter<PlayerStatisticAdapter, StatisticsTournamentAdapter.ViewHolder>(
     DiffCallback
 ) {
@@ -40,17 +40,17 @@ class StatisticsTournamentAdapter(
         init {
             binding.itemFirst.layoutPlayer.setSafeOnClickListener {
                 selectItem?.firstPlayer?.let {
-                    onClickPlayer.invoke(it.playerId, it.playerName)
+                    onClickPlayer.invoke(it.playerId, it.playerName, it.playerUrl)
                 }
             }
             binding.itemSecond.layoutPlayer.setSafeOnClickListener {
                 selectItem?.secondPlayer?.let {
-                    onClickPlayer.invoke(it.playerId, it.playerName)
+                    onClickPlayer.invoke(it.playerId, it.playerName, it.playerUrl)
                 }
             }
             binding.itemThird.layoutPlayer.setSafeOnClickListener {
                 selectItem?.thirdPlayer?.let {
-                    onClickPlayer.invoke(it.playerId, it.playerName)
+                    onClickPlayer.invoke(it.playerId, it.playerName, it.playerUrl)
                 }
             }
         }

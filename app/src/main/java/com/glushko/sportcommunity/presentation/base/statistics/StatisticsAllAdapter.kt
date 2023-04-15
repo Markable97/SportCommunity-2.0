@@ -14,7 +14,7 @@ import com.glushko.sportcommunity.util.extensions.setSafeOnClickListener
 
 class StatisticsAllAdapter(
     private val fromOpen: Int,
-    private val onClickItem: (Int, String) -> Unit
+    private val onClickItem: (Int, String, String) -> Unit
     ): ListAdapter<PlayerStatisticDisplayData, StatisticsAllAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
@@ -38,7 +38,7 @@ class StatisticsAllAdapter(
         init {
             binding.root.setSafeOnClickListener {
                 selectItem?.let { player ->
-                    onClickItem.invoke(player.playerId, player.playerName)
+                    onClickItem.invoke(player.playerId, player.playerName, player.playerUrl)
                 }
             }
         }

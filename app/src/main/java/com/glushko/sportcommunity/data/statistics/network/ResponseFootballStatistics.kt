@@ -91,7 +91,9 @@ data class PlayerWithStatisticsRes(
     @SerializedName("action_name")
     val actionName: String,
     @SerializedName("image_url")
-    val imageUrl: String?
+    val imageUrl: String?,
+    @SerializedName("player_url")
+    val playerUrl: String
 )
 
 fun PlayerWithStatisticsRes.toModel() = PlayerStatisticDisplayData(
@@ -100,11 +102,13 @@ fun PlayerWithStatisticsRes.toModel() = PlayerStatisticDisplayData(
     playerTeam = teamName,
     points = points,
     amplua = amplua,
-    urlAvatar = imageUrl
+    urlAvatar = imageUrl,
+    playerUrl = playerUrl
 )
 fun PlayerWithStatisticsRes.toModelSquad() = SquadPlayerUI(
     playerId = playerId,
     playerName = playerName,
     amplua = amplua,
-    avatarUrl = imageUrl?:""
+    avatarUrl = imageUrl?:"",
+    playerUrl = playerUrl
 )

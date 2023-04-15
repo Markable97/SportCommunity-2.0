@@ -27,9 +27,9 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
     private val adapterStatistics by lazy {
         StatisticsAllAdapter(
             args.openFrom,
-            onClickItem = { id, name ->
+            onClickItem = { id, name, url ->
                 findNavController().navigate(
-                    StatisticsFragmentDirections.actionStatisticsFragmentToPlayerInfoFragment(id, name)
+                    StatisticsFragmentDirections.actionStatisticsFragmentToPlayerInfoFragment(id, name, url)
                 )
             }
         )

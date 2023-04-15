@@ -241,9 +241,9 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
     private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
         viewPagerStatistics.adapter = StatisticsTournamentAdapter(
             fromOpen = Constants.OPEN_FROM_TOURNAMENT,
-            onClickPlayer = { id, name ->
+            onClickPlayer = { id, name, url ->
                 findNavController().navigate(
-                    TournamentFragmentDirections.actionTournamentFragmentToPlayerInfoFragment(id, name)
+                    TournamentFragmentDirections.actionTournamentFragmentToPlayerInfoFragment(id, name, url)
                 )
             }
         ).apply { submitList(data) }

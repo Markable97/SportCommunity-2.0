@@ -164,6 +164,9 @@
         <argument
             android:name="player_name"
             app:argType="string" />
+        <argument
+            android:name="player_url"
+            app:argType="string" />
         <action
             android:id="@+id/action_playerInfoFragment_to_teamFragment"
             app:destination="@id/teamFragment" />

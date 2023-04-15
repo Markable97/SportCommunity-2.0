@@ -188,9 +188,9 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
     private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
         viewPagerStatistics.adapter = StatisticsTournamentAdapter(
             fromOpen = Constants.OPEN_FROM_TEAM,
-            onClickPlayer = { id, name ->
+            onClickPlayer = { id, name, url ->
                 findNavController().navigate(
-                    TeamFragmentDirections.actionTeamFragmentToPlayerInfoFragment(id, name)
+                    TeamFragmentDirections.actionTeamFragmentToPlayerInfoFragment(id, name, url)
                 )
             }
         ).apply { submitList(data) }
