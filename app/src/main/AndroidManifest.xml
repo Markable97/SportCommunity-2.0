@@ -19,6 +19,7 @@
         android:theme="@style/Theme.SportCommunity">
         <activity
             android:name=".presentation.main_screen.ui.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

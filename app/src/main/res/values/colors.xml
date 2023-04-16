@@ -16,6 +16,7 @@
     <color name="main_gradient_start">@color/primary_variant_color</color>
     <color name="main_gradient_end">#FFFFFF</color>
 
+    <color name="loader_bg">#B3000000</color>
 
     <color name="drawer_item_selected">#C195C9BF</color>
     <color name="image_match_segments">#ff6161</color>
