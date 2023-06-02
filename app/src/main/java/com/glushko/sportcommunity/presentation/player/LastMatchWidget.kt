@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
@@ -26,6 +27,7 @@ fun LastMatchWidget(
 ){
     Widget(
         title = stringResource(id = R.string.player__last_activity),
+        backgroundColor = colorResource(id = R.color.primary_color),
         navigationAction = clickActionTitle
     ) {
         Row(

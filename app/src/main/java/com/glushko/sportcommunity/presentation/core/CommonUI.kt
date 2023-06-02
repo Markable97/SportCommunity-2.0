@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -87,12 +88,13 @@ fun EmptyText(textMessage: String) {
 fun Widget(
     title: String,
     navigationAction: (() -> Unit)? = null,
+    backgroundColor: Color = Color.Transparent,
     filling: @Composable () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
-        elevation = 2.dp,
-        backgroundColor = colorResource(id = R.color.primary_color),
+        elevation = 0.dp,
+        backgroundColor = backgroundColor,
         modifier = Modifier
             .fillMaxWidth()
             .clickable(enabled = navigationAction != null) {

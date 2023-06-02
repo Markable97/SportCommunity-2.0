@@ -1,66 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_main"
     >
 
-    <LinearLayout
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="5dp"
-        >
+        android:layout_height="wrap_content" />
 
-        <include
-            android:id="@+id/itemTournamentTable"
-            layout="@layout/item_tournament_table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" />
-
-        <include
-            android:id="@+id/itemStatistics"
-            layout="@layout/item_statistics_all"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" />
-
-        <Button
-            android:id="@+id/buttonGames"
-            style="@style/Widget.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableEnd="@drawable/ic_ball_soccer_small"
-            android:text="@string/tournament__games"
-             />
-
-        <Button
-            android:id="@+id/buttonMedia"
-            style="@style/Widget.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableEnd="@drawable/ic_media"
-            android:text="@string/tournament__media"
-            android:textColor="@color/black" />
-
-        <Button
-            android:id="@+id/buttonKdk"
-            style="@style/Widget.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:drawableEnd="@drawable/ic_kdk"
-            android:text="@string/tournament__kdk"
-            android:textColor="@color/black" />
-
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/composeViewFullGrid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-</ScrollView>
+</FrameLayout>

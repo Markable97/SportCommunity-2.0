@@ -6,7 +6,11 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.MenuHost
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -22,6 +26,7 @@ import com.glushko.sportcommunity.presentation.main_screen.ui.MainViewModel
 import com.glushko.sportcommunity.presentation.media.FullPhoto
 import com.glushko.sportcommunity.presentation.tournament.model.AlreadyExistsFavoriteException
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
+import com.glushko.sportcommunity.presentation.tournament.model.TournamentScreenDisplayData
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
@@ -115,9 +120,23 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        renderCompose()
         setupObservers()
-        setupListener()
+        //setupListener()
     }
+
+    private fun renderCompose() = binding.composeView.run {
+        setContent {
+            val tournamentInfo by viewModel.liveDataTournamentScreen.observeAsState(
+                TournamentScreenDisplayData.empty()
+            )
+            TournamentScreen(
+                navController = findNavController(),
+                tournamentInfo = tournamentInfo
+            )
+        }
+    }
+
 
     private fun setupObservers() {
         viewModelMain.run {
@@ -139,17 +158,17 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
                 checkFavorite(it.selectedId == it.favoriteId)
             }
         }
-        viewModel.run {
+        /*viewModel.run {
             liveDataTournamentInfo.observe(viewLifecycleOwner) {
                 renderTournamentTable(it.tournamentTable, it.isCup)
             }
             liveDataStatistics.observe(viewLifecycleOwner){
                 renderStatistics(it)
             }
-        }
+        }*/
     }
 
-    private fun openFullGrid(url: String) = binding.composeViewFullGrid.run {
+    /*private fun openFullGrid(url: String) = binding.composeViewFullGrid.run {
         setContent {
             FullPhoto(
                 openFullImage = mutableStateOf(true to url),
@@ -160,17 +179,17 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
                 }
             )
         }
-    }
+    }*/
 
-    private fun setupListener() = binding.run {
-        itemTournamentTable.textTitle.setOnClickListener {
+    /*private fun setupListener() = binding.run {
+        *//*itemTournamentTable.textTitle.setOnClickListener {
             val tournamentInfo = viewModel.liveDataTournamentInfo.value ?: return@setOnClickListener
             if (tournamentInfo.isCup) {
                 openFullGrid(tournamentInfo.imageCupGrid?:"")
             } else {
                 findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToTournamentTableFragment())
             }
-        }
+        }*//*
         itemStatistics.textTitle.setOnClickListener {
             viewModelMain.liveDataSelectedDivision.value?.selectedId?.let { divisionId ->
                 findNavController().navigate(TournamentFragmentDirections.actionTournamentFragmentToStatisticsFragment(
@@ -194,9 +213,9 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
         buttonKdk.setOnClickListener {
             binding.root.showDebugUnderDevelopmentMessage()
         }
-    }
+    }*/
 
-    private fun renderTournamentTable(
+    /*private fun renderTournamentTable(
         data: List<TournamentTableDisplayData>,
         cup: Boolean,
     ) = binding.itemTournamentTable.run {
@@ -216,7 +235,7 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
                 }
             }
         }
-    }
+    }*/
 
     private fun renderRow(row: TournamentTableDisplayData, position: Int, bindingRow: ItemTournamentTableRowBinding){
         bindingRow.apply {
@@ -238,7 +257,7 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
         }
     }
 
-    private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
+    /*private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
         viewPagerStatistics.adapter = StatisticsTournamentAdapter(
             fromOpen = Constants.OPEN_FROM_TOURNAMENT,
             onClickPlayer = { id, name, url ->
@@ -249,6 +268,6 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
         ).apply { submitList(data) }
         viewPagerStatistics.addOnPageSelectedListener {  }
         TabLayoutMediator(tabLayoutStatistics, viewPagerStatistics) { _, _ -> }.attach()
-    }
+    }*/
 
 }
