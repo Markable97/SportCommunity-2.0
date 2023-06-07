@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.presentation.statistics
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,11 +45,13 @@ import com.google.accompanist.pager.rememberPagerState
 @Composable
 fun FillingStatisticsWidget(
     statistics: List<PlayerStatisticAdapter>,
+    onClickPlayer: (PlayerStatisticDisplayData) -> Unit
 ) {
     val state = rememberPagerState()
     StatisticsPager(
         pagerState = state,
-        statistics = statistics
+        statistics = statistics,
+        onClickPlayer = onClickPlayer
     )
     Spacer(modifier = Modifier.padding(4.dp))
     StatisticsDotsIndicator(
@@ -61,7 +64,8 @@ fun FillingStatisticsWidget(
 @Composable
 private fun StatisticsPager(
     pagerState: PagerState,
-    statistics: List<PlayerStatisticAdapter>
+    statistics: List<PlayerStatisticAdapter>,
+    onClickPlayer: (PlayerStatisticDisplayData) -> Unit
 ) {
     HorizontalPager(count = statistics.size, state = pagerState) {
         Column(
@@ -75,9 +79,9 @@ private fun StatisticsPager(
                 modifier = Modifier.fillMaxWidth()
             )
             val statisticsInfo = statistics[pagerState.currentPage]
-            StatisticRow(playerInfo = statisticsInfo.firstPlayer)
-            StatisticRow(playerInfo = statisticsInfo.secondPlayer)
-            StatisticRow(playerInfo = statisticsInfo.thirdPlayer)
+            StatisticRow(playerInfo = statisticsInfo.firstPlayer, onClickPlayer)
+            StatisticRow(playerInfo = statisticsInfo.secondPlayer, onClickPlayer)
+            StatisticRow(playerInfo = statisticsInfo.thirdPlayer, onClickPlayer)
         }
     }
 }
@@ -118,11 +122,19 @@ private fun StatisticsDotsIndicator(
 }
 
 @Composable
-fun StatisticRow(playerInfo: PlayerStatisticDisplayData?) {
+fun StatisticRow(
+    playerInfo: PlayerStatisticDisplayData?,
+    onClickPlayer: (PlayerStatisticDisplayData) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 5.dp)
+            .clickable {
+                playerInfo?.let {
+                    onClickPlayer(it)
+                }
+            }
     ) {
         StatisticsFillingRow(playerInfo)
         Spacer(modifier = Modifier.padding(top = 10.dp))

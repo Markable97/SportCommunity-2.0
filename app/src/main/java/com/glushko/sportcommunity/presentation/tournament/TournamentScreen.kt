@@ -65,6 +65,15 @@ private fun RenderStatisticsWidget(
             ))
         }
     ) {
-        FillingStatisticsWidget(statistics)
+        FillingStatisticsWidget(statistics) { playerInfo ->
+            navController.navigate(
+                TournamentFragmentDirections
+                    .actionTournamentFragmentToPlayerInfoFragment(
+                        playerInfo.playerId,
+                        playerInfo.playerName,
+                        playerInfo.playerUrl
+                    )
+            )
+        }
     }
 }
