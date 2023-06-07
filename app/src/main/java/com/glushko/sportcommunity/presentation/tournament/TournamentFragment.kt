@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.MenuHost
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -20,26 +17,18 @@ import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentTournamentBinding
 import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseFragmentWithToolbarMenu
-import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainViewModel
-import com.glushko.sportcommunity.presentation.media.FullPhoto
 import com.glushko.sportcommunity.presentation.tournament.model.AlreadyExistsFavoriteException
-import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentScreenDisplayData
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
-import com.glushko.sportcommunity.util.extensions.addOnPageSelectedListener
 import com.glushko.sportcommunity.util.extensions.getFullUrl
-import com.glushko.sportcommunity.util.extensions.gone
-import com.glushko.sportcommunity.util.extensions.showDebugUnderDevelopmentMessage
 import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.toast
-import com.glushko.sportcommunity.util.extensions.visible
 import com.glushko.sportcommunity.util.succeeded
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -132,7 +121,7 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
             )
             TournamentScreen(
                 navController = findNavController(),
-                tournamentInfo = tournamentInfo
+                tournamentInfo = tournamentInfo,
             )
         }
     }
@@ -149,7 +138,7 @@ class TournamentFragment: BaseFragmentWithToolbarMenu<FragmentTournamentBinding>
                     }
                     is Resource.Loading -> {}
                     is Resource.Success -> {
-                        viewModel.init()
+                        viewModel.init(liveDataSelectedDivision.value)
                     }
                 }
             }

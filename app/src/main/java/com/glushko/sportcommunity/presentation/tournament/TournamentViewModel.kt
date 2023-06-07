@@ -7,6 +7,7 @@ import com.glushko.sportcommunity.data.media.model.MediaUI
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.tournament.TournamentRepository
+import com.glushko.sportcommunity.presentation.tournament.model.DivisionSelected
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentInfoDisplayData
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentScreenDisplayData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,14 +32,16 @@ class TournamentViewModel @Inject constructor(
 
     val liveDataTournamentScreen = MutableLiveData<TournamentScreenDisplayData>()
 
-    fun init(){
+    fun init(selectedDivision: DivisionSelected?) {
+        val divisionId = selectedDivision?.selectedId ?: return
         _liveDataTournamentInfo.value = tournamentRepository.getTournamentInfo()
         _liveDataTable.value = tournamentRepository.getTournamentTable()
         _liveDataStatistics.value = tournamentRepository.getStatistics()
         _liveDataMedia.value = tournamentRepository.getMedia()
         liveDataTournamentScreen.value = TournamentScreenDisplayData(
             tournamentInfo = tournamentRepository.getTournamentInfo(),
-            statistics = tournamentRepository.getStatistics()
+            statistics = tournamentRepository.getStatistics(),
+            selectedDivision = divisionId
         )
     }
 
