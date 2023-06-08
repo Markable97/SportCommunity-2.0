@@ -75,18 +75,25 @@ class TournamentTableFragment : BaseFragment() {
             )
         ) {
             CreateTable(
-                navController = findNavController(),
                 response = response
-            )
+            ) { team ->
+                findNavController().navigate(
+                    TournamentTableFragmentDirections.actionTournamentTableFragmentToTeamFragment(
+                        teamName = team.teamName,
+                        teamId = team.teamId,
+                        teamImage = team.teamImage
+                    )
+                )
+            }
         }
     }
 }
 
 @Composable
 fun CreateTable(
-    navController: NavController,
     response: List<TournamentTableDisplayData>,
     positionColor: Boolean = true,
+    onClickTeam: (TournamentTableDisplayData) -> Unit
 ) {
     Column(
         modifier = Modifier.wrapContentHeight()
@@ -98,7 +105,7 @@ fun CreateTable(
             .wrapContentHeight()
             .weight(2f)
         TableHead(modifierName, modifierOther)
-        TableBody(navController, response, modifierName, modifierOther, positionColor)
+        TableBody(onClickTeam, response, modifierName, modifierOther, positionColor)
     }
 }
 
@@ -126,13 +133,13 @@ fun TableHead(modifier: Modifier, modifierOther: Modifier) {
 
 @Composable
 fun TableBody(
-    navController: NavController,
+    onClickTeam: (TournamentTableDisplayData) -> Unit,
     table: List<TournamentTableDisplayData>, modifier: Modifier, modifierOther: Modifier, positionColor: Boolean
 ) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         itemsIndexed(table) { num, team ->
             TableRow(
-                navController = navController,
+                onClickTeam = onClickTeam,
                 num = num + 1,
                 team = team,
                 modifier = modifier,
@@ -145,7 +152,7 @@ fun TableBody(
 
 @Composable
 fun TableRow(
-    navController: NavController,
+    onClickTeam: (TournamentTableDisplayData) -> Unit,
     num: Int, team: TournamentTableDisplayData, modifier: Modifier, modifierOther: Modifier, positionColor: Boolean
 ) {
     val colorPosition = if (positionColor){
@@ -165,13 +172,7 @@ fun TableRow(
             .wrapContentHeight()
             .clickable(
                 onClick = {
-                    navController.navigate(
-                        TournamentTableFragmentDirections.actionTournamentTableFragmentToTeamFragment(
-                            teamName = team.teamName,
-                            teamId = team.teamId,
-                            teamImage = team.teamImage
-                        )
-                    )
+                    onClickTeam.invoke(team)
                 }
             ),
         verticalAlignment = Alignment.CenterVertically,
