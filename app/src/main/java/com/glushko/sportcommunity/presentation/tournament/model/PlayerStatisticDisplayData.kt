@@ -1,7 +1,9 @@
 package com.glushko.sportcommunity.presentation.tournament.model
 
+import android.os.Parcelable
 import androidx.annotation.StringRes
 import com.glushko.sportcommunity.R
+import kotlinx.parcelize.Parcelize
 
 data class PlayerStatisticAdapter(
     val typeStatistics: TypeStatistics,
@@ -10,6 +12,7 @@ data class PlayerStatisticAdapter(
     val thirdPlayer: PlayerStatisticDisplayData?
 )
 
+@Parcelize
 data class PlayerStatisticDisplayData(
     val playerId: Int,
     val playerName: String,
@@ -18,7 +21,7 @@ data class PlayerStatisticDisplayData(
     val amplua: String,
     val playerUrl: String,
     val urlAvatar: String? = null
-)
+) : Parcelable
 
 enum class TypeStatistics () {
     GOALS, ASSISTS, YELLOW_CARDS, RED_CARDS

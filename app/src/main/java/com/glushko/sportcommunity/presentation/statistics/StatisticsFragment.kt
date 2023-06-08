@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,6 +15,8 @@ import com.glushko.sportcommunity.presentation.tournament.model.TypeStatistics
 import com.glushko.sportcommunity.databinding.FragmentStatisticsBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsAllAdapter
+import com.glushko.sportcommunity.presentation.statistics.model.getOpenStaticsFrom
+import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticDisplayData
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.google.android.material.tabs.TabLayout
@@ -24,7 +29,7 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
 
     private val args: StatisticsFragmentArgs by navArgs()
 
-    private val adapterStatistics by lazy {
+    /*private val adapterStatistics by lazy {
         StatisticsAllAdapter(
             args.openFrom,
             onClickItem = { id, name, url ->
@@ -33,7 +38,7 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
                 )
             }
         )
-    }
+    }*/
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -42,12 +47,24 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
-        setupObservers()
-        setupListeners()
+        renderCompose()
     }
 
-    private fun initViews() {
+    private fun renderCompose() = binding.composeView.run {
+        setContent {
+            val playerList by viewModel.liveDataStatisticsPlayers.observeAsState(Resource.Empty())
+            val listState = rememberLazyListState()
+            StatisticsScreen(
+                openFrom = args.openFrom.getOpenStaticsFrom(),
+                navController = findNavController(),
+                listState = listState,
+                playerList = playerList.data ?: emptyList()
+            ) {
+                viewModel.getStatistics(it)
+            }
+        }
+    }
+    /*private fun initViews() {
         binding.textTitle.text = getText(
             if (args.openFrom == Constants.OPEN_FROM_TOURNAMENT){
                 R.string.tournament__statistics
@@ -56,9 +73,9 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
             }
         )
         binding.recyclerStatistics.adapter = adapterStatistics
-    }
+    }*/
 
-    private fun setupObservers() = viewModel.run{
+    /*private fun setupObservers() = viewModel.run{
         liveDataStatisticsPlayers.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Empty -> {}
@@ -71,9 +88,9 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
                 }
             }
         }
-    }
+    }*/
 
-    private fun setupListeners() = binding.run {
+    /*private fun setupListeners() = binding.run {
         tabLayoutStatistics.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab?.position){
@@ -93,5 +110,5 @@ class StatisticsFragment: BaseXmlFragment<FragmentStatisticsBinding>(R.layout.fr
 
         }
         )
-    }
+    }*/
 }

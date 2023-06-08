@@ -79,9 +79,9 @@ private fun StatisticsPager(
                 modifier = Modifier.fillMaxWidth()
             )
             val statisticsInfo = statistics[pagerState.currentPage]
-            StatisticRow(playerInfo = statisticsInfo.firstPlayer, onClickPlayer)
-            StatisticRow(playerInfo = statisticsInfo.secondPlayer, onClickPlayer)
-            StatisticRow(playerInfo = statisticsInfo.thirdPlayer, onClickPlayer)
+            StatisticRow(playerInfo = statisticsInfo.firstPlayer, onClickPlayer = onClickPlayer)
+            StatisticRow(playerInfo = statisticsInfo.secondPlayer, onClickPlayer = onClickPlayer)
+            StatisticRow(playerInfo = statisticsInfo.thirdPlayer, onClickPlayer = onClickPlayer)
         }
     }
 }
@@ -123,11 +123,12 @@ private fun StatisticsDotsIndicator(
 
 @Composable
 fun StatisticRow(
+    modifier: Modifier = Modifier,
     playerInfo: PlayerStatisticDisplayData?,
     onClickPlayer: (PlayerStatisticDisplayData) -> Unit
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 5.dp)
             .clickable {
