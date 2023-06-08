@@ -106,13 +106,14 @@ class SquadRepositoryImpl @Inject constructor(
         )
     }
     override suspend fun getSquadStatisticsAll(type: TypeStatistics): Resource<List<PlayerStatisticDisplayData>> {
+        val list = when (type) {
+            TypeStatistics.GOALS -> squadStatistics.filter { it.actionId in Constants.TYPE_ACTION_GOALS }.map { it.toModel() }
+            TypeStatistics.ASSISTS -> squadStatistics.filter { it.actionId == Constants.TYPE_ACTION_ASSIST || it.actionId == Constants.TYPE_ACTION_ASSISTS }.map { it.toModel() }
+            TypeStatistics.YELLOW_CARDS -> squadStatistics.filter { it.actionId == Constants.TYPE_ACTION_YELLOW_CARD }.map { it.toModel() }
+            TypeStatistics.RED_CARDS -> squadStatistics.filter { it.actionId == Constants.TYPE_ACTION_RED_CARD }.map { it.toModel() }
+        }
         return Resource.Success(
-            when (type) {
-                TypeStatistics.GOALS -> squadStatistics.filter { it.actionId in Constants.TYPE_ACTION_GOALS }.map { it.toModel() }
-                TypeStatistics.ASSISTS -> squadStatistics.filter { it.actionId == Constants.TYPE_ACTION_ASSIST || it.actionId == Constants.TYPE_ACTION_ASSISTS }.map { it.toModel() }
-                TypeStatistics.YELLOW_CARDS -> squadStatistics.filter { it.actionId == Constants.TYPE_ACTION_YELLOW_CARD }.map { it.toModel() }
-                TypeStatistics.RED_CARDS -> squadStatistics.filter { it.actionId == Constants.TYPE_ACTION_RED_CARD }.map { it.toModel() }
-            }
+            list.distinctBy { it.playerId }
         )
     }
 
