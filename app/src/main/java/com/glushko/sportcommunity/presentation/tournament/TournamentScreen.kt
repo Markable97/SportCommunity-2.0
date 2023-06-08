@@ -41,10 +41,17 @@ private fun RenderTournamentTableWidget(
             }
         ) {
             CreateTable(
-                navController = navController,
                 response = tournamentInfo.tournamentTable.take(4),
                 positionColor = false
-            )
+            ) { team ->
+                navController.navigate(
+                    TournamentFragmentDirections.actionTournamentFragmentToTeamFragment(
+                        teamName = team.teamName,
+                        teamId = team.teamId,
+                        teamImage = team.teamImage
+                    )
+                )
+            }
         }
     }
 }
