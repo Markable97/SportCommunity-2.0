@@ -1,41 +1,35 @@
 package com.glushko.sportcommunity.presentation.team
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.glushko.sportcommunity.R
+import com.glushko.sportcommunity.presentation.core.ButtonIconMain
 import com.glushko.sportcommunity.presentation.core.Widget
 import com.glushko.sportcommunity.presentation.statistics.FillingStatisticsWidget
 import com.glushko.sportcommunity.presentation.tournament.TournamentFragmentDirections
 import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticAdapter
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
-import com.glushko.sportcommunity.presentation.tournament.tournament_table.ui.CreateTable
 import com.glushko.sportcommunity.presentation.tournament.tournament_table.ui.CreateTableWidget
 import com.glushko.sportcommunity.util.Constants
 
@@ -87,7 +81,7 @@ fun TeamScreen(
                 positionColor = false
             ) { team -> }
         }
-        TeamFooter()
+        TeamFooter(navController, teamArg)
     }
 }
 
@@ -124,6 +118,37 @@ fun TeamHeader(teamArg: TeamFragmentArgs) {
 }
 
 @Composable
-fun TeamFooter() {
-    //TODO add team footer buttons
+fun TeamFooter(
+    navController: NavController,
+    teamArg: TeamFragmentArgs
+) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 10.dp)) {
+        ButtonIconMain(
+            modifier = Modifier.weight(1f),
+            textButton = "Состав",
+            imageIcon = ImageVector.vectorResource(id = R.drawable.ic_people),
+            onClick = {
+                navController.navigate(TeamFragmentDirections.actionTeamFragmentToSquadFragment(teamArg.teamId))
+            }
+        )
+        ButtonIconMain(
+            modifier = Modifier.weight(1f),
+            textButton = "Игры",
+            imageIcon = ImageVector.vectorResource(id = R.drawable.ic_ball_soccer_small),
+            onClick = {
+                navController.navigate(TeamFragmentDirections.actionTeamFragmentToGamesFragment(teamArg.teamId))
+            }
+        )
+    }
+    ButtonIconMain(
+        modifier = Modifier.fillMaxWidth()
+            .padding(horizontal = 10.dp),
+        textButton = "Медия",
+        imageIcon = ImageVector.vectorResource(id = R.drawable.ic_media),
+        onClick = {
+            navController.navigate(TeamFragmentDirections.actionTeamFragmentToTeamMediaFragment(teamArg.teamId))
+        }
+    )
 }
