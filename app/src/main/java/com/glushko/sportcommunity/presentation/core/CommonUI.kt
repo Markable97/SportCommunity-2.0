@@ -131,6 +131,7 @@ fun TitleNavigate(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(end = 5.dp)
             .clickable(enabled = navigationAction != null) {
                 navigationAction?.invoke()
             },

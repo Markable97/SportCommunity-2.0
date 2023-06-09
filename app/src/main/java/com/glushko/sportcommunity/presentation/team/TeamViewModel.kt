@@ -9,11 +9,17 @@ import com.glushko.sportcommunity.presentation.tournament.model.PlayerStatisticA
 import com.glushko.sportcommunity.presentation.tournament.model.TournamentTableDisplayData
 import com.glushko.sportcommunity.domain.squad.SquadRepository
 import com.glushko.sportcommunity.domain.tournament.TournamentRepository
+import com.glushko.sportcommunity.presentation.team.model.TeamDisplayData
 import com.glushko.sportcommunity.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.glushko.sportcommunity.util.Result
+import com.glushko.sportcommunity.util.data
+import com.glushko.sportcommunity.util.succeeded
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import launchInMain
 
 @HiltViewModel
 class TeamViewModel @Inject constructor(
@@ -30,25 +36,51 @@ class TeamViewModel @Inject constructor(
     private val _liveDataStatistics: MutableLiveData<Resource<List<PlayerStatisticAdapter>>> = MutableLiveData()
     val liveDataStatistics: LiveData<Resource<List<PlayerStatisticAdapter>>> = _liveDataStatistics
 
+    private val _liveDataTeamDisplayData: MutableLiveData<Result<TeamDisplayData>> = MutableLiveData()
+    val liveDataTeamDisplayData: LiveData<Result<TeamDisplayData>> = _liveDataTeamDisplayData
+
     fun loadingVisible(): Boolean {
         return !(_liveDataSquadInfo.value !is Result.Loading  && _liveDataTable.value !is Result.Loading)
     }
 
     fun init(teamId: Int){
-        viewModelScope.launch {
-            _liveDataSquadInfo.postValue(Result.Loading)
-            _liveDataTable.postValue(Result.Loading)
-            _liveDataSquadInfo.postValue(squadRepository.getSquadInfo(teamId))
-            checkTournamentTable(teamId)
-        }
+        launchInMain()
+            .doOnStart {
+                _liveDataTeamDisplayData.value = Result.Loading
+            }
+            .onError {
+                _liveDataTeamDisplayData.value = Result.Error(it as Exception)
+            }
+            .start {
+                val squadDef = async { squadRepository.getSquadInfo(teamId) }
+                val tournamentDef = async {
+                    checkTournamentTable(teamId)
+                }
+                val squadResponse = squadDef.await()
+                val tournamentResponse = tournamentDef.await()
+                if (squadResponse.succeeded && tournamentResponse.succeeded) {
+                    val statistics = squadRepository.getSquadStatistics()
+                    _liveDataTeamDisplayData.value = Result.Success(
+                        TeamDisplayData(
+                            tournamentTable = (tournamentResponse as Result.Success).data,
+                            statistics = statistics
+                        )
+                    )
+                } else {
+                    val error = (squadResponse as? Result.Error)?.exception
+                        ?: (tournamentResponse as? Result.Error)?.exception
+                        ?: Exception()
+                    throw (error)
+                }
+            }
     }
 
-    private suspend fun checkTournamentTable(teamId: Int){
+    private suspend fun checkTournamentTable(teamId: Int): Result<List<TournamentTableDisplayData>>{
         val table = tournamentRepository.getTournamentTableTeam(teamId)
-        if (table.isEmpty()) {
-            _liveDataTable.postValue(tournamentRepository.getTournamentTableForTeam(teamId))
+        return if (table.isEmpty()) {
+            tournamentRepository.getTournamentTableForTeam(teamId)
         } else {
-            _liveDataTable.postValue(Result.Success(table))
+            Result.Success(table)
         }
     }
 

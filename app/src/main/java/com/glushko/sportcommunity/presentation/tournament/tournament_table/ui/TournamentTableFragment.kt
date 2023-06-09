@@ -109,6 +109,26 @@ fun CreateTable(
     }
 }
 
+@Composable
+fun CreateTableWidget(
+    response: List<TournamentTableDisplayData>,
+    positionColor: Boolean = true,
+    onClickTeam: (TournamentTableDisplayData) -> Unit
+) {
+    Column(
+        modifier = Modifier.wrapContentHeight()
+    ) {
+        val modifierName = Modifier
+            .wrapContentHeight()
+            .weight(8f)
+        val modifierOther = Modifier
+            .wrapContentHeight()
+            .weight(2f)
+        TableHead(modifierName, modifierOther)
+        TableBodyWidget(onClickTeam, response, modifierName, modifierOther, positionColor)
+    }
+}
+
 
 @Composable
 fun TableHead(modifier: Modifier, modifierOther: Modifier) {
@@ -147,6 +167,21 @@ fun TableBody(
                 positionColor
             )
         }
+    }
+}@Composable
+fun TableBodyWidget(
+    onClickTeam: (TournamentTableDisplayData) -> Unit,
+    table: List<TournamentTableDisplayData>, modifier: Modifier, modifierOther: Modifier, positionColor: Boolean
+) {
+    table.forEachIndexed { num, team ->
+        TableRow(
+            onClickTeam = onClickTeam,
+            num = num + 1,
+            team = team,
+            modifier = modifier,
+            modifierOther = modifierOther,
+            positionColor
+        )
     }
 }
 

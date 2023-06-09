@@ -6,6 +6,21 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.view.MenuHost
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,7 +34,10 @@ import com.glushko.sportcommunity.databinding.ItemTournamentTableRowBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import com.glushko.sportcommunity.presentation.base.menu.MenuHostFragment
 import com.glushko.sportcommunity.presentation.base.statistics.StatisticsTournamentAdapter
+import com.glushko.sportcommunity.presentation.core.DoSomething
+import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
+import com.glushko.sportcommunity.presentation.team.model.TeamDisplayData
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
@@ -73,18 +91,44 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-        setupObservers()
-        setupListeners()
+        (requireActivity() as? MainActivity)?.setToolbarTitle(args.teamName)
+        renderCompose()
     }
 
-    private fun initView() = binding.run {
+    private fun renderCompose() = binding.composeView.setContent {
+        val teamDisplayResponse by viewModel.liveDataTeamDisplayData.observeAsState(Result.Loading)
+        CreateScreen(teamDisplayResponse)
+    }
+
+    @Composable
+    private fun CreateScreen(teamDisplayResponse: Result<TeamDisplayData>) {
+        when(teamDisplayResponse) {
+            is Result.Error -> {
+                DoSomething(message = teamDisplayResponse.exception.message ?: "") {
+                    viewModel.init(args.teamId)
+                }
+            }
+            Result.Loading -> {
+                Loader()
+            }
+            is Result.Success -> {
+                TeamScreen(
+                    teamArg = args,
+                    navController = findNavController(),
+                    tournamentTable = teamDisplayResponse.data.tournamentTable,
+                    statistics = teamDisplayResponse.data.statistics
+                )
+            }
+        }
+    }
+
+    /*private fun initView() = binding.run {
         (requireActivity() as? MainActivity)?.setToolbarTitle(args.teamName)
         imageTeam.load(args.teamImage?:"${Constants.BASE_URL_IMAGE}${args.teamName}.png")
         textTeamName.text = args.teamName
-    }
+    }*/
 
-    private fun setupListeners() = binding.run {
+    /*private fun setupListeners() = binding.run {
         itemStatistics.textTitle.setOnClickListener {
             findNavController().navigate(
                 TeamFragmentDirections.actionTeamFragmentToStatisticsFragment(
@@ -110,9 +154,9 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         buttonHistory.setOnClickListener {
             binding.root.showDebugUnderDevelopmentMessage()
         }
-    }
+    }*/
 
-    private fun setupObservers() = viewModel.run {
+    /*private fun setupObservers() = viewModel.run {
         liveDataTable.observe(viewLifecycleOwner){
             showProgress(loadingVisible())
             when(it){
@@ -145,9 +189,9 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
                 }
             }
         }
-    }
+    }*/
 
-    private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
+    /*private fun renderTournamentTable(data: List<TournamentTableDisplayData>) = binding.itemTournamentTable.run {
         data.forEachIndexed{ index, data ->
             when(index) {
                 0 -> renderRow(data,  itemRowFirst)
@@ -157,7 +201,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
                 else -> return@forEachIndexed
             }
         }
-    }
+    }*/
 
     private fun renderRow(row: TournamentTableDisplayData, bindingRow: ItemTournamentTableRowBinding){
         with(bindingRow) {
@@ -185,7 +229,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         }
     }
 
-    private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
+    /*private fun renderStatistics(data: List<PlayerStatisticAdapter>) = binding.itemStatistics.run {
         viewPagerStatistics.adapter = StatisticsTournamentAdapter(
             fromOpen = Constants.OPEN_FROM_TEAM,
             onClickPlayer = { id, name, url ->
@@ -196,7 +240,7 @@ class TeamFragment: BaseXmlFragment<FragmentTeamBinding>(R.layout.fragment_team)
         ).apply { submitList(data) }
         viewPagerStatistics.addOnPageSelectedListener {  }
         TabLayoutMediator(tabLayoutStatistics, viewPagerStatistics) { _, _ -> }.attach()
-    }
+    }*/
 
 
 }
