@@ -78,7 +78,8 @@ fun TeamScreen(
         ) {
             CreateTableWidget(
                 response = tournamentTable.take(4),
-                positionColor = false
+                positionColor = false,
+                teamIdSelect = teamArg.teamId
             ) { team -> }
         }
         TeamFooter(navController, teamArg)

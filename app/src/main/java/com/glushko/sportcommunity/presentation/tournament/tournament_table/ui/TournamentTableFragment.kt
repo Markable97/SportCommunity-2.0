@@ -22,9 +22,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.glushko.sportcommunity.R
@@ -113,6 +114,7 @@ fun CreateTable(
 fun CreateTableWidget(
     response: List<TournamentTableDisplayData>,
     positionColor: Boolean = true,
+    teamIdSelect: Int? = null,
     onClickTeam: (TournamentTableDisplayData) -> Unit
 ) {
     Column(
@@ -125,7 +127,7 @@ fun CreateTableWidget(
             .wrapContentHeight()
             .weight(2f)
         TableHead(modifierName, modifierOther)
-        TableBodyWidget(onClickTeam, response, modifierName, modifierOther, positionColor)
+        TableBodyWidget(onClickTeam, response, modifierName, modifierOther, positionColor, teamIdSelect)
     }
 }
 
@@ -171,16 +173,21 @@ fun TableBody(
 }@Composable
 fun TableBodyWidget(
     onClickTeam: (TournamentTableDisplayData) -> Unit,
-    table: List<TournamentTableDisplayData>, modifier: Modifier, modifierOther: Modifier, positionColor: Boolean
+    table: List<TournamentTableDisplayData>,
+    modifier: Modifier,
+    modifierOther: Modifier,
+    positionColor: Boolean,
+    teamIdSelected: Int?,
 ) {
     table.forEachIndexed { num, team ->
         TableRow(
             onClickTeam = onClickTeam,
-            num = num + 1,
+            num = team.position,
             team = team,
             modifier = modifier,
             modifierOther = modifierOther,
-            positionColor
+            positionColor = positionColor,
+            teamIdSelected = teamIdSelected
         )
     }
 }
@@ -188,7 +195,12 @@ fun TableBodyWidget(
 @Composable
 fun TableRow(
     onClickTeam: (TournamentTableDisplayData) -> Unit,
-    num: Int, team: TournamentTableDisplayData, modifier: Modifier, modifierOther: Modifier, positionColor: Boolean
+    num: Int,
+    team: TournamentTableDisplayData,
+    modifier: Modifier,
+    modifierOther: Modifier,
+    positionColor: Boolean,
+    teamIdSelected: Int? = null
 ) {
     val colorPosition = if (positionColor){
         if (team.positionColor != null) {
@@ -198,6 +210,11 @@ fun TableRow(
         }
     } else {
         Color.Transparent
+    }
+    val (fontSize, fontWeight) = if (team.teamId == teamIdSelected) {
+        16.sp to FontWeight.Bold
+    } else {
+        14.sp to FontWeight.Normal
     }
     Row(
         modifier = Modifier
@@ -213,15 +230,15 @@ fun TableRow(
         verticalAlignment = Alignment.CenterVertically,
 
         ) {
-        TableCell(modifier = modifierOther, value = num.toString())
+        TableCell(modifier = modifierOther, value = num.toString(), isHead = false, fontSize, fontWeight)
         TableCellIMage(modifier = modifierOther, value = team.teamImage ?: "${BASE_URL_IMAGE}${team.teamName}.png")
-        TableCell(modifier = modifier, value = team.teamName)
-        TableCell(modifier = modifierOther, value = team.games.toString())
-        TableCell(modifier = modifierOther, value = team.wins.toString())
-        TableCell(modifier = modifierOther, value = team.draws.toString())
-        TableCell(modifier = modifierOther, value = team.losses.toString())
-        TableCell(modifier = modifierOther, value = team.scCon.toString())
-        TableCell(modifier = modifierOther, value = team.points.toString())
+        TableCell(modifier = modifier, value = team.teamName, fontSize = fontSize, fontWeight = fontWeight)
+        TableCell(modifier = modifierOther, value = team.games.toString(), fontSize = fontSize, fontWeight = fontWeight)
+        TableCell(modifier = modifierOther, value = team.wins.toString(), fontSize = fontSize, fontWeight = fontWeight)
+        TableCell(modifier = modifierOther, value = team.draws.toString(), fontSize = fontSize, fontWeight = fontWeight)
+        TableCell(modifier = modifierOther, value = team.losses.toString(), fontSize = fontSize, fontWeight = fontWeight)
+        TableCell(modifier = modifierOther, value = team.scCon.toString(), fontSize = fontSize, fontWeight = fontWeight)
+        TableCell(modifier = modifierOther, value = team.points.toString(), fontSize = fontSize, fontWeight = fontWeight)
     }
 }
 
@@ -238,11 +255,11 @@ fun TableCellIMage(modifier: Modifier, value: String) {
 }
 
 @Composable
-fun TableCell(modifier: Modifier, value: String, isHead: Boolean = false) {
+fun TableCell(modifier: Modifier, value: String, isHead: Boolean = false, fontSize: TextUnit = 14.sp, fontWeight: FontWeight = FontWeight.Normal) {
     //Ячейка таблицы
     if (isHead) {
         Text(text = value, modifier = modifier, textAlign = TextAlign.Center, fontWeight = FontWeight.ExtraBold)
     } else {
-        Text(text = value, modifier = modifier, textAlign = TextAlign.Center)
+        Text(text = value, modifier = modifier, textAlign = TextAlign.Center, fontWeight = fontWeight, fontSize = fontSize)
     }
 }
