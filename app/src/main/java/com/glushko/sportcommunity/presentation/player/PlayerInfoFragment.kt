@@ -34,6 +34,7 @@ import com.glushko.sportcommunity.util.extensions.snackbar
 import com.glushko.sportcommunity.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 
+//TODO XML to Compose
 @AndroidEntryPoint
 class PlayerInfoFragment : BaseXmlFragment<FragmentPlayerInfoBinding>(R.layout.fragment_player_info), MenuHostFragment {
 

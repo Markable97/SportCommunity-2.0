@@ -18,6 +18,7 @@ import com.glushko.sportcommunity.util.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+//TODO XML to Compose
 @AndroidEntryPoint
 class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squad){
 

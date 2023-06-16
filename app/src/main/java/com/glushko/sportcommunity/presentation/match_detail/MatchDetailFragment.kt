@@ -53,6 +53,7 @@ import com.glushko.sportcommunity.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+//TODO XML to Compose (MatchScreenType.TIME_LINE)
 @AndroidEntryPoint
 class MatchDetailFragment
     : BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.fragment_match_detail), MenuHostFragment {
