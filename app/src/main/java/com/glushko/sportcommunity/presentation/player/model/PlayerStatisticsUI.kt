@@ -60,5 +60,18 @@ enum class PlayerStatisticsUI(
                 else -> null
             }?.apply { setPoint(points) }
         }
+
+        fun getSample() = PENALTY_OUT
+
+        fun getSamples() = listOf(
+            GAMES,
+            GOALS,
+            PENALTY,
+            PENALTY_OUT,
+            YELLOW_CARDS,
+            RED_CARDS,
+            OWN_GOALS,
+            ASSISTS
+        )
     }
 }

@@ -89,24 +89,22 @@ fun TeamScreen(
 @Composable
 fun TeamHeader(teamArg: TeamFragmentArgs) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            ,
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier
                 .size(128.dp)
-                .padding(20.dp)
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(100)
-                )
+                ),
+            contentAlignment = Alignment.Center
         ) {
             AsyncImage(
                 model = teamArg.teamName,
                 contentDescription = "",
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.size(108.dp)
             )
         }
         Spacer(modifier = Modifier.size(10.dp))
