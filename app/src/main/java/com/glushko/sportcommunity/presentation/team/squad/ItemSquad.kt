@@ -1,6 +1,7 @@
 package com.glushko.sportcommunity.presentation.team.squad
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,9 +47,13 @@ class ItemSquadPreview(
 fun ItemSquad(
     @PreviewParameter(ItemSquadPreview::class)
     data: SquadPlayerUI,
+    onClickItem: ((SquadPlayerUI)-> Unit)? = null
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(start = 5.dp, top = 5.dp, bottom = 5.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 5.dp, top = 5.dp, bottom = 5.dp)
+            .clickable { onClickItem?.invoke(data) },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(

@@ -11,7 +11,6 @@ import com.glushko.sportcommunity.databinding.FragmentSquadBinding
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-//TODO XML to Compose
 @AndroidEntryPoint
 class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squad){
 
@@ -25,7 +24,7 @@ class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squ
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.setContent {
-            SquadScreen(viewModel = viewModel)
+            SquadScreen(viewModel = viewModel, navController = findNavController())
         }
     }
 

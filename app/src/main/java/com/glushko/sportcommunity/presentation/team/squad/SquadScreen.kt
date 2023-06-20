@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.data.squad.model.SquadPlayerUI
 import com.glushko.sportcommunity.presentation.core.SearchDisplay
@@ -28,7 +29,8 @@ fun SquadScreen(
     viewModel: SquadViewModel,
     state: SearchState<SquadPlayerUI> = rememberSearchState(
         searchResults = viewModel.initialSquad
-    )
+    ),
+    navController: NavController
 ) {
     Column(
         modifier = modifier.fillMaxSize()
@@ -73,7 +75,15 @@ fun SquadScreen(
                         .fillMaxSize()
                 ) {
                     items(state.searchResults) { player ->
-                        ItemSquad(data = player)
+                        ItemSquad(data = player) {
+                            navController.navigate(
+                                SquadFragmentDirections.actionSquadFragmentToPlayerInfoFragment(
+                                    it.playerId,
+                                    it.playerName,
+                                    it.playerUrl
+                                )
+                            )
+                        }
                     }
                 }
             }
