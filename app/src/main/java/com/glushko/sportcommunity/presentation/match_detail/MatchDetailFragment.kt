@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -42,18 +43,14 @@ import com.glushko.sportcommunity.presentation.base.menu.MenuHostFragment
 import com.glushko.sportcommunity.presentation.core.DoSomething
 import com.glushko.sportcommunity.presentation.core.Loader
 import com.glushko.sportcommunity.presentation.main_screen.ui.MainActivity
-import com.glushko.sportcommunity.presentation.match_detail.adapters.MatchDetailAdapter
 import com.glushko.sportcommunity.presentation.matches.model.MatchFootballDisplayData
 import com.glushko.sportcommunity.presentation.matches.model.MatchScreenType
 import com.glushko.sportcommunity.util.Constants
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.getFullUrl
-import com.glushko.sportcommunity.util.extensions.gone
-import com.glushko.sportcommunity.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-//TODO XML to Compose (MatchScreenType.TIME_LINE)
 @AndroidEntryPoint
 class MatchDetailFragment
     : BaseXmlFragment<FragmentMatchDetailBinding>(R.layout.fragment_match_detail), MenuHostFragment {
@@ -64,8 +61,6 @@ class MatchDetailFragment
     private val matchUrl by lazy {
         args.match.matchUrl
     }
-
-    private val adapterMatchDetail by lazy { MatchDetailAdapter() }
 
     override val menuRes: Int
         get() = R.menu.menu_web_link
@@ -105,17 +100,7 @@ class MatchDetailFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        when(match.screenType) {
-            MatchScreenType.TIME_LINE -> {
-                setupRecycler()
-                setupObservers()
-                renderHeaderCompose()
-            }
-            MatchScreenType.LISTING -> {
-                binding.recyclerMatchActionDetail.gone()
-                renderOnlyCompose()
-            }
-        }
+        renderOnlyCompose()
     }
 
     private fun renderOnlyCompose() {
@@ -124,37 +109,11 @@ class MatchDetailFragment
         }
     }
 
-    private fun renderHeaderCompose() {
-        binding.composableMatchHeader.setContent {
-            UpperCardMatch(match = match)
-        }
-    }
-
-    private fun setupRecycler() {
-        binding.recyclerMatchActionDetail.visible()
-        binding.recyclerMatchActionDetail.adapter = adapterMatchDetail
-    }
-
-    private fun setupObservers() = viewModel.run {
-        liveDataPlayersInMatch.observe(viewLifecycleOwner){
-            Timber.d("Live data $it")
-            showProgress(it is Result.Loading)
-            when(it){
-                is Result.Error -> {}
-                is Result.Loading -> {}
-                is Result.Success -> {
-                    adapterMatchDetail.submitList(it.data)
-                }
-            }
-        }
-    }
-
     @Composable
     fun DetailMatchMainScreen(){
         Column {
             UpperCardMatch(match = match)
             val response by viewModel.liveDataPlayersInMatch.observeAsState(Result.Loading)
-            Timber.d("Live data $response")
             CreateScreen(response = response)
         }
     }
@@ -299,6 +258,31 @@ class MatchDetailFragment
 
     @Composable
     fun ActionsTeams(playersInMatch: List<PlayerInMatchSegment>){
+        when(match.screenType) {
+            MatchScreenType.TIME_LINE -> TypeTimeLine(playersInMatch = playersInMatch)
+            MatchScreenType.LISTING -> TypeListing(playersInMatch = playersInMatch)
+        }
+    }
+
+    @Composable fun TypeTimeLine(playersInMatch: List<PlayerInMatchSegment>) {
+        LazyColumn(modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth()
+        ){
+            items(playersInMatch) { action ->
+                when(action.segment) {
+                    MatchSegment.START -> ItemMatchSegment(segment = action.segment)
+                    MatchSegment.BREAK -> ItemMatchSegment(segment = action.segment)
+                    MatchSegment.END -> ItemMatchSegment(segment = action.segment)
+                    MatchSegment.ACTION_HOME -> ItemMatchAction(isHome = true, data = action)
+                    MatchSegment.ACTION_GUEST -> ItemMatchAction(isHome = false, data = action)
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun TypeListing(playersInMatch: List<PlayerInMatchSegment>) {
         Row(modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
@@ -307,7 +291,6 @@ class MatchDetailFragment
                 val modifier = Modifier
                     .weight(1f)
                     .padding(all = 5.dp)
-
                 ListActionsPlayers(players = playersInMatch.filter{it.segment == MatchSegment.ACTION_HOME}, modifier)
                 Box(modifier = Modifier
                     .width(1.dp)
@@ -316,6 +299,7 @@ class MatchDetailFragment
                 ListActionsPlayers(players = playersInMatch.filter{it.segment == MatchSegment.ACTION_GUEST}, modifier)
             }
         }
+
     }
 
     @Composable
