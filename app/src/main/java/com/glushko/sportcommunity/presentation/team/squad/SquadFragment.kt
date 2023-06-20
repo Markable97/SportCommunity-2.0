@@ -4,39 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.glushko.sportcommunity.R
 import com.glushko.sportcommunity.databinding.FragmentSquadBinding
-import com.glushko.sportcommunity.presentation.base.BaseFragment
 import com.glushko.sportcommunity.presentation.base.BaseXmlFragment
-import com.glushko.sportcommunity.presentation.team.squad.adapters.SquadAdapters
-import com.glushko.sportcommunity.util.Resource
-import com.glushko.sportcommunity.util.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 //TODO XML to Compose
 @AndroidEntryPoint
 class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squad){
 
     private val viewModel: SquadViewModel by viewModels()
-
-    private val adapterSquad by lazy {
-        SquadAdapters().apply {
-            listener = { player ->
-                findNavController().navigate(
-                    SquadFragmentDirections.actionSquadFragmentToPlayerInfoFragment(
-                        player.playerId,
-                        player.playerName,
-                        player.playerUrl
-                    )
-                )
-            }
-        }
-    }
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -45,13 +24,12 @@ class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerSquad.adapter = adapterSquad
-        initSearchView()
-        setObservers()
-        setupListeners()
+        binding.composeView.setContent {
+            SquadScreen(viewModel = viewModel)
+        }
     }
 
-    private fun initSearchView() = binding.run {
+    /*private fun initSearchView() = binding.run {
         searchView.isIconified = false
         //The above line will expand it to fit the area as well as throw up the keyboard
         //To remove the keyboard, but make sure you keep the expanded version:
@@ -71,15 +49,6 @@ class SquadFragment: BaseXmlFragment<FragmentSquadBinding>(R.layout.fragment_squ
             }
 
         })
-    }
-
-    private fun setupListeners() = binding.run{
-    }
-
-    private fun setObservers() = viewModel.run {
-        liveDataSquadList.observe(viewLifecycleOwner){
-            adapterSquad.setData(it)
-        }
-    }
+    }*/
 
 }
