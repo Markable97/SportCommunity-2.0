@@ -23,7 +23,7 @@ class SquadViewModel @Inject constructor(
 
     fun searchPlayer(text: String) : List<SquadPlayerUI> {
         return if (text.isNotBlank()){
-            initialSquad.filter { it.playerName.contains(text) }
+            initialSquad.filter { it.playerName.contains(text, true) }
         } else {
             initialSquad
         }

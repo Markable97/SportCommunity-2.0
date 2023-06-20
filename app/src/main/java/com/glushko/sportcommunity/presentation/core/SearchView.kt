@@ -41,7 +41,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 
 enum class SearchDisplay {
-    InitialResults,/* Suggestions,*/ Results, NoResults
+    /*InitialResults,*//* Suggestions,*/ Results, NoResults
 }
 
 @Stable
@@ -61,7 +61,7 @@ class SearchState<T>(
 
     val searchDisplay: SearchDisplay
         get() = when {
-            !focused && query.text.isEmpty() -> SearchDisplay.InitialResults
+//            !focused && query.text.isEmpty() -> SearchDisplay.Results
 //            focused && query.text.isEmpty() -> SearchDisplay.Suggestions
             searchResults.isEmpty() -> SearchDisplay.NoResults
             else -> SearchDisplay.Results
