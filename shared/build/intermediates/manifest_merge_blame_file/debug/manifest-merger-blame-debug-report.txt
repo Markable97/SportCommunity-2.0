@@ -1,0 +1,11 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.glushko.sportcommunity.shared" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="26"
+6-->/Users/glushko/AndroidStudioProjects/SportCommunity-2.0/shared/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest136134701306560365.xml
+7        android:targetSdkVersion="26" />
+7-->/Users/glushko/AndroidStudioProjects/SportCommunity-2.0/shared/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest136134701306560365.xml
+8
+9</manifest>

@@ -29,6 +29,7 @@ import com.glushko.sportcommunity.data.main_screen.division.model.DivisionDispla
 import com.glushko.sportcommunity.data.main_screen.leagues.model.LeaguesDisplayData
 import com.glushko.sportcommunity.databinding.ActivityMainBinding
 import com.glushko.sportcommunity.databinding.HeaderNavigationDrawerBinding
+import com.glushko.sportcommunity.shared.Greeting
 import com.glushko.sportcommunity.util.Resource
 import com.glushko.sportcommunity.util.Result
 import com.glushko.sportcommunity.util.extensions.showGone
@@ -144,6 +145,8 @@ class MainActivity : AppCompatActivity(), MenuHost {
             true
         }
         getTokenFirebase()
+
+        toast(this, Greeting().greet())
     }
 
     private fun getTokenFirebase() {

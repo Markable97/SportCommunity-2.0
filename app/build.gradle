@@ -10,14 +10,14 @@ plugins {
 }
 
 android {
-    signingConfigs {
+    /*signingConfigs {
         release {
             storeFile file('D:\\Project\\keys\\apps_key.jks')
             storePassword '7913194'
             keyAlias 'SportCommunity'
             keyPassword '7913194'
         }
-    }
+    }*/
     compileSdk 33
 
     defaultConfig {
@@ -34,7 +34,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
             buildConfigField  "String", "HOST_NAME", '"185.155.19.22:8080"'
         }
         debug {
@@ -58,6 +58,8 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":shared"))
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
